@@ -177,7 +177,7 @@ export const Header = () => {
               <Button
                 size="sm"
                 onClick={() => router.push('/login')}
-                className="bg-gradient-to-r from-secondary to-gold hover:from-gold hover:to-secondary text-primary hover:text-primary font-semibold transition-all duration-300 glow-gold hidden sm:flex"
+                className="bg-secondary hover:bg-secondary/90 text-primary hover:text-primary font-semibold transition-all duration-300 glow-gold hidden sm:flex"
               >
                 <LogIn className="w-4 h-4 ml-2" />
                 {t('تسجيل الدخول', 'Login')}
@@ -273,7 +273,7 @@ export const Header = () => {
                     router.push('/login');
                     setIsMobileMenuOpen(false);
                   }}
-                  className="w-full bg-gradient-to-r from-secondary to-gold hover:from-gold hover:to-secondary text-primary font-semibold transition-all duration-300"
+                  className="w-full bg-secondary hover:bg-secondary/90 text-primary font-semibold transition-all duration-300"
                 >
                   <LogIn className="w-4 h-4 ml-2" />
                   {t('تسجيل الدخول', 'Login')}

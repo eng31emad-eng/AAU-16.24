@@ -97,7 +97,7 @@ export default function NewsPageContent({ initialNews }: NewsPageContentProps) {
                                 {/* Image with Enhanced Gradient Overlay */}
                                 <div className="relative aspect-video w-full overflow-hidden">
                                     <img
-                                        src={item.image}
+                                        src={typeof item.image === 'string' ? item.image : (item.image as any)?.src || item.image}
                                         alt={language === 'ar' ? item.titleAr : item.titleEn}
                                         className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                                     />

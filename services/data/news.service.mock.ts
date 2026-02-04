@@ -1,4 +1,8 @@
 import { NewsItem } from '@/types';
+import newsBuilding from '@/assets/news-building.jpg';
+import newsResearch from '@/assets/news-research.jpg';
+import newsPartnership from '@/assets/news-partnership.jpg';
+import newsLibrary from '@/assets/news-library.jpg';
 
 const mockNews: NewsItem[] = [
   {
@@ -10,7 +14,7 @@ const mockNews: NewsItem[] = [
     descriptionEn: 'Official opening of the new college building with senior officials',
     contentAr: 'تم افتتاح مبنى الكلية الجديد بحضور كبار المسؤولين والطلاب. يضم المبنى الجديد قاعات دراسية حديثة ومختبرات متطورة ومكتبة رقمية شاملة. يهدف هذا المشروع إلى توفير بيئة تعليمية متطورة تدعم التميز الأكاديمي والبحث العلمي. المبنى مجهز بأحدث التقنيات التعليمية ويتسع لأكثر من 2000 طالب وطالبة.',
     contentEn: 'The new college building was opened in the presence of senior officials and students. The new building includes modern classrooms, advanced laboratories, and a comprehensive digital library. This project aims to provide an advanced educational environment that supports academic excellence and scientific research. The building is equipped with the latest educational technologies and can accommodate more than 2000 students.',
-    image: 'https://images.unsplash.com/photo-1562774053-701939374585?w=800',
+    image: newsBuilding,
     date: '2025-01-15',
     views: 245,
     tags: ['infrastructure', 'education', 'facilities'],
@@ -24,7 +28,7 @@ const mockNews: NewsItem[] = [
     descriptionEn: 'University receives Research Excellence Award for 2025',
     contentAr: 'حصلت جامعتنا على جائزة التميز البحثي لعام 2025 تقديرًا لمساهماتها المتميزة في مجال البحث العلمي. تم تكريم عدد من الباحثين المتميزين في حفل أقيم بحضور ممثلين من وزارة التعليم العالي والبحث العلمي. هذا الإنجاز يعكس التزام الجامعة بدعم البحث العلمي والابتكار.',
     contentEn: 'Our university received the Research Excellence Award for 2025 in recognition of its outstanding contributions in scientific research. Several distinguished researchers were honored at a ceremony attended by representatives from the Ministry of Higher Education and Scientific Research. This achievement reflects the university\'s commitment to supporting scientific research and innovation.',
-    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800',
+    image: newsResearch,
     date: '2025-01-10',
     views: 189,
     tags: ['research', 'award', 'excellence'],
@@ -38,7 +42,7 @@ const mockNews: NewsItem[] = [
     descriptionEn: 'Signing a strategic partnership agreement with leading European universities',
     contentAr: 'وقعت الجامعة اتفاقية شراكة استراتيجية مع ثلاث جامعات أوروبية رائدة لتبادل الطلاب والباحثين وتطوير برامج أكاديمية مشتركة. تهدف هذه الشراكة إلى تعزيز التعاون الأكاديمي الدولي وإتاحة فرص جديدة للطلاب للدراسة في الخارج.',
     contentEn: 'The university signed a strategic partnership agreement with three leading European universities to exchange students and researchers and develop joint academic programs. This partnership aims to enhance international academic cooperation and provide new opportunities for students to study abroad.',
-    image: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=800',
+    image: newsPartnership,
     date: '2025-01-05',
     views: 312,
     tags: ['partnership', 'international', 'collaboration'],
@@ -52,7 +56,7 @@ const mockNews: NewsItem[] = [
     descriptionEn: 'Opening of digital library containing over 50,000 scientific references',
     contentAr: 'أطلقت الجامعة مكتبتها الرقمية الجديدة التي تحتوي على أكثر من 50,000 مرجع علمي في مختلف التخصصات. المكتبة متاحة للطلاب والباحثين على مدار الساعة وتوفر إمكانية البحث المتقدم والوصول الفوري للمحتوى.',
     contentEn: 'The university launched its new digital library containing over 50,000 scientific references across various disciplines. The library is available 24/7 for students and researchers, offering advanced search capabilities and instant access to content.',
-    image: 'https://images.unsplash.com/photo-1521587760476-6c12a4b040da?w=800',
+    image: newsLibrary,
     date: '2024-12-20',
     views: 428,
     tags: ['education', 'technology', 'library'],

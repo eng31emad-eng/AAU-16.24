@@ -147,7 +147,11 @@ export const NewsSection = ({ initialNews }: NewsSectionProps) => {
               {/* Image */}
               <div className="relative h-44 sm:h-48 overflow-hidden">
                 <motion.img
-                  src={(item as any).image || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800'}
+                  src={
+                    (item as any).image?.src // Check if it's StaticImageData
+                      ? (item as any).image.src
+                      : (item as any).image || 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800'
+                  }
                   alt={t((item as any).title?.ar || item.titleAr, (item as any).title?.en || item.titleEn)}
                   className="w-full h-full object-cover"
                   whileHover={{ scale: 1.1 }}

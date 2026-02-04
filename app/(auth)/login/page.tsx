@@ -32,12 +32,12 @@ export default function Login() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     console.log('Login submitted:', { userType, formData });
-    
+
     // Save user role to localStorage for mock auth
     if (userType) {
       localStorage.setItem('userRole', userType);
     }
-    
+
     // Navigate to appropriate dashboard
     if (userType === 'student') {
       router.push('/student-dashboard');
@@ -48,7 +48,7 @@ export default function Login() {
   return (
     <div className="min-h-screen flex flex-col bg-background">
       <Header />
-      
+
       <main className="flex-1 flex items-center justify-center py-24 px-4">
         <div className="w-full max-w-4xl">
           {/* User Type Selection */}
@@ -73,7 +73,7 @@ export default function Login() {
                       <GraduationCap className="w-10 h-10 text-secondary" />
                     </div>
                     <h3 className="text-2xl font-bold text-foreground">
-                      {t('تسجيل دخول الطالب', 'Student Login')}
+                      {t('تسجيل دخول', 'Student Login')}
                     </h3>
                     <p className="text-muted-foreground">
                       {t('للطلاب المسجلين في الجامعة', 'For registered students')}
@@ -90,7 +90,7 @@ export default function Login() {
                       <User className="w-10 h-10 text-secondary" />
                     </div>
                     <h3 className="text-2xl font-bold text-foreground">
-                      {t('تسجيل دخول الدكتور', 'Teacher Login')}
+                      {t('تسجيل دخول', 'Teacher Login')}
                     </h3>
                     <p className="text-muted-foreground">
                       {t('لأعضاء هيئة التدريس', 'For faculty members')}
