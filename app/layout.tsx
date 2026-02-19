@@ -59,7 +59,7 @@ export async function generateMetadata({ params }): Promise<Metadata> {
         twitter: {
             card: 'summary_large_image',
             title: 'جامعة الجيل الجديد',
-            description: 'مؤسسة تعليمية رائدة في العراق',
+            description: 'مؤسسة تعليمية رائدة في اليمن',
             images: ['/og-image.png'],
         },
         alternates: {
