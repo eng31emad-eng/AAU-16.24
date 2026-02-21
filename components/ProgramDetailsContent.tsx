@@ -25,6 +25,7 @@ import {
     Sparkles,
     TrendingUp,
 } from 'lucide-react';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 
 interface ProgramDetailsContentProps {
@@ -361,20 +362,28 @@ export default function ProgramDetailsContent({
                                                             whileInView={{ opacity: 1, scale: 1 }}
                                                             viewport={{ once: true }}
                                                             transition={{ delay: index * 0.1 }}
-                                                            className="group p-4 rounded-xl bg-gradient-to-br from-muted/50 to-muted hover:from-indigo-50 hover:to-violet-50 dark:hover:from-indigo-950/30 dark:hover:to-violet-950/30 transition-all duration-300 border border-transparent hover:border-indigo-200/50 dark:hover:border-indigo-800/30 cursor-pointer"
+                                                            className="group p-4 rounded-xl bg-gradient-to-br from-muted/50 to-muted hover:from-indigo-50 hover:to-violet-50 dark:hover:from-indigo-950/30 dark:hover:to-violet-950/30 transition-all duration-300 border border-transparent hover:border-indigo-200/50 dark:hover:border-indigo-800/30 cursor-pointer flex items-center gap-4"
                                                         >
-                                                            <div className="space-y-2">
+                                                            <Avatar className="h-12 w-12 border-2 border-primary/20 group-hover:border-primary/50 transition-colors">
+                                                                <AvatarImage src={member.image} alt={isRtl ? member.nameAr : member.nameEn} />
+                                                                <AvatarFallback className="bg-primary/10 text-primary font-bold">
+                                                                    {(isRtl ? member.nameAr : member.nameEn).charAt(0)}
+                                                                </AvatarFallback>
+                                                            </Avatar>
+                                                            <div className="space-y-1 min-w-0">
                                                                 <h4 className="font-semibold text-foreground group-hover:text-indigo-700 dark:group-hover:text-indigo-400 transition-colors truncate">
                                                                     {isRtl ? member.nameAr : member.nameEn}
                                                                 </h4>
-                                                                <Badge variant="secondary" className="text-xs bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">
-                                                                    {isRtl ? member.titleAr : member.titleEn}
-                                                                </Badge>
-                                                                {(isRtl ? member.specializationAr : member.specializationEn) && (
-                                                                    <p className="text-sm text-muted-foreground line-clamp-2">
-                                                                        {isRtl ? member.specializationAr : member.specializationEn}
-                                                                    </p>
-                                                                )}
+                                                                <div className="flex flex-col gap-1">
+                                                                    <Badge variant="secondary" className="w-fit text-[10px] px-1.5 py-0 bg-indigo-100 text-indigo-700 dark:bg-indigo-900/50 dark:text-indigo-300">
+                                                                        {isRtl ? member.titleAr : member.titleEn}
+                                                                    </Badge>
+                                                                    {(isRtl ? member.specializationAr : member.specializationEn) && (
+                                                                        <p className="text-xs text-muted-foreground line-clamp-1">
+                                                                            {isRtl ? member.specializationAr : member.specializationEn}
+                                                                        </p>
+                                                                    )}
+                                                                </div>
                                                             </div>
                                                         </motion.div>
                                                     </Link>

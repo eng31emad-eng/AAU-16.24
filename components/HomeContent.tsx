@@ -13,6 +13,8 @@ const AboutSection = dynamic(() => import('@/components/AboutSection').then(m =>
 const CollegesSection = dynamic(() => import('@/components/CollegesSection').then(m => ({ default: m.CollegesSection })))
 const NewsSection = dynamic(() => import('@/components/NewsSection').then(m => ({ default: m.NewsSection })))
 const EventsSection = dynamic(() => import('@/components/EventsSection').then(m => ({ default: m.EventsSection })))
+const CampusLifeSection = dynamic(() => import('@/components/CampusLifeSection').then(m => ({ default: m.CampusLifeSection })))
+const ProjectsSection = dynamic(() => import('@/components/ProjectsSection').then(m => ({ default: m.ProjectsSection })))
 
 // ContactSection handles its own client-mounting now, but we import it dynamically to keep bundle size low
 const ContactSection = dynamic(() => import('@/components/ContactSection').then(m => ({ default: m.ContactSection })), { ssr: false })
@@ -20,7 +22,7 @@ const ScrollToTop = dynamic(() => import('@/components/ScrollToTop').then(m => (
 // SmartChat needs ssr: false because it likely uses window/document
 const SmartChat = dynamic(() => import('@/components/SmartChat'), { ssr: false })
 
-export default function HomeContent({ events, news, colleges, campusLife, faqs }: any) {
+export default function HomeContent({ events, news, colleges, campusLife, projects, faqs }: any) {
     const { t } = useLanguage()
 
     return (
@@ -31,6 +33,10 @@ export default function HomeContent({ events, news, colleges, campusLife, faqs }
                 <StatsSection />
 
                 <AboutSection />
+
+                <CampusLifeSection initialData={campusLife} />
+
+                <ProjectsSection initialData={projects} />
 
                 <CollegesSection initialData={colleges} />
 

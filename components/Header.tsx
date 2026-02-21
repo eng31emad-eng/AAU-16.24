@@ -111,7 +111,7 @@ export const Header = () => {
           </motion.button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-6">
+          <nav className="hidden lg:flex items-center xl:gap-6 lg:gap-3">
             {mainNavRoutes.map((item, index) => (
               <motion.button
                 key={index}

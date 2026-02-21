@@ -55,7 +55,7 @@ export default function ProjectDetailsContent({ project, relatedProjects }: Proj
                     {/* Breadcrumbs */}
                     <Breadcrumb
                         items={[
-                            { label: { ar: 'استوديو المشاريع', en: 'Projects Studio' }, href: '/projects-studio' },
+                            { label: { ar: 'مشاريع التخرج', en: 'Graduation Projects' }, href: '/projects-studio' },
                             { label: { ar: project.titleAr, en: project.titleEn } }
                         ]}
                     />
@@ -78,12 +78,7 @@ export default function ProjectDetailsContent({ project, relatedProjects }: Proj
 
                     {/* Meta Info */}
                     <div className="flex flex-wrap items-center gap-6 text-muted-foreground">
-                        {project.students && project.students.length > 0 && (
-                            <div className="flex items-center gap-2">
-                                <User className="w-5 h-5" />
-                                <span>{project.students.join(', ')}</span>
-                            </div>
-                        )}
+                        {/* Students names removed as requested for collective projects appearance */}
                         {project.startDate && (
                             <div className="flex items-center gap-2">
                                 <Calendar className="w-5 h-5" />

@@ -6,13 +6,15 @@ export const revalidate = 300;
 
 export default async function HomePage() {
     // Fetch data from Server Data Layer
-    const { events, news, colleges, faqs } = await getHomeData()
+    const { events, news, colleges, campusLife, projects, faqs } = await getHomeData()
 
     return (
         <HomeContent
             events={events.slice(0, 4)}
             news={news.slice(0, 4)}
             colleges={colleges}
+            campusLife={campusLife.slice(0, 3)}
+            projects={projects.slice(0, 3)}
             faqs={faqs.slice(0, 6)}
         />
     )

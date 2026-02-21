@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { ChevronDown, GraduationCap, Users, Award, BookOpen, ArrowLeft, ArrowRight } from 'lucide-react';
+import { ChevronDown, GraduationCap, Users, Award, BookOpen, ArrowLeft, ArrowRight, FileText } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform } from 'framer-motion';
@@ -166,6 +166,20 @@ export const HeroSection = () => {
                 className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto"
               >
                 {t('استكشف الكليات', 'Explore Colleges')}
+              </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Button
+                size="lg"
+                variant="outline"
+                onClick={() => window.open('https://result.yemenexam.com/', '_blank', 'noopener,noreferrer')}
+                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto flex items-center gap-2"
+              >
+                <FileText className="w-5 h-5" />
+                {t('نتائج الطلاب', 'Student Results')}
               </Button>
             </motion.div>
           </motion.div>

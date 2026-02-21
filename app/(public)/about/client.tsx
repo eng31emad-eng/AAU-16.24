@@ -119,16 +119,152 @@ const About = () => {
           ))}
         </div>
 
-        <div className="bg-muted/30 rounded-2xl p-8 md:p-12 animate-fade-in-up">
-          <h2 className="text-3xl font-display font-bold mb-6 text-center">
-            {t('كلمة رئيس الجامعة', "President's Message")}
-          </h2>
-          <p className="text-lg text-muted-foreground leading-relaxed text-center max-w-4xl mx-auto">
-            {t(
-              'بسم الله الرحمن الرحيم. الحمد لله رب العالمين، والصلاة والسلام على خاتم الأنبياء والمرسلين، محمد بن عبدالله الصادق الأمين، وعلى آله وصحبه أجمعين. يسرني أن أرحب بأبنائنا الطلاب والطالبات الذين يتطلعون للانضمام إلى أسرة الجامعة والالتحاق بأحد برامجها الأكاديمية للعام الجامعي 2023 – 2024م، وأن أقدم هذا الدليل الذي يعطي لمحة موجزة عن التخصصات الأكاديمية المتاحة في الجامعة.',
-              'In the name of Allah, the Most Gracious, the Most Merciful. Praise be to Allah, Lord of the Worlds, and prayers and peace be upon the Seal of the Prophets and Messengers... I am pleased to welcome our male and female students who are looking forward to joining the university family...'
-            )}
-          </p>
+        {/* Administrative Team Section */}
+        <div className="mt-20 mb-16 animate-fade-in-up">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
+              {t('الفريق الإداري', 'Administrative Team')}
+            </h2>
+            <div className="w-20 h-1 bg-secondary mx-auto mb-6"></div>
+            <p className="text-muted-foreground max-w-2xl mx-auto">
+              {t('نخبة من الكفاءات الأكاديمية والإدارية التي تقود مسيرة الجامعة نحو التميز والحداثة', 'A group of elite academic and administrative competencies leading the university towards excellence and modernity')}
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center space-y-12 max-w-6xl mx-auto">
+            {/* Level 1: President */}
+            <div className="flex flex-col items-center">
+              <div className="relative group">
+                <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-secondary p-1 bg-background shadow-xl transition-transform duration-500 group-hover:scale-105">
+                  <img
+                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&q=80"
+                    alt={t('د. أحمد محمود الحسن', 'Dr. Ahmed Mahmoud')}
+                    className="w-full h-full object-cover rounded-full"
+                  />
+                </div>
+              </div>
+              <div className="text-center mt-6">
+                <h3 className="text-xl font-bold mb-1">{t('د. أحمد محمود الحسن', 'Dr. Ahmed Mahmoud')}</h3>
+                <p className="text-secondary font-medium">{t('رئيس الجامعة', 'University President')}</p>
+              </div>
+              {/* Vertical line connector */}
+              <div className="w-0.5 h-12 bg-gradient-to-b from-secondary to-primary/20 mt-4 hidden md:block"></div>
+            </div>
+
+            {/* Level 2: Top Management */}
+            <div className="relative w-full">
+              {/* Horizontal line connector (Desktop only) */}
+              <div className="absolute top-0 left-1/4 right-1/4 h-0.5 bg-primary/20 hidden md:block"></div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-center pt-8">
+                {[
+                  {
+                    name: { ar: 'أ.د. محمد العلفي', en: 'Dr. Mohamed Al-Alfi' },
+                    role: { ar: 'نائب رئيس الجامعة للشؤون الأكاديمية', en: 'Vice President for Academic Affairs' },
+                    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'د. خالد سيف', en: 'Dr. Khaled Saif' },
+                    role: { ar: 'الأمين العام للجامعة', en: 'Secretary General' },
+                    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'د. سارة المنصور', en: 'Dr. Sarah Al-Mansouri' },
+                    role: { ar: 'نائب رئيس الجامعة للدراسات العليا', en: 'Vice President for Graduate Studies' },
+                    image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80'
+                  }
+                ].map((member, index) => (
+                  <div key={index} className="flex flex-col items-center group relative">
+                    {/* Vertical line to horizontal (Desktop only) */}
+                    <div className="absolute -top-8 w-0.5 h-8 bg-primary/20 hidden md:block"></div>
+
+                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-secondary transition-all duration-300 shadow-lg mb-4 bg-background">
+                      <img
+                        src={member.image}
+                        alt={t(member.name.ar, member.name.en)}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      />
+                    </div>
+                    <h3 className="text-base font-bold text-center">{t(member.name.ar, member.name.en)}</h3>
+                    <p className="text-xs text-muted-foreground text-center px-2">{t(member.role.ar, member.role.en)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Level 3: Directors (Grid) */}
+            <div className="w-full pt-16">
+              <div className="text-center mb-10">
+                <span className="text-xs font-bold uppercase tracking-widest text-muted-foreground/60">{t('مدراء الإدارات العامة', 'General Administration Directors')}</span>
+              </div>
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
+                {[
+                  {
+                    name: { ar: 'م. ياسر القاضي', en: 'Eng. Yasser Al-Qadi' },
+                    role: { ar: 'مدير الشؤون المالية', en: 'Director of Finance' },
+                    image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'د. علي عبده', en: 'Dr. Ali Abdu' },
+                    role: { ar: 'مسجل عام الجامعة', en: 'University Registrar' },
+                    image: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'أ. منى الراعي', en: 'Ms. Mona Al-Raee' },
+                    role: { ar: 'مدير شؤون الموظفين', en: 'HR Director' },
+                    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'أ. سامي محمد', en: 'Mr. Sami Mohamed' },
+                    role: { ar: 'مدير النظم والمعلومات', en: 'IT Director' },
+                    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'د. ليلى أحمد', en: 'Dr. Layla Ahmed' },
+                    role: { ar: 'مدير ضمان الجودة والاعتماد', en: 'Quality Assurance Director' },
+                    image: 'https://images.unsplash.com/photo-1594744803329-a584af1cae24?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'أ. حسن العزاني', en: 'Mr. Hassan Al-Azani' },
+                    role: { ar: 'مدير العلاقات العامة والإعلام', en: 'Public Relations Director' },
+                    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'أ. فؤاد الصبري', en: 'Mr. Fouad Al-Sabri' },
+                    role: { ar: 'مدير الشؤون القانونية', en: 'Legal Affairs Director' },
+                    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'د. أروى صالح', en: 'Dr. Arwa Saleh' },
+                    role: { ar: 'أمين مكتبة الجامعة', en: 'University Librarian' },
+                    image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0ad2f01?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'م. عمار الحبيشي', en: 'Eng. Ammar Al-Hubaishi' },
+                    role: { ar: 'مدير التخطيط والمشاريع', en: 'Planning & Projects Director' },
+                    image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'أ. جيهان محمد', en: 'Ms. Jihan Mohamed' },
+                    role: { ar: 'منسق شؤون الخريجين', en: 'Alumni Coordinator' },
+                    image: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?w=200&q=80'
+                  }
+                ].map((member, index) => (
+                  <div key={index} className="flex flex-col items-center group">
+                    <div className="w-20 h-20 rounded-full overflow-hidden border border-primary/10 group-hover:border-secondary/50 transition-all duration-300 mb-3 bg-muted/20">
+                      <img
+                        src={member.image}
+                        alt={t(member.name.ar, member.name.en)}
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                      />
+                    </div>
+                    <h4 className="text-xs md:text-sm font-bold text-center leading-tight">{t(member.name.ar, member.name.en)}</h4>
+                    <p className="text-[10px] text-muted-foreground text-center mt-1">{t(member.role.ar, member.role.en)}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

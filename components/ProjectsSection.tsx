@@ -9,20 +9,28 @@ import { projectsService } from '@/services/data/projects.service.mock';
 import { ProjectItem } from '@/types';
 import { motion, useInView } from 'framer-motion';
 
-export const ProjectsSection = () => {
+interface ProjectsSectionProps {
+  initialData?: ProjectItem[];
+}
+
+export const ProjectsSection = ({ initialData }: ProjectsSectionProps) => {
   const { t, language } = useLanguage();
   const router = useRouter();
-  const [projects, setProjects] = useState<ProjectItem[]>([]);
+  const [projects, setProjects] = useState<ProjectItem[]>(initialData || []);
   const sectionRef = useRef(null);
   const isInView = useInView(sectionRef, { once: true, margin: "-100px" });
 
   useEffect(() => {
-    const fetchData = async () => {
-      const data = await projectsService.getAll();
-      setProjects(data.slice(0, 3));
-    };
-    fetchData();
-  }, []);
+    if (!initialData) {
+      const fetchData = async () => {
+        const data = await projectsService.getAll();
+        setProjects(data.slice(0, 3));
+      };
+      fetchData();
+    } else {
+      setProjects(initialData.slice(0, 3));
+    }
+  }, [initialData]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -83,7 +91,7 @@ export const ProjectsSection = () => {
             {t('إبداعات طلابنا', 'Our Students Creations')}
           </motion.div>
           <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent">
-            {t('استديو المشاريع', 'Projects Studio')}
+            {t('مشاريع التخرج', 'Graduation Projects')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             {t(

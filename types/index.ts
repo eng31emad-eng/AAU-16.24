@@ -24,6 +24,9 @@ export interface ProjectItem {
   progress?: number;
   year?: number;
   status: 'current' | 'completed';
+  type?: 'graduation' | 'studio';
+  categoryAr?: string;
+  categoryEn?: string;
   images?: string[];
   detailsAr?: string;
   detailsEn?: string;
@@ -183,6 +186,16 @@ export interface AcademicProgram {
 }
 
 // College Type with Departments
+export interface CollegeNewsItem {
+  id: string;
+  titleAr: string;
+  titleEn: string;
+  descAr: string;
+  descEn: string;
+  date: string;
+  image: string;
+}
+
 export interface College {
   id: string;
   slug: string;
@@ -201,6 +214,7 @@ export interface College {
   admissionRequirementsEn: string;
   icon?: string | any;
   image?: string | any;
+  news?: CollegeNewsItem[];
 }
 
 export interface EventItem {

@@ -6,16 +6,31 @@ import { College, FacultyMember } from '@/types';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ArrowRight, ArrowLeft, Target, Eye, BookOpen, CheckCircle2, GraduationCap, Users, Award, Calendar, Flag } from 'lucide-react';
+import {
+    ArrowRight, ArrowLeft, Target, Eye, BookOpen, CheckCircle2,
+    GraduationCap, Users, Award, Calendar, Flag, Newspaper,
+    Library, CalendarDays, FileSpreadsheet,
+    Facebook, Instagram, MessageCircle
+} from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { DisplayName } from '@/lib/transliterateArabicName';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import Link from 'next/link';
 
 const ENABLE_COLLEGE_ADMIN_CARD = true;
 
 const DUMMY_ADMIN = {
-    dean: '\u062f. \u0623\u062d\u0645\u062f \u0645\u062d\u0645\u062f',
-    head: '\u062f. \u062e\u0627\u0644\u062f \u0639\u0644\u064a',
+    dean: {
+        nameAr: 'د. أحمد محمود الحسن',
+        nameEn: 'Dr. Ahmed Mahmoud',
+        image: 'https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=200&q=80'
+    },
+    head: {
+        nameAr: 'د. محمد علي الأحمد',
+        nameEn: 'Dr. Mohammed Ali',
+        image: 'https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=200&q=80'
+    },
 };
 
 interface CollegeDetailsContentProps {
@@ -222,18 +237,34 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                         <CardHeader>
                             <CardTitle className="text-2xl">{t('\u0625\u062f\u0627\u0631\u0629 \u0627\u0644\u0643\u0644\u064a\u0629', 'College Management')}</CardTitle>
                         </CardHeader>
-                        <CardContent className={`space-y-5 ${isRtl ? 'text-right' : 'text-left'}`}>
-                            <div className="space-y-2">
-                                <p className="text-sm font-medium text-foreground">{t('\u0639\u0645\u064a\u062f \u0627\u0644\u0643\u0644\u064a\u0629', 'College Dean')}</p>
-                                <p className="text-sm text-muted-foreground">
-                                    <span dir="rtl">{DUMMY_ADMIN.dean}</span>
-                                </p>
+                        <CardContent className={`space-y-6 ${isRtl ? 'text-right' : 'text-left'}`}>
+                            <div className="flex items-center gap-4">
+                                <Avatar className="h-14 w-14 border-2 border-secondary shadow-sm">
+                                    <AvatarImage src={DUMMY_ADMIN.dean.image} alt={t(DUMMY_ADMIN.dean.nameAr, DUMMY_ADMIN.dean.nameEn)} />
+                                    <AvatarFallback className="bg-primary/10 text-primary font-bold">
+                                        {t(DUMMY_ADMIN.dean.nameAr, DUMMY_ADMIN.dean.nameEn).charAt(0)}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="space-y-1">
+                                    <p className="text-sm font-bold text-secondary">{t('عميد الكلية', 'College Dean')}</p>
+                                    <p className="text-base font-medium text-foreground">
+                                        {t(DUMMY_ADMIN.dean.nameAr, DUMMY_ADMIN.dean.nameEn)}
+                                    </p>
+                                </div>
                             </div>
-                            <div className="space-y-2">
-                                <p className="text-sm font-medium text-foreground">{t('\u0631\u0626\u064a\u0633 \u0627\u0644\u0642\u0633\u0645', 'Head of Department')}</p>
-                                <p className="text-sm text-muted-foreground">
-                                    <span dir="rtl">{DUMMY_ADMIN.head}</span>
-                                </p>
+                            <div className="flex items-center gap-4">
+                                <Avatar className="h-14 w-14 border-2 border-secondary shadow-sm">
+                                    <AvatarImage src={DUMMY_ADMIN.head.image} alt={t(DUMMY_ADMIN.head.nameAr, DUMMY_ADMIN.head.nameEn)} />
+                                    <AvatarFallback className="bg-primary/10 text-primary font-bold">
+                                        {t(DUMMY_ADMIN.head.nameAr, DUMMY_ADMIN.head.nameEn).charAt(0)}
+                                    </AvatarFallback>
+                                </Avatar>
+                                <div className="space-y-1">
+                                    <p className="text-sm font-bold text-secondary">{t('رئيس القسم', 'Head of Department')}</p>
+                                    <p className="text-base font-medium text-foreground">
+                                        {t(DUMMY_ADMIN.head.nameAr, DUMMY_ADMIN.head.nameEn)}
+                                    </p>
+                                </div>
                             </div>
                         </CardContent>
                     </Card>
@@ -254,6 +285,77 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                         </CardContent>
                     </Card>
                 )}
+
+                {/* College News Section */}
+                {college.news && college.news.length > 0 && (
+                    <div className="mb-16 animate-fade-in-up" style={{ animationDelay: '0.45s' }}>
+                        <div className="flex items-center gap-3 mb-8">
+                            <div className="w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
+                                <Newspaper className="w-5 h-5 text-primary" />
+                            </div>
+                            <h2 className="text-2xl font-bold">{t('أخبار الكلية', 'College News')}</h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                            {college.news.map((news) => (
+                                <Card key={news.id} className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-none bg-card/50 backdrop-blur-sm shadow-md h-full flex flex-col">
+                                    <div className="relative h-48 overflow-hidden">
+                                        <img src={news.image} alt={t(news.titleAr, news.titleEn)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                        <div className="absolute top-4 right-4 bg-secondary text-primary px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                            {news.date}
+                                        </div>
+                                    </div>
+                                    <CardContent className="p-5 flex-grow flex flex-col gap-2 text-right">
+                                        <h3 className="font-bold text-lg leading-tight group-hover:text-secondary transition-colors text-foreground">
+                                            {t(news.titleAr, news.titleEn)}
+                                        </h3>
+                                        <p className="font-normal text-sm md:text-base text-muted-foreground leading-relaxed">
+                                            {t(news.descAr, news.descEn)}
+                                        </p>
+                                    </CardContent>
+                                </Card>
+                            ))}
+                        </div>
+                    </div>
+                )}
+
+                {/* College Services Links */}
+                <div className="mb-16 animate-fade-in-up" style={{ animationDelay: '0.5s' }}>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            className="h-24 bg-card/50 backdrop-blur-md border border-primary/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/40 transition-all duration-300 text-lg font-bold gap-3 shadow-sm group rounded-2xl"
+                            onClick={() => window.open('https://library.university.edu', '_blank')}
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10">
+                                <Library className="w-6 h-6 text-secondary" />
+                            </div>
+                            {t('مكتبة الكلية', 'College Library')}
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            className="h-24 bg-card/50 backdrop-blur-md border border-primary/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/40 transition-all duration-300 text-lg font-bold gap-3 shadow-sm group rounded-2xl"
+                            onClick={() => window.open('https://schedule.university.edu', '_blank')}
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10">
+                                <CalendarDays className="w-6 h-6 text-secondary" />
+                            </div>
+                            {t('الجدول الدراسي', 'Study Schedule')}
+                        </Button>
+                        <Button
+                            variant="outline"
+                            size="lg"
+                            className="h-24 bg-card/50 backdrop-blur-md border border-primary/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/40 transition-all duration-300 text-lg font-bold gap-3 shadow-sm group rounded-2xl"
+                            onClick={() => window.open('https://exams.university.edu', '_blank')}
+                        >
+                            <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10">
+                                <FileSpreadsheet className="w-6 h-6 text-secondary" />
+                            </div>
+                            {t('الجدول الامتحاني', 'Exam Schedule')}
+                        </Button>
+                    </div>
+                </div>
 
                 {/* Faculty Members */}
                 {facultyMembers.length > 0 && (
@@ -301,8 +403,42 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                     </Card>
                 )}
 
+                {/* Social Connect Section */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: 0.7 }}
+                    className="mt-8 text-center"
+                >
+                    <h3 className="text-xl font-bold mb-8 text-foreground relative inline-block">
+                        {t('تواصل مع الكلية', 'Connect with the College')}
+                        <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-secondary to-transparent rounded-full opacity-50"></span>
+                    </h3>
+                    <div className="flex justify-center gap-8">
+                        {[
+                            { icon: Facebook, label: 'Facebook', color: 'hover:bg-blue-600 hover:text-white', href: '#' },
+                            { icon: Instagram, label: 'Instagram', color: 'hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 hover:text-white', href: '#' },
+                            { icon: MessageCircle, label: 'WhatsApp', color: 'hover:bg-green-600 hover:text-white', href: 'https://wa.me/967' },
+                        ].map((social, idx) => (
+                            <motion.a
+                                key={idx}
+                                href={social.href}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                whileHover={{ scale: 1.15, y: -8 }}
+                                whileTap={{ scale: 0.95 }}
+                                className={`w-14 h-14 rounded-2xl bg-card shadow-lg flex items-center justify-center transition-all duration-300 text-muted-foreground border border-border/40 ${social.color}`}
+                                title={social.label}
+                            >
+                                <social.icon className="w-7 h-7" />
+                            </motion.a>
+                        ))}
+                    </div>
+                </motion.div>
+
                 {/* CTA Section */}
-                <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-8 md:p-12 text-center animate-fade-in-up" style={{ animationDelay: '0.6s' }}>
+                <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-8 md:p-12 text-center animate-fade-in-up mt-20" style={{ animationDelay: '0.6s' }}>
                     <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 text-primary-foreground">
                         {t('انضم إلينا اليوم', 'Join Us Today')}
                     </h2>
@@ -327,6 +463,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                         </Button>
                     </div>
                 </div>
+
             </div>
         </div>
     );
