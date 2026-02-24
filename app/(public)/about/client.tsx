@@ -6,6 +6,7 @@ import { ArrowLeft, ArrowRight, Target, Eye, Heart, Flag, Quote, Sparkles } from
 ;
 import { Card, CardContent } from '@/components/ui/card';
 import aboutImage from '@/assets/about-university.jpg';
+import studentsStudying from '@/assets/students-studying.jpg';
 import { useRouter } from 'next/navigation'
 
 const About = () => {
@@ -69,10 +70,14 @@ const About = () => {
         </Button>
 
         <div className="mb-16 text-center animate-fade-in-up">
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
+          <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
+            <Sparkles className="w-4 h-4" />
+            {t('تعرف علينا', 'About Us')}
+          </div>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
             {t('عن جامعة الجيل الجديد', 'About AJ JEEL ALJADEED UNIVERSITY')}
           </h1>
-          <div className="w-24 h-1 bg-secondary mx-auto"></div>
+          <div className="w-32 h-1.5 bg-gradient-to-r from-primary to-secondary mx-auto rounded-full"></div>
         </div>
 
         <div className="grid lg:grid-cols-2 gap-12 mb-16 animate-fade-in-up">
@@ -94,29 +99,107 @@ const About = () => {
           </div>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 mb-20">
           {values.map((value, index) => (
             <Card
               key={index}
-              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in-up relative overflow-hidden"
+              className="group hover:shadow-xl transition-all duration-300 hover:-translate-y-2 animate-fade-in-up relative overflow-hidden bg-card/50 backdrop-blur-sm border-border/50"
               style={{ animationDelay: `${index * 0.1}s` }}
             >
               {/* Gradient Top Bar */}
               <div className={`absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${value.gradient}`} />
 
-              <CardContent className="pt-6">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${value.gradient} flex items-center justify-center mb-4 shadow-lg mx-auto group-hover:scale-110 transition-transform duration-300`}>
+              <CardContent className="pt-8 pb-8 px-6">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${value.gradient} flex items-center justify-center mb-6 shadow-lg mx-auto group-hover:scale-110 transition-transform duration-300`}>
                   <value.icon className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-xl font-display font-bold text-center mb-3">
+                <h3 className="text-xl font-display font-bold text-center mb-4">
                   {t(value.title.ar, value.title.en)}
                 </h3>
-                <p className="text-muted-foreground text-center leading-relaxed text-sm">
+                <p className="text-muted-foreground text-center leading-relaxed text-sm md:text-base">
                   {t(value.description.ar, value.description.en)}
                 </p>
               </CardContent>
             </Card>
           ))}
+        </div>
+
+        {/* President's Message Section */}
+        <div className="mb-24 animate-fade-in-up">
+          <Card className="overflow-hidden border-none bg-gradient-to-br from-primary/5 via-background to-secondary/5 shadow-2xl rounded-3xl">
+            <CardContent className="p-0">
+              <div className="grid lg:grid-cols-5 gap-0 items-stretch">
+                {/* Image / Name Card */}
+                <div className="lg:col-span-2 relative overflow-hidden group bg-primary/20">
+                  <div className="absolute inset-0 bg-primary/20 opacity-0 lg:group-hover:opacity-100 transition-opacity duration-700 z-10"></div>
+                  <div className="relative h-auto lg:h-full lg:min-h-[600px]">
+                    <img
+                      src={(studentsStudying as any).src || studentsStudying}
+                      alt={t('أ.د/ همدان الشامي', 'Prof. Dr. Hamdan Al-Shami')}
+                      className="w-full h-auto object-contain transition-transform duration-700 lg:group-hover:scale-105"
+                    />
+                    <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8 bg-gradient-to-t from-black/95 via-black/40 to-transparent z-20">
+                      <h3 className="text-xl md:text-2xl lg:text-3xl font-display font-bold text-white mb-1 md:mb-2">
+                        {t('أ.د/ همدان الشامي', 'Prof. Dr. Hamdan Al-Shami')}
+                      </h3>
+                      <p className="text-secondary font-bold text-base md:text-lg">
+                        {t('رئيس الجامعة', 'University President')}
+                      </p>
+                      <div className="mt-3 md:mt-4 opacity-70 font-handwriting text-xl md:text-2xl text-white -rotate-3 select-none">
+                        {t('Hamdan Al-Shami', 'Hamdan Al-Shami')}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="lg:col-span-3 p-6 md:p-10 lg:p-16 flex flex-col justify-center relative bg-background/40 backdrop-blur-md">
+                  <Quote className="absolute top-4 right-4 md:top-8 md:right-8 w-12 h-12 md:w-20 md:h-20 text-primary/5 rotate-180" />
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-4 mb-6 md:mb-8">
+                      <div className="w-8 md:w-12 h-1 md:h-1.5 bg-gradient-to-r from-primary to-secondary rounded-full" />
+                      <h2 className="text-2xl md:text-3xl font-display font-bold text-foreground">
+                        {t('كلمة رئيس الجامعة', "President's Message")}
+                      </h2>
+                    </div>
+
+                    <div className="space-y-4 md:space-y-6 text-muted-foreground leading-relaxed text-base md:text-lg text-justify font-medium">
+                      <p className="italic text-foreground/80 text-lg md:text-xl border-r-4 border-primary/30 pr-4">
+                        "{t(
+                          'بسم الله الرحمن الرحيم. الحمد لله رب العالمين، والصلاة والسلام على خاتم الأنبياء المرسلين، محمد بن عبدالله الصادق الأمين، وعلى آله وصحبه أجمعين.',
+                          'In the name of Allah, the Most Gracious, the Most Merciful. Praise be to Allah, Lord of the Worlds, and prayers and peace be upon the Seal of the Prophets and Messengers, Muhammad bin Abdullah, the Truthful and Trustworthy, and upon all his family and companions.'
+                        )}"
+                      </p>
+                      <p>
+                        {t(
+                          'يسرني أن أرحب بأبنائنا الطلاب والطالبات الذين يتطلعون للانضمام إلى أسرة الجامعة والالتحاق بأحد برامجها الأكاديمية للعام الجامعي 2023 – 2024م، وأن أقدم هذا الدليل الذي يعطي لمحة موجزة عن التخصصات الأكاديمية المتاحة في الجامعة.',
+                          'I am pleased to welcome our male and female students who are looking forward to joining the university family and enrolling in one of its academic programs for the academic year 2023-2024, and to present this guide which gives a brief overview of the academic specializations available at the university.'
+                        )}
+                      </p>
+                      <p>
+                        {t(
+                          'أبنائي الطلاب والطالبات... سعت الجامعة منذ تأسيسها بكل جد أن تكون شريكاً فاعلاً في تحسين نوعية التعليم الجامعي، وتوفير بيئة جامعية تشجع على الإبداع والريادة والتميز وتنمية قدراتهم ومواهبهم.',
+                          'My students... Since its establishment, the university has strived earnestly to be an effective partner in improving the quality of university education, and providing a university environment that encourages creativity, leadership, excellence, and the development of their capabilities and talents.'
+                        )}
+                      </p>
+                      <p>
+                        {t(
+                          'وهي حريصة على تحديث برامجها باستمرار، واستقطاب الكوادر الأكاديمية المتميزة، وتوظيف التقنيات الحديثة. كما تسعى لتعزيز شراكاتها المجتمعية والأكاديمية، وترسيخ قيم الجودة لضمان أفضل المخرجات.',
+                          'It is keen to constantly update its programs, attract distinguished academic staff, and employ modern technologies. It also seeks to strengthen its community and academic partnerships, and consolidate quality values to ensure the best outputs.'
+                        )}
+                      </p>
+                      <p>
+                        {t(
+                          'ختاماً، نثق بأنكم ستكونون على قدر المسؤولية في تمثيل الجامعة وتحقيق رؤيتها، وبناء مستقبل مشرق لكم ولوطنكم. والله ولي التوفيق.',
+                          'In conclusion, we trust that you will be up to the responsibility of representing the university and achieving its vision, and building a bright future for you and your country. And Allah is the Guardian of success.'
+                        )}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Administrative Team Section */}
@@ -132,19 +215,19 @@ const About = () => {
           </div>
 
           <div className="flex flex-col items-center space-y-12 max-w-6xl mx-auto">
-            {/* Level 1: President */}
+            {/* Level 1: President (Already shown above in message, so we link them) */}
             <div className="flex flex-col items-center">
               <div className="relative group">
-                <div className="w-32 h-32 md:w-36 md:h-36 rounded-full overflow-hidden border-4 border-secondary p-1 bg-background shadow-xl transition-transform duration-500 group-hover:scale-105">
+                <div className="w-48 h-auto md:w-64 rounded-2xl overflow-hidden border-4 border-secondary p-1 bg-background shadow-xl transition-transform duration-500 group-hover:scale-105">
                   <img
-                    src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&q=80"
-                    alt={t('د. أحمد محمود الحسن', 'Dr. Ahmed Mahmoud')}
-                    className="w-full h-full object-cover rounded-full"
+                    src={(studentsStudying as any).src || studentsStudying}
+                    alt={t('أ.د/ همدان الشامي', 'Prof. Dr. Hamdan Al-Shami')}
+                    className="w-full h-auto object-contain"
                   />
                 </div>
               </div>
               <div className="text-center mt-6">
-                <h3 className="text-xl font-bold mb-1">{t('د. أحمد محمود الحسن', 'Dr. Ahmed Mahmoud')}</h3>
+                <h3 className="text-xl font-bold mb-1">{t('أ.د/ همدان الشامي', 'Prof. Dr. Hamdan Al-Shami')}</h3>
                 <p className="text-secondary font-medium">{t('رئيس الجامعة', 'University President')}</p>
               </div>
               {/* Vertical line connector */}

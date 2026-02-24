@@ -2,6 +2,7 @@
 import Link from 'next/link';
 
 import { useState } from 'react';
+import { useAuth } from '@/contexts/AuthContext';
 ;
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -29,16 +30,17 @@ export default function Login() {
     email: '',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const { login, isLoading: authLoading } = useAuth();
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Login submitted:', { userType, formData });
 
-    // Save user role to localStorage for mock auth
-    if (userType) {
-      localStorage.setItem('userRole', userType);
-    }
+    // Map 'teacher' to 'doctor' for our AuthContext
+    const roleToLogin = userType === 'teacher' ? 'doctor' : (userType as any);
 
-    // Navigate to appropriate dashboard
+    await login(roleToLogin);
+
+    // Navigate to appropriate dashboard after login
     if (userType === 'student') {
       router.push('/student-dashboard');
     } else if (userType === 'teacher') {

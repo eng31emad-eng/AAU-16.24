@@ -297,22 +297,28 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                             {college.news.map((news) => (
-                                <Card key={news.id} className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-none bg-card/50 backdrop-blur-sm shadow-md h-full flex flex-col">
-                                    <div className="relative h-48 overflow-hidden">
-                                        <img src={news.image} alt={t(news.titleAr, news.titleEn)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
-                                        <div className="absolute top-4 right-4 bg-secondary text-primary px-3 py-1 rounded-full text-xs font-bold shadow-lg">
-                                            {news.date}
+                                <Link
+                                    key={news.id}
+                                    href={`/news/${news.slug}`}
+                                    className="block h-full cursor-pointer"
+                                >
+                                    <Card className="overflow-hidden group hover:shadow-xl transition-all duration-300 border-none bg-card/50 backdrop-blur-sm shadow-md h-full flex flex-col">
+                                        <div className="relative h-48 overflow-hidden">
+                                            <img src={news.image} alt={t(news.titleAr, news.titleEn)} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" />
+                                            <div className="absolute top-4 right-4 bg-secondary text-primary px-3 py-1 rounded-full text-xs font-bold shadow-lg">
+                                                {news.date}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <CardContent className="p-5 flex-grow flex flex-col gap-2 text-right">
-                                        <h3 className="font-bold text-lg leading-tight group-hover:text-secondary transition-colors text-foreground">
-                                            {t(news.titleAr, news.titleEn)}
-                                        </h3>
-                                        <p className="font-normal text-sm md:text-base text-muted-foreground leading-relaxed">
-                                            {t(news.descAr, news.descEn)}
-                                        </p>
-                                    </CardContent>
-                                </Card>
+                                        <CardContent className="p-5 flex-grow flex flex-col gap-2 text-right">
+                                            <h3 className="font-bold text-lg leading-tight group-hover:text-secondary transition-colors text-foreground">
+                                                {t(news.titleAr, news.titleEn)}
+                                            </h3>
+                                            <p className="font-normal text-sm md:text-base text-muted-foreground leading-relaxed">
+                                                {t(news.descAr, news.descEn)}
+                                            </p>
+                                        </CardContent>
+                                    </Card>
+                                </Link>
                             ))}
                         </div>
                     </div>

@@ -8,6 +8,8 @@ const mockNews: NewsItem[] = [
   {
     id: '1',
     slug: 'new-college-building-opening',
+    collegeId: 'medicine',
+    isGlobal: true,
     titleAr: 'افتتاح مبنى الكلية الجديد',
     titleEn: 'Opening of New College Building',
     descriptionAr: 'افتتاح رسمي لمبنى الكلية الجديد بحضور كبار المسؤولين',
@@ -22,6 +24,7 @@ const mockNews: NewsItem[] = [
   {
     id: '2',
     slug: 'research-excellence-award',
+    isGlobal: true,
     titleAr: 'جائزة التميز البحثي للجامعة',
     titleEn: 'University Research Excellence Award',
     descriptionAr: 'الجامعة تحصل على جائزة التميز البحثي لعام 2025',
@@ -36,6 +39,7 @@ const mockNews: NewsItem[] = [
   {
     id: '3',
     slug: 'international-partnership',
+    isGlobal: true,
     titleAr: 'شراكة دولية جديدة مع جامعات أوروبية',
     titleEn: 'New International Partnership with European Universities',
     descriptionAr: 'توقيع اتفاقية شراكة استراتيجية مع جامعات رائدة في أوروبا',

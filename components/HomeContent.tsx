@@ -9,7 +9,6 @@ import { HeroSection } from '@/components/HeroSection'
 import { StatsSection } from '@/components/StatsSection'
 
 // Dynamic imports for below-the-fold content
-const AboutSection = dynamic(() => import('@/components/AboutSection').then(m => ({ default: m.AboutSection })))
 const CollegesSection = dynamic(() => import('@/components/CollegesSection').then(m => ({ default: m.CollegesSection })))
 const NewsSection = dynamic(() => import('@/components/NewsSection').then(m => ({ default: m.NewsSection })))
 const EventsSection = dynamic(() => import('@/components/EventsSection').then(m => ({ default: m.EventsSection })))
@@ -31,8 +30,6 @@ export default function HomeContent({ events, news, colleges, campusLife, projec
                 <HeroSection />
 
                 <StatsSection />
-
-                <AboutSection />
 
                 <CampusLifeSection initialData={campusLife} />
 

@@ -100,30 +100,36 @@ const mockColleges: College[] = [
     news: [
       {
         id: 'med-news-1',
-        titleAr: 'ندوة حول جراحة القلب المفتوح',
-        titleEn: 'Open Heart Surgery Seminar',
-        descAr: 'نظمت الكلية ندوة دولية تناولت أحدث تقنيات جراحة القلب المفتوح والحد من المخاطر الجراحية المستحدثة بمشاركة خبراء محليين ودوليين.',
-        descEn: 'The college organized an international seminar on the latest open-heart surgery techniques and reducing surgical risks with local and international experts.',
-        date: '2024-05-15',
-        image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80'
+        slug: 'new-college-building-opening',
+        titleAr: 'افتتاح مبنى الكلية الجديد',
+        titleEn: 'Opening of New College Building',
+        descAr: 'افتتاح رسمي لمبنى الكلية الجديد بحضور كبار المسؤولين والطلاب.',
+        descEn: 'Official opening of the new college building with senior officials and students.',
+        date: '2025-01-15',
+        image: 'https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80',
+        collegeId: 'medicine'
       },
       {
         id: 'med-news-2',
-        titleAr: 'ورشة عمل حول الطب السريري',
-        titleEn: 'Clinical Medicine Workshop',
-        descAr: 'أقامت الكلية ورشة عمل تطبيقية لطلاب السنة النهائية حول مهارات التشخيص السريري المتقدم والتعامل مع الحالات الطارئة بمستشفيات الجامعة.',
-        descEn: 'The college held an applied workshop for final-year students on advanced clinical diagnosis skills and handling emergency cases at university hospitals.',
-        date: '2024-05-10',
-        image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80'
+        slug: 'research-excellence-award',
+        titleAr: 'جائزة التميز البحثي للجامعة',
+        titleEn: 'University Research Excellence Award',
+        descAr: 'الجامعة تحصل على جائزة التميز البحثي لعام 2025 تقديرًا لمساهماتها.',
+        descEn: 'University receives Research Excellence Award for 2025 in recognition of its contributions.',
+        date: '2025-01-10',
+        image: 'https://images.unsplash.com/photo-1579684385127-1ef15d508118?w=400&q=80',
+        collegeId: 'medicine'
       },
       {
         id: 'med-news-3',
-        titleAr: 'حملة توعية حول السرطان',
-        titleEn: 'Cancer Awareness Campaign',
-        descAr: 'أطلق قسم الأورام بالتعاون مع اتحاد الطلاب حملة توعوية تهدف إلى نشر الوعي حول الكشف المبكر والوقاية من الأمراض السرطانية في المجتمع.',
-        descEn: 'The Oncology Department, in cooperation with the Student Union, launched an awareness campaign aimed at spreading awareness about early detection and prevention of cancers.',
-        date: '2024-05-05',
-        image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=400&q=80'
+        slug: 'international-partnership',
+        titleAr: 'شراكة دولية جديدة مع جامعات أوروبية',
+        titleEn: 'New International Partnership with European Universities',
+        descAr: 'توقيع اتفاقية شراكة استراتيجية مع جامعات رائدة في أوروبا للتبادل الطلابي.',
+        descEn: 'Signing a strategic partnership agreement with leading European universities for student exchange.',
+        date: '2025-01-05',
+        image: 'https://images.unsplash.com/photo-1551190822-a9333d879b1f?w=400&q=80',
+        collegeId: 'medicine'
       }
     ]
   },
@@ -238,30 +244,36 @@ const mockColleges: College[] = [
     news: [
       {
         id: 'hs-news-1',
-        titleAr: 'يوم طب الأسنان المجاني',
-        titleEn: 'Free Dental Care Day',
-        descAr: 'نظمت عيادات الكلية يوماً علاجياً مجانياً استهدف الفئات الأقل دخلاً، حيث تم تقديم خدمات الفحص والحشو والتنظيف بإشراف الكادر التدريسي.',
-        descEn: 'The college clinics organized a free treatment day for low-income groups, providing examination, filling, and cleaning services supervised by faculty staff.',
-        date: '2024-05-18',
-        image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=400&q=80'
+        slug: 'digital-library-launch',
+        titleAr: 'إطلاق المكتبة الرقمية الشاملة',
+        titleEn: 'Launch of Comprehensive Digital Library',
+        descAr: 'افتتاح مكتبة رقمية تحتوي على أكثر من 50,000 مرجع علمي في مختلف التخصصات.',
+        descEn: 'Opening of digital library containing over 50,000 scientific references across various disciplines.',
+        date: '2024-12-20',
+        image: 'https://images.unsplash.com/photo-1606811841689-23dfddce3e95?w=400&q=80',
+        collegeId: 'health-sciences'
       },
       {
         id: 'hs-news-2',
-        titleAr: 'ندوة حول الصيدلة السريرية',
-        titleEn: 'Clinical Pharmacy Seminar',
-        descAr: 'ناقشت الندوة دور الصيدلي في الرعاية الصحية المتكاملة وأهمية الصيدلة السريرية في تقليل الأخطاء الدوائية وتحسين نتائج العلاج للمرضى.',
-        descEn: 'The seminar discussed the pharmacist\'s role in integrated healthcare and the importance of clinical pharmacy in reducing medication errors and improving patient outcomes.',
-        date: '2024-05-12',
-        image: 'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&q=80'
+        slug: 'student-innovation-competition',
+        titleAr: 'مسابقة الابتكار الطلابي السنوية',
+        titleEn: 'Annual Student Innovation Competition',
+        descAr: 'انطلاق النسخة الخامسة من مسابقة الابتكار الطلابي بمشاركة مشاريع مبتكرة.',
+        descEn: 'Launch of the fifth edition of the Student Innovation Competition with innovative projects.',
+        date: '2024-12-15',
+        image: 'https://images.unsplash.com/photo-1585435557343-3b092031a831?w=400&q=80',
+        collegeId: 'health-sciences'
       },
       {
         id: 'hs-news-3',
-        titleAr: 'تطوير تقنيات الفحص المختبري',
-        titleEn: 'Developing Lab Tech Techniques',
-        descAr: 'استضاف قسم المختبرات خبير تكنولوجي لعرض أحدث الأجهزة والتقنيات المستخدمة في التحليل الجيني والتشخيص المخبري الدقيق.',
-        descEn: 'The Laboratory Department hosted a technology expert to showcase the latest devices and techniques used in genetic analysis and accurate laboratory diagnosis.',
-        date: '2024-05-08',
-        image: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&q=80'
+        slug: 'sports-tournament-2025',
+        titleAr: 'بطولة الجامعة الرياضية 2025',
+        titleEn: 'University Sports Tournament 2025',
+        descAr: 'انطلاق البطولة الرياضية السنوية بمشاركة فرق من جميع الكليات في مختلف الألعاب.',
+        descEn: 'Launch of the annual sports tournament with teams from all colleges in various sports.',
+        date: '2024-12-10',
+        image: 'https://images.unsplash.com/photo-1582719471384-894fbb16e074?w=400&q=80',
+        collegeId: 'health-sciences'
       }
     ]
   },
@@ -456,30 +468,36 @@ const mockColleges: College[] = [
     news: [
       {
         id: 'eng-news-1',
-        titleAr: 'مسابقة الروبوتات السنوية',
-        titleEn: 'Annual Robotics Competition',
-        descAr: 'شهدت الكلية تنافساً كبيراً بين فرق الطلاب في تصميم وبرمجة الروبوتات الذكية القادرة على حل المشكلات المعقدة والمهام اللوجستية.',
-        descEn: 'The college witnessed great competition between student teams in designing and programming smart robots capable of solving complex problems and logistical tasks.',
-        date: '2024-05-20',
-        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=80'
+        slug: 'student-innovation-competition',
+        titleAr: 'مسابقة الابتكار الطلابي السنوية',
+        titleEn: 'Annual Student Innovation Competition',
+        descAr: 'مشاركة واسعة لطلاب الهندسة في مسابقة الابتكار السنوية بمشاريع تقنية متميزة.',
+        descEn: 'Wide participation of engineering students in the annual innovation competition with outstanding technical projects.',
+        date: '2024-12-15',
+        image: 'https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=400&q=80',
+        collegeId: 'engineering-it'
       },
       {
         id: 'eng-news-2',
-        titleAr: 'ورشة حول الأمن السيبراني',
-        titleEn: 'Cybersecurity Workshop',
-        descAr: 'نظم قسم تكنولوجيا المعلومات ورشة عمل مكثفة حول حماية البيانات من الاختراقات الأمنية وفهم استراتيجيات الدفاع السيبراني الحديثة.',
-        descEn: 'The IT Department organized an intensive workshop on data protection from security breaches and understanding modern cyber defense strategies.',
-        date: '2024-05-14',
-        image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=400&q=80'
+        slug: 'career-fair-2025',
+        titleAr: 'معرض التوظيف 2025',
+        titleEn: 'Career Fair 2025',
+        descAr: 'فرص توظيف مباشرة لطلاب الهندسة وتقنية المعلومات بمشاركة شركات رائدة.',
+        descEn: 'Direct employment opportunities for engineering and IT students with participation from leading companies.',
+        date: '2024-11-28',
+        image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800',
+        collegeId: 'engineering-it'
       },
       {
         id: 'eng-news-3',
-        titleAr: 'مستقبل الذكاء الاصطناعي',
-        titleEn: 'The Future of AI',
-        descAr: 'استضافت الكلية ندوة نقاشية حول أخلاقيات الذكاء الاصطناعي وتأثيراته المستقبلية على سوق العمل والابتكار في المجالات الهندسية المختلفة.',
-        descEn: 'The college hosted a discussion seminar on AI ethics and its future effects on the labor market and innovation in various engineering fields.',
-        date: '2024-05-09',
-        image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=400&q=80'
+        slug: 'new-college-building-opening',
+        titleAr: 'افتتاح مبنى الكلية الجديد',
+        titleEn: 'Opening of New College Building',
+        descAr: 'تجهيزات حديثة ومختبرات متطورة في مبنى الكلية الجديد لدعم التميز الأكاديمي.',
+        descEn: 'Modern equipment and advanced laboratories in the new college building to support academic excellence.',
+        date: '2025-01-15',
+        image: 'https://images.unsplash.com/photo-15598397734-2b71ea197ec2?w=400&q=80',
+        collegeId: 'engineering-it'
       }
     ]
   },
@@ -653,30 +671,36 @@ const mockColleges: College[] = [
     news: [
       {
         id: 'bus-news-1',
-        titleAr: 'مؤتمر ريادة الأعمال',
-        titleEn: 'Entrepreneurship Conference',
-        descAr: 'نظمت الكلية مؤتمراً استضاف رواد أعمال ناجحين لمشاركة تجاربهم مع الطلاب ونقاش مستقبل الشركات الناشئة في السوق المحلية والإقليمية.',
-        descEn: 'The college organized a conference hosting successful entrepreneurs to share their experiences with students and discuss the future of startups in local and regional markets.',
-        date: '2024-05-22',
-        image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80'
+        slug: 'research-excellence-award',
+        titleAr: 'جائزة التميز البحثي للجامعة',
+        titleEn: 'University Research Excellence Award',
+        descAr: 'تكريم الباحثين في الكلية لمساهماتهم المتميزة في مجال البحث الإداري والمالي.',
+        descEn: 'Honoring researchers in the college for their outstanding contributions in administrative and financial research.',
+        date: '2025-01-10',
+        image: 'https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=400&q=80',
+        collegeId: 'business-humanities'
       },
       {
         id: 'bus-news-2',
-        titleAr: 'اتجاهات التسويق الرقمي',
-        titleEn: 'Digital Marketing Trends',
-        descAr: 'ورشة عمل حول أحدث استراتيجيات التسويق عبر وسائل التواصل الاجتماعي واستخدام تحليل البيانات في تحسين الحملات الترويجية وزيادة المبيعات.',
-        descEn: 'A workshop on the latest social media marketing strategies and using data analysis to improve promotional campaigns and increase sales.',
-        date: '2024-05-16',
-        image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&q=80'
+        slug: 'international-partnership',
+        titleAr: 'شراكة دولية جديدة مع جامعات أوروبية',
+        titleEn: 'New International Partnership with European Universities',
+        descAr: 'فتح آفاق جديدة للتبادل الأكاديمي والطلابي في تخصصات إدارة الأعمال واللغات.',
+        descEn: 'Opening new horizons for academic and student exchange in business administration and languages.',
+        date: '2025-01-05',
+        image: 'https://images.unsplash.com/photo-1533750349088-cd871a92f312?w=400&q=80',
+        collegeId: 'business-humanities'
       },
       {
         id: 'bus-news-3',
-        titleAr: 'ندوة القانون التجاري الدولي',
-        titleEn: 'International Trade Law Seminar',
-        descAr: 'ناقش خبراء قانونيون أحدث التعديلات في قوانين التجارة الدولية وتأثيرها على استثمارات الشركات الكبرى وتسهيل التبادل التجاري العابر للحدود.',
-        descEn: 'Legal experts discussed the latest amendments in international trade laws and their impact on major corporate investments and facilitating cross-border trade.',
-        date: '2024-05-11',
-        image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80'
+        slug: 'digital-library-launch',
+        titleAr: 'إطلاق المكتبة الرقمية الشاملة',
+        titleEn: 'Launch of Comprehensive Digital Library',
+        descAr: 'كلية العلوم الإدارية تستلم صلاحيات الوصول للمكتبة الرقمية العالمية لخدمة الباحثين.',
+        descEn: 'College of Administrative Sciences receives access rights to the international digital library to serve researchers.',
+        date: '2024-12-20',
+        image: 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=400&q=80',
+        collegeId: 'business-humanities'
       }
     ]
   },

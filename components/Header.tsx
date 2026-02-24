@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Menu, X, LogIn, ChevronDown, Globe } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Menu, X, LogIn, ChevronDown, Globe, Stethoscope, Heart, Settings, Briefcase, Search, Rocket, Users, MessageSquare, BookOpen, Microscope, Trophy, Smile, HeartPulse, Utensils, FileText, Book } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { usePathname, useRouter } from 'next/navigation';
 import nguLogo from '@/assets/ngu-building.jpg';
@@ -28,8 +28,14 @@ export const Header = () => {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isCollegesHovered, setIsCollegesHovered] = useState(false);
+  const [isCentersHovered, setIsCentersHovered] = useState(false);
+  const [isCampusLifeHovered, setIsCampusLifeHovered] = useState(false);
+  const [isResearchHovered, setIsResearchHovered] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
@@ -51,14 +57,44 @@ export const Header = () => {
   };
 
   const isActiveRoute = (href: string, isRoute?: boolean) => {
+    if (!mounted) return false;
+
     if (!isRoute) {
-      return location.hash === href;
+      return typeof window !== 'undefined' && window.location.hash === href;
     }
     if (href === '/') {
       return pathname === '/';
     }
     return pathname === href || pathname.startsWith(`${href}/`);
   };
+
+  const colleges = [
+    { id: 'medicine', ar: 'كلية الطب البشري', en: 'College of Human Medicine', icon: Stethoscope, href: '/colleges/medicine' },
+    { id: 'health-sciences', ar: 'كلية العلوم الطبية والصحية', en: 'College of Medical & Health Sciences', icon: Heart, href: '/colleges/health-sciences' },
+    { id: 'engineering', ar: 'كلية الهندسة وتكنولوجيا المعلومات', en: 'College of Engineering & IT', icon: Settings, href: '/colleges/engineering' },
+    { id: 'business', ar: 'كلية العلوم الإدارية', en: 'College of Administrative Sciences', icon: Briefcase, href: '/colleges/business' },
+  ];
+
+  const centers = [
+    { id: 'research', ar: 'مركز البحوث والدراسات', en: 'Research & Studies Center', icon: Search, href: '/centers/research' },
+    { id: 'training', ar: 'مركز التدريب والتطوير', en: 'Training & Development Center', icon: Rocket, href: '/centers/training' },
+    { id: 'community-service', ar: 'مركز خدمة المجتمع', en: 'Community Service Center', icon: Users, href: '/centers/community-service' },
+    { id: 'consulting', ar: 'مركز الاستشارات', en: 'Consulting Center', icon: MessageSquare, href: '/centers/consulting' },
+  ];
+
+  const campusLife = [
+    { id: 'library', ar: 'المكتبة المركزية', en: 'Central Library', icon: BookOpen, href: '/campus-life/central-library' },
+    { id: 'labs', ar: 'المختبرات العلمية', en: 'Scientific Laboratories', icon: Microscope, href: '/campus-life/scientific-laboratories' },
+    { id: 'sports', ar: 'الملاعب الرياضية', en: 'Sports Fields', icon: Trophy, href: '/campus-life/sports-fields' },
+    { id: 'club', ar: 'النادي الطلابي', en: 'Student Club', icon: Smile, href: '/campus-life/student-club' },
+    { id: 'health', ar: 'المركز الصحي', en: 'Health Center', icon: HeartPulse, href: '/campus-life/health-center' },
+    { id: 'dining', ar: 'المطاعم والكافتيريات', en: 'Restaurants & Cafeterias', icon: Utensils, href: '/campus-life/restaurants-cafeterias' },
+  ];
+
+  const researchItems = [
+    { id: 'journal', ar: 'المجلة العلمية', en: 'Scientific Journal', icon: Book, href: '/research/journal' },
+    { id: 'articles', ar: 'المقالات العلمية', en: 'Scientific Articles', icon: FileText, href: '/research/articles' },
+  ];
 
   const navItemVariants = {
     hidden: { opacity: 0, y: -10 },
@@ -112,28 +148,108 @@ export const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center xl:gap-6 lg:gap-3">
-            {mainNavRoutes.map((item, index) => (
-              <motion.button
-                key={index}
-                onClick={() => handleNavigation(item.href, item.isRoute)}
-                className={`transition-all duration-300 transition-colors duration-150 font-medium text-sm relative group text-white text-shadow-sm hover:text-secondary
-                  } ${isActiveRoute(item.href, item.isRoute) ? 'text-secondary' : ''}`}
-                custom={index}
-                variants={navItemVariants}
-                initial="hidden"
-                animate="visible"
-                whileHover={{ y: -2 }}
-              >
-                {t(item.ar, item.en)}
-                <motion.span
-                  className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
-                    }`}
-                  transition={{ duration: 0.3 }}
-                />
-              </motion.button>
-            ))}
+            {mainNavRoutes.map((item, index) => {
+              const isColleges = item.href === '/colleges';
+              const isCenters = item.href === '/centers';
+              const isCampusLife = item.href === '/campus-life';
+              const isResearch = item.href === '/research';
 
-            {additionalRoutes.length > 0 && (
+              if (isColleges || isCenters || isCampusLife || isResearch) {
+                const hoveredState = isColleges ? isCollegesHovered : isCenters ? isCentersHovered : isCampusLife ? isCampusLifeHovered : isResearchHovered;
+                const setHoveredState = isColleges ? setIsCollegesHovered : isCenters ? setIsCentersHovered : isCampusLife ? setIsCampusLifeHovered : setIsResearchHovered;
+                const items = isColleges ? colleges : isCenters ? centers : isCampusLife ? campusLife : researchItems;
+                const menuWidth = isColleges ? 'w-[520px]' : isCenters ? 'w-[500px]' : isCampusLife ? 'w-[480px]' : 'w-[450px]';
+
+                return (
+                  <div
+                    key={index}
+                    className="relative"
+                    onMouseEnter={() => setHoveredState(true)}
+                    onMouseLeave={() => setHoveredState(false)}
+                  >
+                    <motion.button
+                      onClick={() => handleNavigation(item.href, item.isRoute)}
+                      className={`transition-all duration-300 transition-colors duration-150 font-medium text-sm relative group text-white text-shadow-sm hover:text-secondary flex items-center gap-1 ${isActiveRoute(item.href, item.isRoute) ? 'text-secondary' : ''}`}
+                      custom={index}
+                      variants={navItemVariants}
+                      initial="hidden"
+                      animate="visible"
+                      whileHover={{ y: -2 }}
+                    >
+                      {t(item.ar, item.en)}
+                      <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${hoveredState ? 'rotate-180' : ''}`} />
+                      <motion.span
+                        className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
+                          }`}
+                        transition={{ duration: 0.3 }}
+                      />
+                    </motion.button>
+
+                    <AnimatePresence>
+                      {hoveredState && (
+                        <motion.div
+                          initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                          animate={{ opacity: 1, y: 0, scale: 1 }}
+                          exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                          transition={{ duration: 0.2 }}
+                          className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 ${menuWidth} bg-white/95 backdrop-blur-xl border border-secondary/20 rounded-2xl shadow-2xl overflow-hidden z-50 p-5`}
+                        >
+                          <div className="grid grid-cols-2 gap-3">
+                            {items.map((subItem) => (
+                              <motion.button
+                                key={subItem.id}
+                                onClick={() => handleNavigation(subItem.href, true)}
+                                className="flex items-start gap-4 p-3 rounded-xl hover:bg-secondary/10 group/item transition-all duration-300 text-right"
+                                whileHover={{ x: language === 'ar' ? -5 : 5 }}
+                              >
+                                <div className="p-2.5 rounded-lg bg-secondary/10 text-secondary group-hover/item:bg-secondary group-hover/item:text-primary transition-colors duration-300">
+                                  <subItem.icon className="w-5 h-5" />
+                                </div>
+                                <div className="flex-1">
+                                  <h4 className="text-primary font-bold text-sm mb-0.5 group-hover/item:text-secondary-dark transition-colors">
+                                    {t(subItem.ar, subItem.en)}
+                                  </h4>
+                                  <p className="text-[10px] text-muted-foreground line-clamp-1">
+                                    {language === 'ar' ? 'اكتشف المزيد من التفاصيل والمعلومات' : 'Explore more details and information'}
+                                  </p>
+                                </div>
+                              </motion.button>
+                            ))}
+                          </div>
+                          <div className="mt-4 pt-3 border-t border-secondary/10 flex justify-center items-center">
+                            <span className="text-[10px] text-muted-foreground/60 italic font-medium">
+                              {t('بوابة التميز والجيل الجديد', 'Portal of Excellence and Next Generation')}
+                            </span>
+                          </div>
+                        </motion.div>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                );
+              }
+
+              return (
+                <motion.button
+                  key={index}
+                  onClick={() => handleNavigation(item.href, item.isRoute)}
+                  className={`transition-all duration-300 transition-colors duration-150 font-medium text-sm relative group text-white text-shadow-sm hover:text-secondary ${isActiveRoute(item.href, item.isRoute) ? 'text-secondary' : ''}`}
+                  custom={index}
+                  variants={navItemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ y: -2 }}
+                >
+                  {t(item.ar, item.en)}
+                  <motion.span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
+                      }`}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
+              );
+            })}
+
+            {mounted && additionalRoutes.length > 0 && (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <motion.button
@@ -288,29 +404,62 @@ export const Header = () => {
                   {t('الصفحات الرئيسية', 'Main Pages')}
                 </h3>
                 <nav className="flex flex-col gap-2">
-                  {mainNavRoutes.map((item, index) => (
-                    <motion.button
-                      key={index}
-                      onClick={() => {
-                        handleNavigation(item.href, item.isRoute);
-                        setIsMobileMenuOpen(false);
-                      }}
-                      className={`mobile-nav-item text-lg font-medium text-foreground hover:text-secondary transition-all duration-200 text-start py-2.5 px-3 rounded-lg flex items-center gap-3 group ${isActiveRoute(item.href, item.isRoute)
-                        ? 'bg-[rgba(245,200,60,0.22)] text-secondary is-active'
-                        : 'hover:bg-[rgba(245,200,60,0.22)]'
-                        }`}
-                      initial={{ opacity: 0, x: -20 }}
-                      animate={{ opacity: 1, x: 0 }}
-                      transition={{ delay: 0.15 + index * 0.05 }}
-                      whileHover={{ x: language === 'ar' ? -5 : 5 }}
-                    >
-                      <motion.span
-                        className={`w-1 h-6 bg-secondary rounded-full ${isActiveRoute(item.href, item.isRoute) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                          }`}
-                      />
-                      {t(item.ar, item.en)}
-                    </motion.button>
-                  ))}
+                  {mainNavRoutes.map((item, index) => {
+                    const isColleges = item.href === '/colleges';
+                    const isCenters = item.href === '/centers';
+                    const isCampusLife = item.href === '/campus-life';
+                    const isResearch = item.href === '/research';
+                    const hasSubMenu = isColleges || isCenters || isCampusLife || isResearch;
+                    const subItems = isColleges ? colleges : isCenters ? centers : isCampusLife ? campusLife : researchItems;
+
+                    return (
+                      <div key={index}>
+                        <motion.button
+                          onClick={() => {
+                            if (!hasSubMenu) {
+                              handleNavigation(item.href, item.isRoute);
+                              setIsMobileMenuOpen(false);
+                            }
+                          }}
+                          className={`mobile-nav-item text-lg font-medium text-foreground hover:text-secondary transition-all duration-200 text-start py-2.5 px-3 rounded-lg flex items-center justify-between group ${isActiveRoute(item.href, item.isRoute)
+                            ? 'bg-[rgba(245,200,60,0.22)] text-secondary is-active'
+                            : 'hover:bg-[rgba(245,200,60,0.22)]'
+                            }`}
+                          initial={{ opacity: 0, x: -20 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.15 + index * 0.05 }}
+                          whileHover={{ x: language === 'ar' ? -5 : 5 }}
+                        >
+                          <div className="flex items-center gap-3">
+                            <motion.span
+                              className={`w-1 h-6 bg-secondary rounded-full ${isActiveRoute(item.href, item.isRoute) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                                }`}
+                            />
+                            {t(item.ar, item.en)}
+                          </div>
+                          {hasSubMenu && <ChevronDown className="w-5 h-5 text-muted-foreground" />}
+                        </motion.button>
+
+                        {hasSubMenu && (
+                          <div className="mr-6 mt-1 space-y-1 mb-2">
+                            {subItems.map((subItem) => (
+                              <button
+                                key={subItem.id}
+                                onClick={() => {
+                                  handleNavigation(subItem.href, true);
+                                  setIsMobileMenuOpen(false);
+                                }}
+                                className="w-full text-right py-2 px-4 text-sm text-muted-foreground hover:text-secondary transition-colors border-r-2 border-transparent hover:border-secondary flex items-center gap-2"
+                              >
+                                <subItem.icon className="w-4 h-4" />
+                                {t(subItem.ar, subItem.en)}
+                              </button>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </nav>
               </div>
 

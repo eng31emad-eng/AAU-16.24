@@ -1,4 +1,5 @@
 import AdminLayoutClient from './layout-client';
+import { RouteGuard } from '@/components/RouteGuard';
 
 export const dynamic = "force-dynamic";
 
@@ -7,5 +8,9 @@ export default function AdminLayout({
 }: {
     children: React.ReactNode
 }) {
-    return <AdminLayoutClient>{children}</AdminLayoutClient>;
+    return (
+        <RouteGuard allowedRoles={['admin']}>
+            <AdminLayoutClient>{children}</AdminLayoutClient>
+        </RouteGuard>
+    );
 }

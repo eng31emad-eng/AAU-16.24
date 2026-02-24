@@ -1,6 +1,8 @@
 export interface NewsItem {
   id: string;
   slug: string;
+  collegeId?: string;
+  isGlobal?: boolean;
   titleAr: string;
   titleEn: string;
   descriptionAr: string;
@@ -104,19 +106,6 @@ export interface SearchResult {
   image?: string | any;
 }
 
-export interface TeamMember {
-  id: string;
-  nameAr: string;
-  nameEn: string;
-  positionAr: string;
-  positionEn: string;
-  email?: string;
-  phone?: string;
-  bioAr?: string;
-  bioEn?: string;
-  image?: string | any;
-}
-
 export interface FacultyMember {
   id: string;
   nameAr: string;
@@ -188,12 +177,14 @@ export interface AcademicProgram {
 // College Type with Departments
 export interface CollegeNewsItem {
   id: string;
+  slug: string;
   titleAr: string;
   titleEn: string;
   descAr: string;
   descEn: string;
   date: string;
   image: string;
+  collegeId?: string;
 }
 
 export interface College {
