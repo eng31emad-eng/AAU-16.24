@@ -433,7 +433,9 @@ export type TeamMember = {
   nameEn: string;
   positionAr: string;
   positionEn: string;
-  image?: string | any;
+  email?: string;
+  phone?: string;
   bioAr?: string;
   bioEn?: string;
+  image?: string | any;
 };
