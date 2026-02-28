@@ -354,7 +354,7 @@ function StudentDashboardContent() {
                       {language === 'ar' ? profile?.levelAr : profile?.levelEn}
                     </Badge>
                     <Badge variant="outline" className="border-secondary/30 text-secondary">
-                      {language === 'ar' ? profile?.statusAr || 'منتظم' : profile?.statusEn || 'Regular'}
+                      {profile?.status || (language === 'ar' ? 'منتظم' : 'Regular')}
                     </Badge>
                   </div>
                   <div className="p-4 bg-muted/30 rounded-2xl border border-secondary/10">
