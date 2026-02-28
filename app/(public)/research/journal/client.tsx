@@ -46,18 +46,29 @@ export default function JournalClient() {
         fetchJournals();
     }, []);
 
-    const handleDownload = (title: string, format: 'PDF' | 'Word') => {
+    const [downloading, setDownloading] = useState<string | null>(null);
+
+    const handleDownload = async (title: string, format: 'PDF' | 'Word') => {
+        const downloadId = `${title}-${format}`;
+        setDownloading(downloadId);
+
+        toast.info(t(`جاري تحضير ملف ${format}...`, `Preparing ${format} file...`), {
+            description: t('يرجى الانتظار للحظات بينما يتم تجهيز النسخة الأكاديمية.', 'Please wait while the academic version is being prepared.'),
+        });
+
+        // محاكاة تقنية: تأخير بسيط لإعطاء انطباع بالتجهيز
+        await new Promise(resolve => setTimeout(resolve, 1500));
+
         toast.success(t(`بدأ تحميل ${title} بصيغة ${format}...`, `Starting download for ${title} as ${format}...`), {
-            description: t('يرجى التحقق من مجلد التنزيلات في جهازك، سيفتح الملف تلقائياً إذا كان المتصفح يدعم ذلك.', 'Please check your device downloads folder. The file will open automatically if your browser supports it.'),
+            description: t('يرجى التحقق من مجلد التنزيلات في جهازك.', 'Please check your device downloads folder.'),
             icon: format === 'PDF' ? <FileType className="w-5 h-5 text-red-500" /> : <FileType className="w-5 h-5 text-blue-500" />
         });
 
-        // محاكاة تقنية: فتح ملف تجريبي لإظهار "الطريقة" للمستخدم
         if (format === 'PDF') {
-            setTimeout(() => {
-                window.open('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', '_blank');
-            }, 1500);
+            window.open('https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf', '_blank');
         }
+
+        setDownloading(null);
     };
 
     const containerVariants = {

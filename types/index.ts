@@ -200,6 +200,12 @@ export interface College {
   missionEn: string;
   goalsAr?: string;
   goalsEn?: string;
+  valuesAr?: string;
+  valuesEn?: string;
+  qualityAr?: string;
+  qualityEn?: string;
+  strategyAr?: string;
+  strategyEn?: string;
   programs: AcademicProgram[];
   admissionRequirementsAr: string;
   admissionRequirementsEn: string;

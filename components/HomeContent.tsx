@@ -20,6 +20,7 @@ const ContactSection = dynamic(() => import('@/components/ContactSection').then(
 const ScrollToTop = dynamic(() => import('@/components/ScrollToTop').then(m => ({ default: m.ScrollToTop })))
 // SmartChat needs ssr: false because it likely uses window/document
 const SmartChat = dynamic(() => import('@/components/SmartChat'), { ssr: false })
+import { UniversityVideoSection } from '@/components/UniversityVideoSection'
 
 export default function HomeContent({ events, news, colleges, campusLife, projects, faqs }: any) {
     const { t } = useLanguage()
@@ -41,6 +42,8 @@ export default function HomeContent({ events, news, colleges, campusLife, projec
 
                 <EventsSection initialEvents={events} />
 
+
+                <UniversityVideoSection />
 
                 {/* FAQ Section */}
                 <section id="faq" className="py-16 bg-background">

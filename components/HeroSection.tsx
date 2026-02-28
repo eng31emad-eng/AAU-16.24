@@ -7,6 +7,14 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import heroCampus from '@/assets/ngu-building.jpg';
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Calendar as CalendarIcon, Download, ZoomIn } from 'lucide-react';
 
 export const HeroSection = () => {
   const { t, language } = useLanguage();
@@ -123,6 +131,15 @@ export const HeroSection = () => {
             <span className="text-secondary">{t('الجامعة', 'UNIVERSITY')}</span>
           </motion.h1>
 
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-center pt-2"
+          >
+            <span className="text-secondary font-display text-xl sm:text-2xl font-bold tracking-[0.2em] opacity-90">
+              {t('لأجيال واعدة', 'FOR PROMISING GENERATIONS')}
+            </span>
+          </motion.div>
+
           <motion.p
             className="text-base sm:text-lg md:text-2xl text-white/80 max-w-3xl mx-auto"
             variants={itemVariants}
@@ -181,6 +198,51 @@ export const HeroSection = () => {
                 <FileText className="w-5 h-5" />
                 {t('نتائج الطلاب', 'Student Results')}
               </Button>
+            </motion.div>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button
+                    size="lg"
+                    variant="outline"
+                    className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto flex items-center gap-2"
+                  >
+                    <CalendarIcon className="w-5 h-5" />
+                    {t('التقويم الجامعي', 'Academic Calendar')}
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-4xl w-[95vw] h-[80vh] flex flex-col p-0 overflow-hidden bg-background/95 backdrop-blur-lg border-secondary/20">
+                  <DialogHeader className="p-6 border-b border-border/50 flex flex-row items-center justify-between">
+                    <DialogTitle className="text-2xl font-display font-bold flex items-center gap-3">
+                      <CalendarIcon className="w-6 h-6 text-secondary" />
+                      {t('التقويم الجامعي للعام 2024-2025', 'Academic Calendar 2024-2025')}
+                    </DialogTitle>
+                    <div className="flex gap-2">
+                      <Button variant="outline" size="icon" className="rounded-full hover:bg-secondary/10 border-border/50">
+                        <ZoomIn className="w-4 h-4" />
+                      </Button>
+                      <Button variant="outline" size="icon" className="rounded-full hover:bg-secondary/10 border-border/50">
+                        <Download className="w-4 h-4" />
+                      </Button>
+                    </div>
+                  </DialogHeader>
+                  <div className="flex-1 relative bg-muted/30 overflow-auto p-4 flex items-start justify-center">
+                    <div className="relative w-full max-w-3xl aspect-[1/1.4] bg-white shadow-2xl rounded-lg overflow-hidden border border-border/50">
+                      <div className="absolute inset-0 flex items-center justify-center bg-muted/50">
+                        <div className="text-center p-8">
+                          <CalendarIcon className="w-16 h-16 text-muted-foreground/30 mx-auto mb-4" />
+                          <p className="text-muted-foreground font-medium">
+                            {t('سيتم رفع التقويم الرسمي فور صدوره من الوزارة', 'The official calendar will be uploaded as soon as it is issued by the Ministry')}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </DialogContent>
+              </Dialog>
             </motion.div>
           </motion.div>
 

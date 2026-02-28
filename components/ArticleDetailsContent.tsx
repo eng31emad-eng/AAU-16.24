@@ -6,7 +6,7 @@ import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { Button } from '@/components/ui/button';
 import {
     Calendar, User, Tag, ArrowRight, ArrowLeft,
-    Clock, BookOpen, Share2, Printer, ChevronRight, ChevronLeft
+    Clock, BookOpen, Share2, ChevronRight, ChevronLeft, Globe
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
@@ -105,12 +105,24 @@ export default function ArticleDetailsContent({ article, relatedArticles }: Arti
                                             )}
                                         </p>
                                         <div className="bg-primary/5 p-6 rounded-2xl border border-primary/10 my-8">
-                                            <h4 className="font-bold text-primary mb-3">{t('الكلمات المفتاحية:', 'Keywords:')}</h4>
+                                            <div className="flex items-center justify-between mb-3">
+                                                <h4 className="font-bold text-primary">{t('الكلمات المفتاحية:', 'Keywords:')}</h4>
+                                                <div className="flex items-center gap-1.5 text-[10px] text-secondary font-bold bg-secondary/10 px-2 py-0.5 rounded-full">
+                                                    <Globe className="w-3 h-3" />
+                                                    {t('تحسين ظهور البحث (SEO)', 'Search Discoverability (SEO)')}
+                                                </div>
+                                            </div>
                                             <div className="flex flex-wrap gap-2">
                                                 {article.tags.map(tag => (
-                                                    <Badge key={tag} variant="outline" className="bg-white">#{tag}</Badge>
+                                                    <Badge key={tag} variant="outline" className="bg-white hover:border-secondary hover:text-secondary transition-colors cursor-default">#{tag}</Badge>
                                                 ))}
                                             </div>
+                                            <p className="mt-3 text-[10px] text-muted-foreground italic leading-relaxed">
+                                                {t(
+                                                    '* هذه الكلمات تساعد محركات البحث العالمية والباحثين على العثور على دراستك بشكل أسرع وأكثر دقة.',
+                                                    '* These keywords help global search engines and researchers find your study faster and more accurately.'
+                                                )}
+                                            </p>
                                         </div>
                                     </div>
                                 </div>

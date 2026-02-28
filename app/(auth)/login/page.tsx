@@ -14,11 +14,12 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Header } from '@/components/Header';
 import { Footer } from '@/components/Footer';
 import { useRouter } from 'next/navigation'
+import { toast } from 'sonner';
 
 type UserType = 'student' | 'teacher' | null;
 
 export default function Login() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const router = useRouter();
   const [userType, setUserType] = useState<UserType>(null);
   const [rememberMe, setRememberMe] = useState(false);
@@ -29,11 +30,57 @@ export default function Login() {
     name: '',
     email: '',
   });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+
+    if (name === 'academicNumber') {
+      if (!value) error = language === 'ar' ? 'الرقم الأكاديمي مطلوب' : 'Academic number is required';
+      else if (!/^\d+$/.test(value)) error = language === 'ar' ? 'يجب أن يكون الرقم الأكاديمي أرقاماً فقط' : 'Academic number must be digits only';
+    }
+
+    if (name === 'phone') {
+      if (!value) error = language === 'ar' ? 'رقم الهاتف مطلوب' : 'Phone number is required';
+      else if (!/^7\d{8}$/.test(value)) error = language === 'ar' ? 'يجب أن يبدأ بـ 7 ويتكون من 9 أرقام' : 'Must start with 7 and be 9 digits';
+    }
+
+    if (name === 'password') {
+      if (!value) error = language === 'ar' ? 'كلمة المرور مطلوبة' : 'Password is required';
+    }
+
+    setErrors(prev => ({ ...prev, [name]: error }));
+    return error === '';
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { id, value } = e.target;
+    const lowerId = id.toLowerCase();
+    const name = lowerId.includes('academicnumber') ? 'academicNumber' : (lowerId.includes('phone') ? 'phone' : (lowerId.includes('password') ? 'password' : ''));
+
+    let cleanedValue = value;
+    if (name === 'academicNumber' || name === 'phone') {
+      cleanedValue = value.replace(/\D/g, ''); // Remove non-digits
+    }
+
+    setFormData(prev => ({ ...prev, [name]: cleanedValue }));
+    if (name) validateField(name, cleanedValue);
+  };
 
   const { login, isLoading: authLoading } = useAuth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Final validation check
+    const isAcademicValid = validateField('academicNumber', formData.academicNumber);
+    const isPasswordValid = validateField('password', formData.password);
+    const isPhoneValid = validateField('phone', formData.phone);
+
+    if (!isAcademicValid || !isPasswordValid || !isPhoneValid) {
+      toast.error(language === 'ar' ? 'يرجى تصحيح الأخطاء قبل المتابعة' : 'Please correct the errors before proceeding');
+      return;
+    }
 
     // Map 'teacher' to 'doctor' for our AuthContext
     const roleToLogin = userType === 'teacher' ? 'doctor' : (userType as any);
@@ -75,9 +122,9 @@ export default function Login() {
                       <GraduationCap className="w-10 h-10 text-secondary" />
                     </div>
                     <h3 className="text-2xl font-bold text-foreground">
-                      {t('تسجيل دخول', 'Student Login')}
+                      {t('طالب', 'Student')}
                     </h3>
-                    <p className="text-muted-foreground">
+                    <p className="text-foreground font-medium">
                       {t('للطلاب المسجلين في الجامعة', 'For registered students')}
                     </p>
                   </div>
@@ -92,10 +139,10 @@ export default function Login() {
                       <User className="w-10 h-10 text-secondary" />
                     </div>
                     <h3 className="text-2xl font-bold text-foreground">
-                      {t('تسجيل دخول', 'Teacher Login')}
+                      {t('عضو هيئة تدريس', 'Faculty Member')}
                     </h3>
-                    <p className="text-muted-foreground">
-                      {t('لأعضاء هيئة التدريس', 'For faculty members')}
+                    <p className="text-foreground font-medium">
+                      {t('لأعضاء هيئة التدريس والبحث العلمي', 'For faculty and researchers')}
                     </p>
                   </div>
                 </Card>
@@ -127,11 +174,16 @@ export default function Login() {
                     id="academicNumber"
                     type="text"
                     value={formData.academicNumber}
-                    onChange={(e) => setFormData({ ...formData, academicNumber: e.target.value })}
+                    onChange={handleInputChange}
                     placeholder={t('أدخل الرقم الأكاديمي', 'Enter academic number')}
                     required
-                    className="text-right"
+                    className={`text-right ${errors.academicNumber ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.academicNumber && (
+                    <p className="text-xs text-red-500 text-right mt-1 animate-in fade-in slide-in-from-top-1">
+                      {errors.academicNumber}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -142,11 +194,16 @@ export default function Login() {
                     id="password"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={handleInputChange}
                     placeholder={t('أدخل كلمة المرور', 'Enter password')}
                     required
-                    className="text-right"
+                    className={`text-right ${errors.password ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.password && (
+                    <p className="text-xs text-red-500 text-right mt-1 animate-in fade-in slide-in-from-top-1">
+                      {errors.password}
+                    </p>
+                  )}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Checkbox
@@ -174,11 +231,16 @@ export default function Login() {
                     id="phone"
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={handleInputChange}
                     placeholder={t('أدخل رقم الهاتف', 'Enter phone number')}
                     required
-                    className="text-right"
+                    className={`text-right ${errors.phone ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.phone && (
+                    <p className="text-xs text-red-500 text-right mt-1 animate-in fade-in slide-in-from-top-1">
+                      {errors.phone}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex gap-3 pt-4">
@@ -226,11 +288,16 @@ export default function Login() {
                     id="teacherAcademicNumber"
                     type="text"
                     value={formData.academicNumber}
-                    onChange={(e) => setFormData({ ...formData, academicNumber: e.target.value })}
+                    onChange={handleInputChange}
                     placeholder={t('أدخل الرقم الأكاديمي', 'Enter academic number')}
                     required
-                    className="text-right"
+                    className={`text-right ${errors.academicNumber ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.academicNumber && (
+                    <p className="text-xs text-red-500 text-right mt-1 animate-in fade-in slide-in-from-top-1">
+                      {errors.academicNumber}
+                    </p>
+                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -241,11 +308,16 @@ export default function Login() {
                     id="teacherPassword"
                     type="password"
                     value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+                    onChange={handleInputChange}
                     placeholder={t('أدخل كلمة المرور', 'Enter password')}
                     required
-                    className="text-right"
+                    className={`text-right ${errors.password ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.password && (
+                    <p className="text-xs text-red-500 text-right mt-1 animate-in fade-in slide-in-from-top-1">
+                      {errors.password}
+                    </p>
+                  )}
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
                       <Checkbox
@@ -273,11 +345,16 @@ export default function Login() {
                     id="teacherPhone"
                     type="tel"
                     value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    onChange={handleInputChange}
                     placeholder={t('أدخل رقم الهاتف', 'Enter phone number')}
                     required
-                    className="text-right"
+                    className={`text-right ${errors.phone ? 'border-red-500 focus:ring-red-500' : ''}`}
                   />
+                  {errors.phone && (
+                    <p className="text-xs text-red-500 text-right mt-1 animate-in fade-in slide-in-from-top-1">
+                      {errors.phone}
+                    </p>
+                  )}
                 </div>
 
                 <div className="flex gap-3 pt-4">

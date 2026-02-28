@@ -36,8 +36,13 @@ export const LanguageProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
 export const useLanguage = () => {
   const context = useContext(LanguageContext);
+  // Return a safe fallback if used outside provider (mostly for SSR/Testing)
   if (!context) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    return {
+      language: 'ar' as Language,
+      toggleLanguage: () => { },
+      t: (ar: string, en: string) => ar
+    };
   }
   return context;
 };

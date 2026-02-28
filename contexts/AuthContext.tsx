@@ -42,11 +42,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         let mockUser: User | null = null;
 
         if (role === 'admin') {
-            mockUser = { id: '1', name: 'مدير النظام', role: 'admin', email: 'admin@ngu.edu' };
+            mockUser = { id: '1', name: 'مدير النظام', role: 'admin', email: 'admin@al-jeel-al-jadeed.edu' };
         } else if (role === 'doctor') {
-            mockUser = { id: '2', name: 'الأستاذ الدكتور', role: 'doctor', email: 'doctor@ngu.edu' };
+            mockUser = { id: '2', name: 'الأستاذ الدكتور', role: 'doctor', email: 'doctor@al-jeel-al-jadeed.edu' };
         } else if (role === 'student') {
-            mockUser = { id: '3', name: 'الطالب الجامعي', role: 'student', email: 'student@ngu.edu' };
+            mockUser = { id: '3', name: 'الطالب الجامعي', role: 'student', email: 'student@al-jeel-al-jadeed.edu' };
         }
 
         if (mockUser) {

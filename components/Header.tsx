@@ -1,8 +1,9 @@
 'use client'
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
-import { ChevronLeft, ChevronRight, Menu, X, LogIn, ChevronDown, Globe, Stethoscope, Heart, Settings, Briefcase, Search, Rocket, Users, MessageSquare, BookOpen, Microscope, Trophy, Smile, HeartPulse, Utensils, FileText, Book } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Menu, X, LogIn, ChevronDown, Globe, Stethoscope, Heart, Settings, Briefcase, Search, Rocket, Users, MessageSquare, BookOpen, Microscope, Trophy, Smile, HeartPulse, Utensils, FileText, Book, Sun, Moon } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
+import { useTheme } from 'next-themes';
 import { usePathname, useRouter } from 'next/navigation';
 import nguLogo from '@/assets/ngu-building.jpg';
 import { mainNavRoutes, additionalRoutes } from '@/config/routes';
@@ -12,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { NotificationDropdown } from './NotificationDropdown';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -24,6 +26,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 
 export const Header = () => {
   const { language, toggleLanguage, t } = useLanguage();
+  const { theme, setTheme } = useTheme();
   const router = useRouter();
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
@@ -32,6 +35,8 @@ export const Header = () => {
   const [isCentersHovered, setIsCentersHovered] = useState(false);
   const [isCampusLifeHovered, setIsCampusLifeHovered] = useState(false);
   const [isResearchHovered, setIsResearchHovered] = useState(false);
+  const [isMoreHovered, setIsMoreHovered] = useState(false);
+  const [openMobileSubMenu, setOpenMobileSubMenu] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -71,8 +76,8 @@ export const Header = () => {
   const colleges = [
     { id: 'medicine', ar: 'كلية الطب البشري', en: 'College of Human Medicine', icon: Stethoscope, href: '/colleges/medicine' },
     { id: 'health-sciences', ar: 'كلية العلوم الطبية والصحية', en: 'College of Medical & Health Sciences', icon: Heart, href: '/colleges/health-sciences' },
-    { id: 'engineering', ar: 'كلية الهندسة وتكنولوجيا المعلومات', en: 'College of Engineering & IT', icon: Settings, href: '/colleges/engineering' },
-    { id: 'business', ar: 'كلية العلوم الإدارية', en: 'College of Administrative Sciences', icon: Briefcase, href: '/colleges/business' },
+    { id: 'engineering-it', ar: 'كلية الهندسة وتكنولوجيا المعلومات', en: 'College of Engineering & IT', icon: Settings, href: '/colleges/engineering-it' },
+    { id: 'business-humanities', ar: 'كلية العلوم الإدارية والانسأنيه', en: 'College of Administrative & Humanitarian Sciences', icon: Briefcase, href: '/colleges/business-humanities' },
   ];
 
   const centers = [
@@ -142,7 +147,9 @@ export const Header = () => {
               <h1 className="text-xl font-display font-bold leading-tight group-hover:text-secondary transition-colors">
                 {t('جامعة الجيل الجديد', 'AJ JEEL ALJADEED UNIVERSITY')}
               </h1>
-              <p className="text-xs text-secondary font-semibold">AAU</p>
+              <p className="text-[9px] text-secondary/90 font-medium tracking-wider uppercase">
+                {t('لأجيال واعدة', 'FOR PROMISING GENERATIONS')}
+              </p>
             </div>
           </motion.button>
 
@@ -250,32 +257,55 @@ export const Header = () => {
             })}
 
             {mounted && additionalRoutes.length > 0 && (
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <motion.button
-                    className={`transition-all duration-300 transition-colors duration-150 font-medium text-sm relative group flex items-center gap-1 text-white text-shadow-sm hover:text-secondary`}
-                    custom={mainNavRoutes.length}
-                    variants={navItemVariants}
-                    initial="hidden"
-                    animate="visible"
-                    whileHover={{ y: -2 }}
-                  >
-                    {t('المزيد', 'More')}
-                    <ChevronDown className="w-4 h-4 transition-transform group-hover:rotate-180 duration-300" />
-                  </motion.button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align={language === 'ar' ? 'start' : 'end'}>
-                  {additionalRoutes.map((item, index) => (
-                    <DropdownMenuItem
-                      key={index}
-                      onClick={() => handleNavigation(item.href, item.isRoute)}
-                      className={isActiveRoute(item.href, item.isRoute) ? 'bg-[rgba(245,200,60,0.22)] text-secondary' : ''}
+              <div
+                className="relative"
+                onMouseEnter={() => setIsMoreHovered(true)}
+                onMouseLeave={() => setIsMoreHovered(false)}
+              >
+                <motion.button
+                  className={`transition-all duration-300 transition-colors duration-150 font-medium text-sm relative group flex items-center gap-1 text-white text-shadow-sm hover:text-secondary ${isMoreHovered ? 'text-secondary' : ''}`}
+                  custom={mainNavRoutes.length}
+                  variants={navItemVariants}
+                  initial="hidden"
+                  animate="visible"
+                  whileHover={{ y: -2 }}
+                >
+                  {t('المزيد', 'More')}
+                  <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMoreHovered ? 'rotate-180' : ''}`} />
+                  <motion.span
+                    className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isMoreHovered ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                    transition={{ duration: 0.3 }}
+                  />
+                </motion.button>
+
+                <AnimatePresence>
+                  {isMoreHovered && (
+                    <motion.div
+                      initial={{ opacity: 0, y: 10, scale: 0.95 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: 10, scale: 0.95 }}
+                      transition={{ duration: 0.2 }}
+                      className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[220px] bg-white/95 backdrop-blur-xl border border-secondary/20 rounded-xl shadow-2xl overflow-hidden z-50 p-2`}
                     >
-                      {t(item.ar, item.en)}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
+                      <div className="flex flex-col gap-1">
+                        {additionalRoutes.map((item, index) => (
+                          <motion.button
+                            key={index}
+                            onClick={() => handleNavigation(item.href, item.isRoute)}
+                            className={`flex items-center gap-3 w-full p-2.5 rounded-lg text-right transition-all duration-200 group/item ${isActiveRoute(item.href, item.isRoute) ? 'bg-secondary/20 text-secondary' : 'hover:bg-secondary/10 text-primary'}`}
+                            whileHover={{ x: language === 'ar' ? -5 : 5 }}
+                          >
+                            <span className="text-sm font-bold flex-1">
+                              {t(item.ar, item.en)}
+                            </span>
+                            <ChevronLeft className={`w-4 h-4 text-secondary/40 group-hover/item:text-secondary transition-transform ${language === 'ar' ? '' : 'rotate-180'}`} />
+                          </motion.button>
+                        ))}
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             )}
           </nav>
 
@@ -311,8 +341,7 @@ export const Header = () => {
                       variant="outline"
                       size="sm"
                       onClick={toggleLanguage}
-                      className={`transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm
-                        }`}
+                      className="transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm"
                     >
                       <motion.div
                         animate={{ rotate: [0, 15, -15, 0] }}
@@ -326,6 +355,59 @@ export const Header = () => {
                 </TooltipTrigger>
                 <TooltipContent>
                   <p>{t('تبديل اللغة', 'Switch Language')}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <NotificationDropdown />
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t('الإشعارات', 'Notifications')}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+                      className="transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm"
+                    >
+                      <AnimatePresence mode="wait">
+                        <motion.div
+                          key={theme === 'dark' ? 'dark' : 'light'}
+                          initial={{ rotate: -90, opacity: 0 }}
+                          animate={{ rotate: 0, opacity: 1 }}
+                          exit={{ rotate: 90, opacity: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          {theme === 'dark' ? (
+                            <Moon className="w-4 h-4" />
+                          ) : (
+                            <Sun className="w-4 h-4" />
+                          )}
+                        </motion.div>
+                      </AnimatePresence>
+                    </Button>
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t('تبديل الوضع', 'Toggle Theme')}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
@@ -411,12 +493,15 @@ export const Header = () => {
                     const isResearch = item.href === '/research';
                     const hasSubMenu = isColleges || isCenters || isCampusLife || isResearch;
                     const subItems = isColleges ? colleges : isCenters ? centers : isCampusLife ? campusLife : researchItems;
+                    const isSubMenuOpen = openMobileSubMenu === item.href;
 
                     return (
                       <div key={index}>
                         <motion.button
                           onClick={() => {
-                            if (!hasSubMenu) {
+                            if (hasSubMenu) {
+                              setOpenMobileSubMenu(isSubMenuOpen ? null : item.href);
+                            } else {
                               handleNavigation(item.href, item.isRoute);
                               setIsMobileMenuOpen(false);
                             }
@@ -437,26 +522,47 @@ export const Header = () => {
                             />
                             {t(item.ar, item.en)}
                           </div>
-                          {hasSubMenu && <ChevronDown className="w-5 h-5 text-muted-foreground" />}
+                          {hasSubMenu && (
+                            <motion.div
+                              animate={{ rotate: isSubMenuOpen ? 180 : 0 }}
+                              transition={{ duration: 0.3 }}
+                            >
+                              <ChevronDown className="w-5 h-5 text-muted-foreground line-clamp-1" />
+                            </motion.div>
+                          )}
                         </motion.button>
 
-                        {hasSubMenu && (
-                          <div className="mr-6 mt-1 space-y-1 mb-2">
-                            {subItems.map((subItem) => (
-                              <button
-                                key={subItem.id}
-                                onClick={() => {
-                                  handleNavigation(subItem.href, true);
-                                  setIsMobileMenuOpen(false);
-                                }}
-                                className="w-full text-right py-2 px-4 text-sm text-muted-foreground hover:text-secondary transition-colors border-r-2 border-transparent hover:border-secondary flex items-center gap-2"
-                              >
-                                <subItem.icon className="w-4 h-4" />
-                                {t(subItem.ar, subItem.en)}
-                              </button>
-                            ))}
-                          </div>
-                        )}
+                        <AnimatePresence>
+                          {hasSubMenu && isSubMenuOpen && (
+                            <motion.div
+                              initial={{ height: 0, opacity: 0 }}
+                              animate={{ height: 'auto', opacity: 1 }}
+                              exit={{ height: 0, opacity: 0 }}
+                              transition={{ duration: 0.3, ease: 'easeInOut' }}
+                              className="overflow-hidden"
+                            >
+                              <div className="ms-8 mt-1 space-y-1 mb-4 border-s-2 border-secondary/10">
+                                {subItems.map((subItem) => (
+                                  <button
+                                    key={subItem.id}
+                                    onClick={() => {
+                                      handleNavigation(subItem.href, true);
+                                      setIsMobileMenuOpen(false);
+                                    }}
+                                    className={`w-full text-start py-3 px-4 text-sm text-muted-foreground hover:text-secondary hover:bg-secondary/5 transition-all flex items-center gap-3 rounded-e-lg group/subitem`}
+                                  >
+                                    <div className="p-1.5 rounded-md bg-secondary/5 group-hover/subitem:bg-secondary/10 transition-colors">
+                                      <subItem.icon className="w-4 h-4 text-secondary/70 group-hover/subitem:text-secondary" />
+                                    </div>
+                                    <span className="font-medium">
+                                      {t(subItem.ar, subItem.en)}
+                                    </span>
+                                  </button>
+                                ))}
+                              </div>
+                            </motion.div>
+                          )}
+                        </AnimatePresence>
                       </div>
                     );
                   })}
@@ -479,7 +585,7 @@ export const Header = () => {
                             handleNavigation(item.href, item.isRoute);
                             setIsMobileMenuOpen(false);
                           }}
-                          className={`mobile-nav-item text-base font-medium text-foreground hover:text-secondary transition-all duration-200 text-start py-2 px-3 rounded-lg flex items-center gap-3 group ${isActiveRoute(item.href, item.isRoute)
+                          className={`mobile-nav-item text-base font-medium text-foreground hover:text-secondary transition-all duration-200 text-start py-2.5 px-3 rounded-lg flex items-center justify-between group ${isActiveRoute(item.href, item.isRoute)
                             ? 'bg-[rgba(245,200,60,0.22)] text-secondary is-active'
                             : 'hover:bg-[rgba(245,200,60,0.22)]'
                             }`}
@@ -488,11 +594,14 @@ export const Header = () => {
                           transition={{ delay: 0.3 + index * 0.05 }}
                           whileHover={{ x: language === 'ar' ? -5 : 5 }}
                         >
-                          <motion.span
-                            className={`w-1 h-5 bg-secondary/50 rounded-full ${isActiveRoute(item.href, item.isRoute) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
-                              }`}
-                          />
-                          {t(item.ar, item.en)}
+                          <div className="flex items-center gap-3">
+                            <motion.span
+                              className={`w-1 h-5 bg-secondary/50 rounded-full ${isActiveRoute(item.href, item.isRoute) ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'
+                                }`}
+                            />
+                            {t(item.ar, item.en)}
+                          </div>
+                          <ChevronLeft className={`w-4 h-4 text-muted-foreground/50 transition-transform group-hover:text-secondary ${language === 'ar' ? '' : 'rotate-180'}`} />
                         </motion.button>
                       ))}
                     </nav>
@@ -506,7 +615,7 @@ export const Header = () => {
           </div>
         </SheetContent>
       </Sheet>
-    </motion.header>
+    </motion.header >
   );
 };
 

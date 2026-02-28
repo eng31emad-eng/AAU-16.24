@@ -7,20 +7,24 @@ import { LanguageProvider } from '@/contexts/LanguageContext'
 import { AuthProvider } from '@/contexts/AuthContext'
 import { useState } from 'react'
 
+import { ThemeProvider } from 'next-themes'
+
 export function Providers({ children }: { children: React.ReactNode }) {
     const [queryClient] = useState(() => new QueryClient())
 
     return (
         <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-                <LanguageProvider>
-                    <AuthProvider>
-                        <Toaster />
-                        <Sonner />
-                        {children}
-                    </AuthProvider>
-                </LanguageProvider>
-            </TooltipProvider>
+            <LanguageProvider>
+                <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
+                    <TooltipProvider>
+                        <AuthProvider>
+                            <Toaster />
+                            <Sonner />
+                            {children}
+                        </AuthProvider>
+                    </TooltipProvider>
+                </ThemeProvider>
+            </LanguageProvider>
         </QueryClientProvider>
     )
 }

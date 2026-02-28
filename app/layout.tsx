@@ -89,7 +89,7 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="ar" dir="rtl" className={`${inter.variable} ${tajawal.variable} ${playfair.variable}`}>
+        <html lang="ar" dir="rtl" className={`${inter.variable} ${tajawal.variable} ${playfair.variable}`} suppressHydrationWarning>
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

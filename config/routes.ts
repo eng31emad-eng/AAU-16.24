@@ -23,7 +23,10 @@ export const publicRoutes: NavItem[] = [
   { ar: 'العروض', en: 'Offers', href: '/offers', isRoute: true, showInMainNav: false },
   { ar: 'المشاريع', en: 'Projects', href: '/projects-studio', isRoute: true, showInMainNav: false },
   { ar: 'الفعاليات', en: 'Events', href: '/events', isRoute: true, showInMainNav: false },
-  { ar: 'المدونة', en: 'Blog', href: '/blog', isRoute: true, showInMainNav: false },
+  { ar: 'الروابط الهامة', en: 'Important Links', href: '/links', isRoute: true, showInMainNav: false },
+  { ar: 'طلب بريد جامعي', en: 'University Email Request', href: '/email-request', isRoute: true, showInMainNav: false },
+  { ar: 'التعليم الإلكتروني', en: 'E-Learning', href: '/e-learning', isRoute: true, showInMainNav: false },
+  { ar: 'الخريجون', en: 'Alumni', href: '/alumni', isRoute: true, showInMainNav: false },
 ];
 
 export const mainNavRoutes = publicRoutes.filter(route => route.showInMainNav);

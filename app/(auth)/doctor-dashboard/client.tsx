@@ -457,25 +457,27 @@ export default function DoctorDashboard() {
           <TabsContent value="profile" className="animate-fade-in">
             <div className="grid md:grid-cols-3 gap-6">
               {/* Profile Card */}
-              <Card className="md:col-span-1">
-                <CardContent className="pt-6 text-center">
-                  <div className="relative w-32 h-32 mx-auto mb-4 group">
+              <Card className="md:col-span-1 overflow-hidden border-secondary/20 h-fit sticky top-24">
+                <div className="h-32 bg-gradient-to-r from-primary to-secondary/80 relative" />
+                <CardContent className="pt-0 -mt-16 text-center relative z-10">
+                  <div className="relative w-32 h-32 mx-auto mb-4 group ring-4 ring-background rounded-full overflow-hidden bg-background">
                     {profileImage ? (
                       <img
                         src={profileImage}
                         alt={t('الملف الشخصي', 'Profile')}
-                        className="w-full h-full rounded-full object-cover border-4 border-secondary/20"
+                        className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full rounded-full bg-gradient-to-br from-secondary to-gold flex items-center justify-center">
+                      <div className="w-full h-full bg-gradient-to-br from-secondary to-gold flex items-center justify-center">
                         <User className="h-16 w-16 text-secondary-foreground" />
                       </div>
                     )}
                     <button
                       onClick={() => profileImageRef.current?.click()}
-                      className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                      className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center cursor-pointer text-white"
                     >
-                      <Edit className="h-6 w-6 text-white" />
+                      <Edit className="h-6 w-6 mb-1" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider">{t('تغيير', 'Change')}</span>
                     </button>
                     <input
                       type="file"
@@ -485,15 +487,17 @@ export default function DoctorDashboard() {
                       onChange={handleProfileImageChange}
                     />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground mb-1">
+                  <h2 className="text-xl font-bold text-foreground mb-1 leading-tight">
                     {language === 'ar' ? profile?.nameAr : profile?.nameEn}
                   </h2>
-                  <p className="text-secondary font-medium mb-4">
+                  <p className="text-secondary font-display font-medium mb-3 tracking-wide">
                     {language === 'ar' ? profile?.degreeAr : profile?.degreeEn}
                   </p>
-                  <Badge variant="secondary" className="mb-4">
-                    {language === 'ar' ? profile?.specializationAr : profile?.specializationEn}
-                  </Badge>
+                  <div className="flex flex-wrap justify-center gap-2 mb-4">
+                    <Badge variant="secondary" className="bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors">
+                      {language === 'ar' ? profile?.specializationAr : profile?.specializationEn}
+                    </Badge>
+                  </div>
                 </CardContent>
               </Card>
 
@@ -518,65 +522,102 @@ export default function DoctorDashboard() {
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <Mail className="h-5 w-5 text-secondary" />
-                      {t('معلومات التواصل', 'Contact Information')}
+                <Card className="border-secondary/10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center justify-between border-b border-secondary/5 bg-muted/20">
+                    <CardTitle className="flex items-center gap-2 text-lg font-bold">
+                      <div className="p-2 rounded-lg bg-secondary/10">
+                        <Mail className="h-5 w-5 text-secondary" />
+                      </div>
+                      {t('معلومات التواصل والمكتب', 'Contact & Office Information')}
                     </CardTitle>
                     {!isEditingProfile ? (
-                      <Button variant="outline" size="sm" onClick={() => setIsEditingProfile(true)}>
-                        <Edit className="h-4 w-4 me-2" />
-                        {t('تعديل', 'Edit')}
-                      </Button>
+                      <button
+                        onClick={() => setIsEditingProfile(true)}
+                        className="flex items-center gap-2 text-secondary hover:text-secondary/80 font-bold transition-all text-sm"
+                      >
+                        <Edit className="h-4 w-4" />
+                        {t('تعديل البيانات', 'Edit Details')}
+                      </button>
                     ) : (
-                      <div className="flex gap-2">
-                        <Button size="sm" onClick={handleSaveProfile}>
+                      <div className="flex gap-2 animate-in fade-in slide-in-from-right-2">
+                        <Button
+                          size="sm"
+                          onClick={handleSaveProfile}
+                          className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-bold"
+                        >
                           <Save className="h-4 w-4 me-2" />
                           {t('حفظ', 'Save')}
                         </Button>
-                        <Button variant="outline" size="sm" onClick={() => setIsEditingProfile(false)}>
-                          <X className="h-4 w-4" />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setIsEditingProfile(false);
+                            setEditedProfile({ email: profile?.email, phone: profile?.phone });
+                          }}
+                          className="border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                        >
+                          <X className="h-4 w-4 me-2" />
+                          {t('إلغاء', 'Cancel')}
                         </Button>
                       </div>
                     )}
                   </CardHeader>
-                  <CardContent className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <Label className="text-sm text-muted-foreground">{t('البريد الإلكتروني', 'Email')}</Label>
+                  <CardContent className="grid sm:grid-cols-2 gap-8 pt-6">
+                    <div className="space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('البريد الإلكتروني', 'Email')}
+                      </Label>
                       {isEditingProfile ? (
-                        <Input
-                          value={editedProfile.email || ''}
-                          onChange={(e) => setEditedProfile(prev => ({ ...prev, email: e.target.value }))}
-                        />
+                        <div className="relative group/input">
+                          <Mail className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/input:text-secondary transition-colors" />
+                          <Input
+                            value={editedProfile.email || ''}
+                            onChange={(e) => setEditedProfile(prev => ({ ...prev, email: e.target.value }))}
+                            className="ps-10 border-secondary/20 focus:border-secondary focus:ring-secondary/20 rounded-xl"
+                            placeholder="example@ngu.edu.ye"
+                          />
+                        </div>
                       ) : (
-                        <div className="flex items-center gap-2 mt-1">
-                          <Mail className="h-4 w-4 text-muted-foreground" />
-                          <span>{profile?.email}</span>
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-secondary/5 group-hover:border-secondary/20 transition-all shadow-sm">
+                          <Mail className="h-4 w-4 text-secondary/60" />
+                          <p className="font-medium text-foreground">{profile?.email}</p>
                         </div>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-sm text-muted-foreground">{t('رقم الهاتف', 'Phone Number')}</Label>
+
+                    <div className="space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('رقم الهاتف', 'Phone Number')}
+                      </Label>
                       {isEditingProfile ? (
-                        <Input
-                          value={editedProfile.phone || ''}
-                          onChange={(e) => setEditedProfile(prev => ({ ...prev, phone: e.target.value }))}
-                          dir="ltr"
-                        />
+                        <div className="relative group/input">
+                          <Phone className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/input:text-secondary transition-colors" />
+                          <Input
+                            value={editedProfile.phone || ''}
+                            onChange={(e) => setEditedProfile(prev => ({ ...prev, phone: e.target.value }))}
+                            className="ps-10 border-secondary/20 focus:border-secondary focus:ring-secondary/20 rounded-xl"
+                            dir="ltr"
+                            placeholder="+967 ..."
+                          />
+                        </div>
                       ) : (
-                        <div className="flex items-center gap-2 mt-1">
-                          <Phone className="h-4 w-4 text-muted-foreground" />
-                          <span dir="ltr">{profile?.phone}</span>
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-secondary/5 group-hover:border-secondary/20 transition-all shadow-sm">
+                          <Phone className="h-4 w-4 text-secondary/60" />
+                          <p className="font-medium text-foreground" dir="ltr">{profile?.phone}</p>
                         </div>
                       )}
                     </div>
-                    <div className="sm:col-span-2">
-                      <Label className="text-sm text-muted-foreground">{t('ساعات المكتب', 'Office Hours')}</Label>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Clock className="h-4 w-4 text-muted-foreground" />
-                        <span>{language === 'ar' ? profile?.officeHoursAr : profile?.officeHoursEn}</span>
+
+                    <div className="sm:col-span-2 space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('ساعات المكتب', 'Office Hours')}
+                      </Label>
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/40 border border-transparent group-hover:border-secondary/10 transition-all">
+                        <Clock className="h-4 w-4 text-secondary/60" />
+                        <span className="font-medium">{language === 'ar' ? profile?.officeHoursAr : profile?.officeHoursEn}</span>
                       </div>
+                      <p className="text-[10px] text-muted-foreground px-1">{t('يتم تحديد ساعات المكتب من قبل الإدارة', 'Office hours are set by administration')}</p>
                     </div>
                   </CardContent>
                 </Card>

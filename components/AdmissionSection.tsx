@@ -9,6 +9,8 @@ import { ChevronLeft, ChevronRight, CheckCircle, Upload, FileText, GraduationCap
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 export const AdmissionSection = () => {
   const { t, language } = useLanguage();
@@ -23,6 +25,7 @@ export const AdmissionSection = () => {
     phone: '',
     college: '',
     program: '',
+    educationStatus: 'graduate' as 'graduate' | 'student',
     documents: {
       highSchool: null as File | null,
       id: null as File | null,
@@ -30,11 +33,65 @@ export const AdmissionSection = () => {
     }
   });
 
-  const colleges = [
-    { ar: 'كلية الهندسة', en: 'College of Engineering' },
-    { ar: 'كلية الطب', en: 'College of Medicine' },
-    { ar: 'كلية إدارة الأعمال', en: 'College of Business Administration' },
-    { ar: 'كلية العلوم الإنسانية', en: 'College of Humanities' }
+  const [serialNumber, setSerialNumber] = useState<string | null>(null);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const [errors, setErrors] = useState<Record<string, string>>({});
+
+  const validateField = (name: string, value: string) => {
+    let error = '';
+    switch (name) {
+      case 'fullName':
+        if (value && !/^[\u0600-\u06FFa-zA-Z\s]+$/.test(value)) {
+          error = t('يرجى استخدام الحروف فقط', 'Please use letters only');
+        } else if (value && value.trim().split(/\s+/).length < 3) {
+          error = t('يرجى كتابة الاسم الثلاثي على الأقل', 'Please enter at least three names');
+        }
+        break;
+      case 'phone':
+        if (value && !/^7\d{8}$/.test(value)) {
+          error = t('رقم الهاتف يجب أن يبدأ بـ 7 ويتكون من 9 أرقام', 'Phone number must start with 7 and be 9 digits');
+        }
+        break;
+      case 'email':
+        if (value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+          error = t('يرجى إدخال بريد إلكتروني صحيح', 'Please enter a valid email address');
+        }
+        break;
+      case 'college':
+        if (!value) error = t('يرجى اختيار الكلية', 'Please select a college');
+        break;
+      case 'program':
+        if (!value) error = t('يرجى إدخال اسم البرنامج', 'Please enter program name');
+        break;
+    }
+    setErrors(prev => ({ ...prev, [name]: error }));
+    return error === '';
+  };
+
+  const handleInputChange = (field: string, value: string) => {
+    let clean = value;
+    if (field === 'fullName') {
+      clean = value.replace(/[^\u0600-\u06FFa-zA-Z\s]/g, '').replace(/\s\s+/g, ' ');
+    } else if (field === 'phone') {
+      clean = value.replace(/\D/g, '').slice(0, 9);
+    } else if (field === 'college' || field === 'program') {
+      clean = value.replace(/[^\u0600-\u06FFa-zA-Z0-9\s\-\u0660-\u0669]/g, '').replace(/\s\s+/g, ' ');
+    }
+
+    setFormData(prev => ({ ...prev, [field]: clean }));
+    validateField(field, clean);
+  };
+
+  const generateSerialNumber = () => {
+    const random = Math.floor(1000 + Math.random() * 9000);
+    return `AJU-24-${random}`;
+  };
+
+  const collegesEn = [
+    { ar: 'كلية الطب البشري', en: 'College of Human Medicine' },
+    { ar: 'كلية العلوم الطبية والصحية', en: 'College of Medical & Health Sciences' },
+    { ar: 'كلية الهندسة وتكنولوجيا المعلومات', en: 'College of Engineering & IT' },
+    { ar: 'كلية العلوم الإدارية والإنسانية', en: 'College of Administrative & Humanitarian Sciences' }
   ];
 
   const steps = [
@@ -45,8 +102,22 @@ export const AdmissionSection = () => {
   ];
 
   const handleNext = () => {
-    if (currentStep < totalSteps) {
+    let isValid = true;
+    if (currentStep === 1) {
+      const v1 = validateField('fullName', formData.fullName);
+      const v2 = validateField('phone', formData.phone);
+      const v3 = validateField('email', formData.email);
+      isValid = v1 && v2 && v3 && !!formData.fullName && !!formData.phone && !!formData.email;
+    } else if (currentStep === 2) {
+      const v1 = validateField('college', formData.college);
+      const v2 = validateField('program', formData.program);
+      isValid = v1 && v2 && !!formData.college && !!formData.program;
+    }
+
+    if (isValid && currentStep < totalSteps) {
       setCurrentStep(currentStep + 1);
+    } else if (!isValid) {
+      toast.error(t('يرجى التأكد من صحة جميع البيانات المطلوبة', 'Please ensure all required data is correct'));
     }
   };
 
@@ -64,32 +135,68 @@ export const AdmissionSection = () => {
   };
 
   const handleSubmit = () => {
+    const isNameValid = validateField('fullName', formData.fullName);
+    const isPhoneValid = validateField('phone', formData.phone);
+    const isEmailValid = validateField('email', formData.email);
+    const isCollegeValid = validateField('college', formData.college);
+    const isProgramValid = validateField('program', formData.program);
+
+    if (!isNameValid || !isPhoneValid || !isEmailValid || !isCollegeValid || !isProgramValid || !formData.fullName || !formData.phone || !formData.email || !formData.college || !formData.program) {
+      toast.error(t('يرجى تصحيح الأخطاء في النموذج قبل الإرسال', 'Please correct form errors before submitting'));
+      return;
+    }
+
+    const isGraduate = formData.educationStatus === 'graduate';
+    const hasFiles = formData.documents.highSchool && formData.documents.id && formData.documents.photo;
+
+    if (isGraduate && !hasFiles) {
+      toast.error(t('يرجى رفع جميع الوثائق المطلوبة للحصول على الرقم التسلسلي والخصم', 'Please upload all required documents to get the serial number and discount'));
+      setCurrentStep(3);
+      return;
+    }
+
+    if (hasFiles || !isGraduate) {
+      // In a real system, we wouldn't generate this until admin approval.
+      // For the mock, we'll store it but show a "Pending Review" status.
+      const sNum = generateSerialNumber();
+      setSerialNumber(sNum);
+    }
+
+    setShowSuccess(true);
+
     toast.success(
       t(
-        'تم إرسال طلب القبول بنجاح! سنتواصل معك قريباً.',
-        'Admission application submitted successfully! We will contact you soon.'
+        'تم إرسال طلب القبول بنجاح!',
+        'Admission application submitted successfully!'
       )
     );
+  };
+
+  const resetForm = () => {
     setFormData({
       fullName: '',
       email: '',
       phone: '',
       college: '',
       program: '',
+      educationStatus: 'graduate',
       documents: { highSchool: null, id: null, photo: null }
     });
+    setSerialNumber(null);
+    setShowSuccess(false);
+    setErrors({});
     setCurrentStep(1);
   };
 
   const stepVariants = {
     hidden: { opacity: 0, x: 50 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       x: 0,
       transition: { duration: 0.4, ease: "easeOut" as const }
     },
-    exit: { 
-      opacity: 0, 
+    exit: {
+      opacity: 0,
       x: -50,
       transition: { duration: 0.3 }
     }
@@ -102,13 +209,13 @@ export const AdmissionSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
             whileHover={{ scale: 1.05 }}
           >
@@ -120,10 +227,62 @@ export const AdmissionSection = () => {
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
             {t(
-              'ابدأ رحلتك الأكاديمية معنا من خلال التقديم عبر النموذج التالي',
-              'Start your academic journey with us by applying through the following form'
+              'أهلاً بكم في جامعة الجيل الجديد. ابدأ رحلتك الأكاديمية معنا من خلال التقديم عبر النموذج التالي',
+              'Welcome to Al-Jeel Al-Jadeed University. Start your academic journey with us by applying through the following form'
             )}
           </p>
+        </motion.div>
+
+        {/* Student Affairs Section */}
+        <motion.div
+          className="mb-16"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-3 mb-8">
+              <div className="h-8 w-1.5 bg-secondary rounded-full" />
+              <h3 className="text-3xl font-display font-bold text-foreground">
+                {t('شؤون الطلاب', 'Student Affairs')}
+              </h3>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[
+                { title: { ar: 'لائحة شؤون الطلاب', en: 'Student Affairs Regulations' }, icon: FileText, href: '/docs/regulations.pdf' },
+                { title: { ar: 'الدوري التكميلي', en: 'Supplementary Semester' }, icon: FileText, href: '/docs/supplementary.pdf' },
+                { title: { ar: 'استمارة تظلمات', en: 'Grievance Form' }, icon: FileText, href: '/docs/grievance.pdf' },
+                { title: { ar: 'ضوابط وسلوكيات عامة', en: 'General Behavior Controls' }, icon: FileText, href: '/docs/general_conduct.pdf' },
+                { title: { ar: 'ضوابط وسلوكيات الامتحانات', en: 'Exam Behavior Controls' }, icon: FileText, href: '/docs/exam_conduct.pdf' },
+              ].map((doc, idx) => (
+                <motion.div
+                  key={idx}
+                  whileHover={{ y: -5, scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  <Button
+                    variant="outline"
+                    className="w-full h-auto py-5 px-6 flex items-center justify-between text-right bg-white/5 hover:bg-white/10 border-border group transition-all duration-300 shadow-sm hover:shadow-md hover:border-secondary"
+                    onClick={() => {
+                      window.open(doc.href, '_blank');
+                      toast.info(t('يتم الآن فتح الملف...', 'Opening file...'));
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-secondary/10 flex items-center justify-center group-hover:bg-secondary/20">
+                        <doc.icon className="w-5 h-5 text-secondary" />
+                      </div>
+                      <span className="font-bold text-base whitespace-normal text-start">
+                        {t(doc.title.ar, doc.title.en)}
+                      </span>
+                    </div>
+                    <Upload className="w-5 h-5 text-muted-foreground group-hover:text-secondary opacity-50 group-hover:opacity-100 transition-all rotate-180" />
+                  </Button>
+                </motion.div>
+              ))}
+            </div>
+          </div>
         </motion.div>
 
         <motion.div
@@ -137,30 +296,29 @@ export const AdmissionSection = () => {
               <CardTitle className="text-2xl text-center mb-8">
                 {t('نموذج التقديم', 'Application Form')}
               </CardTitle>
-              
+
               <div className="flex justify-between items-center relative">
                 {/* Progress Line */}
                 <div className="absolute top-6 left-0 right-0 h-1 bg-white/20 rounded-full">
-                  <motion.div 
+                  <motion.div
                     className="h-full bg-secondary rounded-full"
                     initial={{ width: 0 }}
                     animate={{ width: `${((currentStep - 1) / (totalSteps - 1)) * 100}%` }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
                   />
                 </div>
-                
+
                 {steps.map((step) => (
-                  <motion.div 
-                    key={step.number} 
+                  <motion.div
+                    key={step.number}
                     className="relative z-10 flex flex-col items-center"
                     whileHover={{ scale: 1.1 }}
                   >
-                    <motion.div 
-                      className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${
-                        currentStep >= step.number 
-                          ? 'bg-secondary text-primary shadow-lg' 
-                          : 'bg-white/20 text-white/60'
-                      }`}
+                    <motion.div
+                      className={`w-12 h-12 rounded-full flex items-center justify-center transition-all duration-300 ${currentStep >= step.number
+                        ? 'bg-secondary text-primary shadow-lg'
+                        : 'bg-white/20 text-white/60'
+                        }`}
                       animate={currentStep >= step.number ? { scale: [1, 1.1, 1] } : {}}
                       transition={{ duration: 0.3 }}
                     >
@@ -190,53 +348,83 @@ export const AdmissionSection = () => {
                       <User className="w-5 h-5 text-primary" />
                       {t('المعلومات الشخصية', 'Personal Information')}
                     </h3>
-                    
+
                     <div className="grid md:grid-cols-2 gap-6">
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.1 }}
                       >
-                        <Label htmlFor="fullName">{t('الاسم الكامل', 'Full Name')}</Label>
+                        <Label htmlFor="fullName" className={errors.fullName ? 'text-red-500' : ''}>{t('الاسم الكامل', 'Full Name')}</Label>
                         <Input
                           id="fullName"
                           value={formData.fullName}
-                          onChange={(e) => setFormData({ ...formData, fullName: e.target.value })}
+                          onChange={(e) => handleInputChange('fullName', e.target.value)}
                           placeholder={t('أدخل الاسم الكامل', 'Enter full name')}
-                          className="mt-2"
+                          className={`mt-2 ${errors.fullName ? 'border-red-500 ring-red-500/20' : ''}`}
                         />
+                        {errors.fullName && <p className="text-xs text-red-500 mt-1">{errors.fullName}</p>}
                       </motion.div>
                       <motion.div
                         initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: 0.2 }}
                       >
-                        <Label htmlFor="phone">{t('رقم الهاتف', 'Phone Number')}</Label>
+                        <Label htmlFor="phone" className={errors.phone ? 'text-red-500' : ''}>{t('رقم الهاتف', 'Phone Number')}</Label>
                         <Input
                           id="phone"
                           type="tel"
                           value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                          placeholder={t('أدخل رقم الهاتف', 'Enter phone number')}
-                          className="mt-2"
+                          onChange={(e) => handleInputChange('phone', e.target.value)}
+                          placeholder={t('أدخل رقم الهاتف', '77XXXXXXX')}
+                          className={`mt-2 ${errors.phone ? 'border-red-500 ring-red-500/20' : ''}`}
                         />
+                        {errors.phone && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
                       </motion.div>
                     </div>
-                    
+
                     <motion.div
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.3 }}
                     >
-                      <Label htmlFor="email">{t('البريد الإلكتروني', 'Email')}</Label>
+                      <Label htmlFor="email" className={errors.email ? 'text-red-500' : ''}>{t('البريد الإلكتروني', 'Email')}</Label>
                       <Input
                         id="email"
                         type="email"
                         value={formData.email}
-                        onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        placeholder={t('أدخل البريد الإلكتروني', 'Enter email')}
-                        className="mt-2"
+                        onChange={(e) => handleInputChange('email', e.target.value)}
+                        placeholder={t('example@mail.com', 'example@mail.com')}
+                        className={`mt-2 ${errors.email ? 'border-red-500 ring-red-500/20' : ''}`}
                       />
+                      {errors.email && <p className="text-xs text-red-500 mt-1">{errors.email}</p>}
+                    </motion.div>
+
+                    <motion.div
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.4 }}
+                      className="p-4 bg-primary/5 rounded-xl border border-primary/10"
+                    >
+                      <Label className="mb-4 block text-primary font-bold">{t('الحالة الدراسية', 'Education Status')}</Label>
+                      <RadioGroup
+                        value={formData.educationStatus}
+                        onValueChange={(val: 'graduate' | 'student') => setFormData({ ...formData, educationStatus: val })}
+                        className="flex flex-col gap-3"
+                      >
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer group">
+                          <RadioGroupItem value="graduate" id="graduate" className="border-primary text-primary" />
+                          <Label htmlFor="graduate" className="cursor-pointer font-medium group-hover:text-primary transition-colors">
+                            {t('خريج ثانوية عامة (مستعد لرفع الوثائق)', 'High School Graduate (Ready to upload documents)')}
+                          </Label>
+                        </div>
+                        <div className="flex items-center space-x-2 rtl:space-x-reverse cursor-pointer group">
+                          <RadioGroupItem value="student" id="student" className="border-primary text-primary" />
+                          <Label htmlFor="student" className="cursor-pointer font-medium group-hover:text-primary transition-colors">
+                            {t('طالب ثالث ثانوي (حجز مقعد فقط)', '3rd Year Secondary Student (Seat reservation only)')}
+                          </Label>
+                        </div>
+                      </RadioGroup>
                     </motion.div>
                   </motion.div>
                 )}
@@ -261,22 +449,23 @@ export const AdmissionSection = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.1 }}
                     >
-                      <Label htmlFor="college">{t('الكلية', 'College')}</Label>
+                      <Label htmlFor="college" className={errors.college ? 'text-red-500' : ''}>{t('الكلية', 'College')}</Label>
                       <Select
                         value={formData.college}
-                        onValueChange={(value) => setFormData({ ...formData, college: value })}
+                        onValueChange={(value) => handleInputChange('college', value)}
                       >
-                        <SelectTrigger className="mt-2">
+                        <SelectTrigger className={`mt-2 ${errors.college ? 'border-red-500 ring-red-500/20' : ''}`}>
                           <SelectValue placeholder={t('اختر الكلية', 'Select College')} />
                         </SelectTrigger>
                         <SelectContent>
-                          {colleges.map((college, index) => (
+                          {collegesEn.map((college, index) => (
                             <SelectItem key={index} value={t(college.ar, college.en)}>
                               {t(college.ar, college.en)}
                             </SelectItem>
                           ))}
                         </SelectContent>
                       </Select>
+                      {errors.college && <p className="text-xs text-red-500 mt-1">{errors.college}</p>}
                     </motion.div>
 
                     <motion.div
@@ -284,14 +473,15 @@ export const AdmissionSection = () => {
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 0.2 }}
                     >
-                      <Label htmlFor="program">{t('البرنامج', 'Program')}</Label>
+                      <Label htmlFor="program" className={errors.program ? 'text-red-500' : ''}>{t('البرنامج', 'Program')}</Label>
                       <Input
                         id="program"
                         value={formData.program}
-                        onChange={(e) => setFormData({ ...formData, program: e.target.value })}
+                        onChange={(e) => handleInputChange('program', e.target.value)}
                         placeholder={t('أدخل اسم البرنامج', 'Enter program name')}
-                        className="mt-2"
+                        className={`mt-2 ${errors.program ? 'border-red-500 ring-red-500/20' : ''}`}
                       />
+                      {errors.program && <p className="text-xs text-red-500 mt-1">{errors.program}</p>}
                     </motion.div>
                   </motion.div>
                 )}
@@ -311,7 +501,7 @@ export const AdmissionSection = () => {
                       {t('رفع الوثائق', 'Upload Documents')}
                     </h3>
 
-                    <div className="grid gap-4">
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                       {[
                         { key: 'highSchool', label: { ar: 'شهادة الثانوية', en: 'High School Certificate' } },
                         { key: 'id', label: { ar: 'صورة الهوية', en: 'ID Photo' } },
@@ -319,29 +509,44 @@ export const AdmissionSection = () => {
                       ].map((doc, index) => (
                         <motion.label
                           key={doc.key}
-                          className="group border-2 border-dashed border-border rounded-xl p-6 text-center hover:border-primary/50 hover:bg-primary/5 transition-all cursor-pointer"
+                          className={`group border-2 border-dashed rounded-xl p-6 text-center transition-all cursor-pointer ${formData.educationStatus === 'student' ? 'border-muted bg-muted/20 opacity-80' : 'border-border hover:border-primary/50 hover:bg-primary/5'
+                            }`}
                           initial={{ opacity: 0, y: 20 }}
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ delay: 0.1 + index * 0.1 }}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
+                          whileHover={formData.educationStatus === 'graduate' ? { scale: 1.02 } : {}}
+                          whileTap={formData.educationStatus === 'graduate' ? { scale: 0.98 } : {}}
                         >
-                          <motion.div 
+                          <motion.div
                             className="w-14 h-14 mx-auto mb-3 rounded-xl bg-primary/10 flex items-center justify-center group-hover:bg-primary/20 transition-colors"
-                            whileHover={{ rotate: 10 }}
+                            whileHover={formData.educationStatus === 'graduate' ? { rotate: 10 } : {}}
                           >
                             <Upload className="w-6 h-6 text-primary" />
                           </motion.div>
                           <span className="text-foreground font-medium">
                             {t(doc.label.ar, doc.label.en)}
+                            {formData.educationStatus === 'student' && <span className="text-xs text-muted-foreground block font-normal">({t('اختياري لطلاب ثالث ثانوي', 'Optional for 3rd year students')})</span>}
                           </span>
                           <Input
                             type="file"
+                            accept=".pdf,application/pdf"
                             className="hidden"
-                            onChange={(e) => handleFileUpload(doc.key as keyof typeof formData.documents, e.target.files?.[0] || null)}
+                            disabled={formData.educationStatus === 'student'}
+                            onChange={(e) => {
+                              const file = e.target.files?.[0] || null;
+                              if (file && file.type !== 'application/pdf') {
+                                toast.error(t('يرجى رفع ملفات بصيغة PDF فقط', 'Please upload PDF files only'));
+                                return;
+                              }
+                              if (file && file.size > 5 * 1024 * 1024) {
+                                toast.error(t('حجم الملف كبير جداً (الأقصى 5 ميجابايت)', 'File size is too large (Max 5MB)'));
+                                return;
+                              }
+                              handleFileUpload(doc.key as keyof typeof formData.documents, file);
+                            }}
                           />
                           {formData.documents[doc.key as keyof typeof formData.documents] && (
-                            <motion.p 
+                            <motion.p
                               className="mt-2 text-sm text-green-600 flex items-center justify-center gap-2"
                               initial={{ opacity: 0, scale: 0.8 }}
                               animate={{ opacity: 1, scale: 1 }}
@@ -353,6 +558,15 @@ export const AdmissionSection = () => {
                         </motion.label>
                       ))}
                     </div>
+
+                    {formData.educationStatus === 'student' && (
+                      <div className="bg-blue-500/10 text-blue-700 p-4 rounded-xl text-center text-sm">
+                        {t(
+                          'يمكنك إرسال الطلب الآن لحجز مقعدك، وسيتم إصدار الرقم التسلسلي والخصم فور رفع وثائقك لاحقاً.',
+                          'You can submit the application now to reserve your seat. The serial number and discount will be issued once you upload your documents later.'
+                        )}
+                      </div>
+                    )}
                   </motion.div>
                 )}
 
@@ -371,7 +585,7 @@ export const AdmissionSection = () => {
                       {t('مراجعة البيانات', 'Review Information')}
                     </h3>
 
-                    <motion.div 
+                    <motion.div
                       className="bg-muted/50 rounded-xl p-6 space-y-4"
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
@@ -384,8 +598,8 @@ export const AdmissionSection = () => {
                         { label: { ar: 'الكلية:', en: 'College:' }, value: formData.college },
                         { label: { ar: 'البرنامج:', en: 'Program:' }, value: formData.program },
                       ].map((item, index) => (
-                        <motion.div 
-                          key={index} 
+                        <motion.div
+                          key={index}
                           className="flex justify-between items-center py-2 border-b border-border/50 last:border-0"
                           initial={{ opacity: 0, x: -20 }}
                           animate={{ opacity: 1, x: 0 }}
@@ -397,7 +611,7 @@ export const AdmissionSection = () => {
                       ))}
                     </motion.div>
 
-                    <motion.p 
+                    <motion.p
                       className="text-sm text-muted-foreground text-center bg-amber-500/10 text-amber-700 p-3 rounded-lg"
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
@@ -449,6 +663,103 @@ export const AdmissionSection = () => {
             </CardContent>
           </Card>
         </motion.div>
+
+        {/* Success Dialog */}
+        <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
+          <DialogContent className="max-w-md bg-white p-0 overflow-hidden border-none rounded-2xl shadow-2xl">
+            <div className="p-8 text-center space-y-6">
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", stiffness: 200, damping: 10 }}
+                className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto shadow-lg"
+              >
+                <CheckCircle className="w-10 h-10 text-white" />
+              </motion.div>
+
+              <div className="space-y-2">
+                <h2 className="text-2xl font-display font-bold text-gray-900">
+                  {t('تم استلام طلبك بنجاح!', 'Application Received!')}
+                </h2>
+                <p className="text-gray-600">
+                  {formData.educationStatus === 'graduate'
+                    ? t('شكراً لك على التقديم عبر موقعنا. لقد حصلت على خصم 3% للطلاب المجددين!', 'Thank you for applying through our website. You received a 3% discount for new students!')
+                    : t('تم حفظ بيانات حجز المقعد بنجاح. سنقوم بمراجعة طلبك والتواصل معك.', 'Seat reservation data saved successfully. We will review and contact you.')}
+                </p>
+              </div>
+
+              {serialNumber && formData.educationStatus === 'graduate' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-amber-500/5 rounded-2xl p-6 border-2 border-dashed border-amber-500/20 relative group"
+                >
+                  <div className="flex items-center justify-center gap-2 text-amber-600 font-bold mb-3">
+                    <div className="w-2 h-2 bg-amber-500 rounded-full animate-pulse" />
+                    {t('قيد المراجعة والتدقيق', 'Under Review & Verification')}
+                  </div>
+                  <p className="text-sm text-gray-600 mb-4">
+                    {t(
+                      'يتم الآن مراجعة وثائقك من قبل قسم القبول. بعد التأكد من صحتها، سيتم تفعيل الخصم لك.',
+                      'Your documents are being reviewed by the admissions department. After verification, the discount will be activated for you.'
+                    )}
+                  </p>
+                  <div className="bg-white rounded-xl p-4 border border-amber-200">
+                    <div className="text-xs text-muted-foreground mb-1">{t('رقم الطلب المؤقت', 'Temporary Request ID')}</div>
+                    <div className="text-2xl font-display font-black text-amber-700 tracking-wider">
+                      {serialNumber}
+                    </div>
+                  </div>
+                </motion.div>
+              )}
+
+              {serialNumber && formData.educationStatus === 'student' && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.3 }}
+                  className="bg-primary/5 rounded-2xl p-6 border-2 border-dashed border-primary/20 relative group"
+                >
+                  <div className="text-xs uppercase tracking-widest text-primary font-bold mb-2">
+                    {t('رقم حجز المقعد', 'SEAT RESERVATION NUMBER')}
+                  </div>
+                  <div className="text-4xl font-display font-black text-primary tracking-wider">
+                    {serialNumber}
+                  </div>
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {t('يرجى التوجه للجامعة لاستكمال إجراءات التسجيل بعد النجاح في الثانوية.', 'Please visit the university to complete registration after passing high school.')}
+                  </p>
+                </motion.div>
+              )}
+
+              {!serialNumber && formData.educationStatus === 'student' && (
+                <div className="bg-amber-500/10 p-4 rounded-xl text-amber-700 text-sm font-medium">
+                  {t('سيصلك الرقم التسلسلي والخصم فور استكمال رفع الوثائق.', 'You will receive the serial number and discount once document upload is completed.')}
+                </div>
+              )}
+
+              <div className="flex flex-col gap-3 pt-4">
+                {serialNumber && (
+                  <Button
+                    onClick={() => window.print()}
+                    className="bg-primary hover:bg-primary/90 text-white font-bold h-12 rounded-xl"
+                  >
+                    <FileText className="w-4 h-4 mx-2" />
+                    {t('طباعة أو حفظ الرقم', 'Print or Save Number')}
+                  </Button>
+                )}
+                <Button
+                  variant="ghost"
+                  onClick={resetForm}
+                  className="text-muted-foreground hover:bg-gray-100 rounded-xl"
+                >
+                  {t('إغلاق', 'Close')}
+                </Button>
+              </div>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
     </section>
   );

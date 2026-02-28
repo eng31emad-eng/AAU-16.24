@@ -111,7 +111,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                     ))}
                 </div>
 
-                {/* Vision & Mission & Goals */}
+                {/* Vision & Mission & Goals & Quality & Values & Strategy */}
                 <div className="grid md:grid-cols-3 gap-8 mb-12">
                     <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up border-l-4 border-l-primary">
                         <CardHeader className="pb-4">
@@ -146,11 +146,11 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                     </Card>
 
                     {college.goalsAr && (
-                        <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up border-l-4 border-l-green-500" style={{ animationDelay: '0.2s' }}>
+                        <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up border-l-4 border-l-amber-500" style={{ animationDelay: '0.2s' }}>
                             <CardHeader className="pb-4">
                                 <div className="flex items-center gap-3">
-                                    <div className="w-12 h-12 rounded-xl bg-green-500/10 flex items-center justify-center group-hover:bg-green-500/20 transition-colors">
-                                        <Flag className="w-6 h-6 text-green-600" />
+                                    <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center group-hover:bg-amber-500/20 transition-colors">
+                                        <Flag className="w-6 h-6 text-amber-600" />
                                     </div>
                                     <CardTitle className="text-2xl">{t('الأهداف', 'Goals')}</CardTitle>
                                 </div>
@@ -158,6 +158,60 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                             <CardContent>
                                 <p className="text-muted-foreground leading-relaxed text-lg">
                                     {t(college.goalsAr, college.goalsEn)}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {college.qualityAr && (
+                        <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up border-l-4 border-l-blue-500" style={{ animationDelay: '0.3s' }}>
+                            <CardHeader className="pb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 rounded-xl bg-blue-500/10 flex items-center justify-center group-hover:bg-blue-500/20 transition-colors">
+                                        <Award className="w-6 h-6 text-blue-600" />
+                                    </div>
+                                    <CardTitle className="text-2xl">{t('الجودة', 'Quality')}</CardTitle>
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground leading-relaxed text-lg">
+                                    {t(college.qualityAr, college.qualityEn)}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {college.valuesAr && (
+                        <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up border-l-4 border-l-purple-500" style={{ animationDelay: '0.4s' }}>
+                            <CardHeader className="pb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 rounded-xl bg-purple-500/10 flex items-center justify-center group-hover:bg-purple-500/20 transition-colors">
+                                        <CheckCircle2 className="w-6 h-6 text-purple-600" />
+                                    </div>
+                                    <CardTitle className="text-2xl">{t('القيم', 'Values')}</CardTitle>
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground leading-relaxed text-lg">
+                                    {t(college.valuesAr, college.valuesEn)}
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {college.strategyAr && (
+                        <Card className="group hover:shadow-xl transition-all duration-500 overflow-hidden animate-fade-in-up border-l-4 border-l-emerald-500" style={{ animationDelay: '0.5s' }}>
+                            <CardHeader className="pb-4">
+                                <div className="flex items-center gap-3">
+                                    <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center group-hover:bg-emerald-500/20 transition-colors">
+                                        <Target className="w-6 h-6 text-emerald-600" />
+                                    </div>
+                                    <CardTitle className="text-2xl">{t('الأهداف الاستراتيجية', 'Strategic Objectives')}</CardTitle>
+                                </div>
+                            </CardHeader>
+                            <CardContent>
+                                <p className="text-muted-foreground leading-relaxed text-lg">
+                                    {t(college.strategyAr, college.strategyEn)}
                                 </p>
                             </CardContent>
                         </Card>

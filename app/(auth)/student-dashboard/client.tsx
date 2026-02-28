@@ -24,6 +24,7 @@ import {
 } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
+import { StudentSurvey } from '@/components/dashboard/StudentSurvey';
 import {
   getStudentProfile,
   getStudentCourses,
@@ -58,6 +59,7 @@ function StudentDashboardContent() {
   const [grades, setGrades] = useState<StudentGrade[]>([]);
   const [finance, setFinance] = useState<StudentFinance | null>(null);
   const [notifications, setNotifications] = useState<StudentNotification[]>([]);
+  const [showSurvey, setShowSurvey] = useState(false);
 
   const [selectedCourse, setSelectedCourse] = useState<string>('all');
   const [selectedSemester, setSelectedSemester] = useState<string>('all');
@@ -112,6 +114,14 @@ function StudentDashboardContent() {
           setCurrentConversation(conv);
           const msgs = await messagesService.getConversationMessages(conv.id);
           setConversationMessages(msgs);
+        }
+
+        // Check for survey completion (Daily Frequency)
+        const lastCompletedDate = localStorage.getItem('survey_last_completed_date');
+        const today = new Date().toLocaleDateString('en-CA'); // YYYY-MM-DD
+
+        if (lastCompletedDate !== today) {
+          setShowSurvey(true);
         }
       } catch (error) {
         console.error('Error loading data:', error);
@@ -251,6 +261,13 @@ function StudentDashboardContent() {
     <div className="min-h-screen flex flex-col bg-background" data-breadcrumb="local">
       <Header />
 
+      {showSurvey && (
+        <StudentSurvey
+          studentName={profile?.nameAr || profile?.nameEn || ''}
+          onComplete={() => setShowSurvey(false)}
+        />
+      )}
+
       <main className="flex-1 container mx-auto px-4 py-8 pt-24">
         {/* Page Title with Notifications */}
         <div className="mb-8 animate-fade-in flex flex-col md:flex-row md:items-center md:justify-between gap-4">
@@ -298,25 +315,27 @@ function StudentDashboardContent() {
           <TabsContent value="profile" className="animate-fade-in">
             <div className="grid md:grid-cols-3 gap-6">
               {/* Profile Card */}
-              <Card className="md:col-span-1">
-                <CardContent className="pt-6 text-center">
-                  <div className="relative w-32 h-32 mx-auto mb-4 group">
+              <Card className="md:col-span-1 overflow-hidden border-secondary/20 h-fit sticky top-24">
+                <div className="h-32 bg-gradient-to-r from-primary to-secondary/80 relative" />
+                <CardContent className="pt-0 -mt-16 text-center relative z-10">
+                  <div className="relative w-32 h-32 mx-auto mb-4 group ring-4 ring-background rounded-full overflow-hidden bg-background">
                     {profileImage ? (
                       <img
                         src={profileImage}
                         alt={t('الملف الشخصي', 'Profile')}
-                        className="w-full h-full rounded-full object-cover border-4 border-secondary/20"
+                        className="w-full h-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full rounded-full bg-gradient-to-br from-secondary to-gold flex items-center justify-center">
+                      <div className="w-full h-full bg-gradient-to-br from-secondary to-gold flex items-center justify-center">
                         <User className="h-16 w-16 text-secondary-foreground" />
                       </div>
                     )}
                     <button
                       onClick={() => profileImageRef.current?.click()}
-                      className="absolute inset-0 rounded-full bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center cursor-pointer"
+                      className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col items-center justify-center cursor-pointer text-white"
                     >
-                      <Edit className="h-6 w-6 text-white" />
+                      <Edit className="h-6 w-6 mb-1" />
+                      <span className="text-[10px] font-bold uppercase tracking-wider">{t('تغيير', 'Change')}</span>
                     </button>
                     <input
                       type="file"
@@ -326,19 +345,29 @@ function StudentDashboardContent() {
                       onChange={handleProfileImageChange}
                     />
                   </div>
-                  <h2 className="text-xl font-bold text-foreground mb-1">
+                  <h2 className="text-xl font-bold text-foreground mb-1 leading-tight">
                     {language === 'ar' ? profile?.nameAr : profile?.nameEn}
                   </h2>
-                  <p className="text-secondary font-medium mb-2">{profile?.academicNumber}</p>
-                  <Badge variant="secondary" className="mb-4">
-                    {language === 'ar' ? profile?.levelAr : profile?.levelEn}
-                  </Badge>
-                  <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <p className="text-secondary font-display font-medium mb-3 tracking-wide">{profile?.academicNumber}</p>
+                  <div className="flex flex-wrap justify-center gap-2 mb-6">
+                    <Badge variant="secondary" className="bg-secondary/10 text-secondary hover:bg-secondary/20 transition-colors">
+                      {language === 'ar' ? profile?.levelAr : profile?.levelEn}
+                    </Badge>
+                    <Badge variant="outline" className="border-secondary/30 text-secondary">
+                      {language === 'ar' ? profile?.statusAr || 'منتظم' : profile?.statusEn || 'Regular'}
+                    </Badge>
+                  </div>
+                  <div className="p-4 bg-muted/30 rounded-2xl border border-secondary/10">
                     <div className="flex items-center justify-between mb-2">
-                      <span className="text-sm text-muted-foreground">{t('الساعات المكتملة', 'Completed Credits')}</span>
-                      <span className="font-bold">{profile?.completedCredits} / {profile?.totalCredits}</span>
+                      <span className="text-xs text-muted-foreground font-medium">{t('إنجاز الخطة الدراسية', 'Curriculum Progress')}</span>
+                      <span className="text-xs font-bold text-secondary">
+                        {Math.round(((profile?.completedCredits || 0) / (profile?.totalCredits || 1)) * 100)}%
+                      </span>
                     </div>
-                    <Progress value={(profile?.completedCredits || 0) / (profile?.totalCredits || 1) * 100} className="h-2" />
+                    <Progress value={(profile?.completedCredits || 0) / (profile?.totalCredits || 1) * 100} className="h-2 bg-secondary/10" />
+                    <p className="text-[10px] text-muted-foreground mt-2">
+                      {profile?.completedCredits} {t('من أصل', 'out of')} {profile?.totalCredits} {t('ساعة معتمدة', 'credit hours')}
+                    </p>
                   </div>
                 </CardContent>
               </Card>
@@ -379,60 +408,120 @@ function StudentDashboardContent() {
                   </CardContent>
                 </Card>
 
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between">
-                    <CardTitle className="flex items-center gap-2">
-                      <Mail className="h-5 w-5 text-secondary" />
+                <Card className="border-secondary/10 shadow-sm overflow-hidden transition-all duration-300 hover:shadow-md">
+                  <CardHeader className="flex flex-row items-center justify-between border-b border-secondary/5 bg-muted/20">
+                    <CardTitle className="flex items-center gap-2 text-lg font-bold">
+                      <div className="p-2 rounded-lg bg-secondary/10">
+                        <Mail className="h-5 w-5 text-secondary" />
+                      </div>
                       {t('معلومات التواصل', 'Contact Information')}
                     </CardTitle>
                     {!isEditingProfile ? (
-                      <Button variant="outline" size="sm" onClick={() => setIsEditingProfile(true)}>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => setIsEditingProfile(true)}
+                        className="text-secondary hover:text-secondary hover:bg-secondary/10 font-bold transition-all"
+                      >
                         <Edit className="h-4 w-4 me-2" />
-                        {t('تعديل', 'Edit')}
+                        {t('تعديل البيانات', 'Edit Details')}
                       </Button>
                     ) : (
-                      <div className="flex gap-2">
-                        <Button size="sm" onClick={handleSaveProfile}>
+                      <div className="flex gap-2 animate-in fade-in slide-in-from-right-2">
+                        <Button
+                          size="sm"
+                          onClick={handleSaveProfile}
+                          className="bg-secondary text-secondary-foreground hover:bg-secondary/90 font-bold"
+                        >
                           <Save className="h-4 w-4 me-2" />
                           {t('حفظ', 'Save')}
                         </Button>
-                        <Button variant="outline" size="sm" onClick={() => setIsEditingProfile(false)}>
-                          <X className="h-4 w-4" />
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => {
+                            setIsEditingProfile(false);
+                            setEditedProfile({ emailPersonal: profile?.emailPersonal, phone: profile?.phone });
+                          }}
+                          className="border-red-200 text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors"
+                        >
+                          <X className="h-4 w-4 me-2" />
+                          {t('إلغاء', 'Cancel')}
                         </Button>
                       </div>
                     )}
                   </CardHeader>
-                  <CardContent className="grid sm:grid-cols-2 gap-4">
-                    <div>
-                      <Label className="text-sm text-muted-foreground">{t('البريد الجامعي', 'University Email')}</Label>
-                      <p className="font-medium">{profile?.emailUniversity}</p>
+                  <CardContent className="grid sm:grid-cols-2 gap-8 pt-6">
+                    <div className="space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('البريد الجامعي', 'University Email')}
+                      </Label>
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/40 border border-transparent group-hover:border-secondary/10 transition-all">
+                        <Building className="h-4 w-4 text-secondary/60" />
+                        <p className="font-medium text-foreground select-all">{profile?.emailUniversity}</p>
+                      </div>
+                      <p className="text-[10px] text-muted-foreground px-1">{t('لا يمكن تعديل البريد الجامعي', 'University email cannot be changed')}</p>
                     </div>
-                    <div>
-                      <Label className="text-sm text-muted-foreground">{t('البريد الشخصي', 'Personal Email')}</Label>
+
+                    <div className="space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('البريد الشخصي', 'Personal Email')}
+                      </Label>
                       {isEditingProfile ? (
-                        <Input
-                          value={editedProfile.emailPersonal || ''}
-                          onChange={(e) => setEditedProfile(prev => ({ ...prev, emailPersonal: e.target.value }))}
-                        />
+                        <div className="relative group/input">
+                          <Mail className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/input:text-secondary transition-colors" />
+                          <Input
+                            value={editedProfile.emailPersonal || ''}
+                            onChange={(e) => setEditedProfile(prev => ({ ...prev, emailPersonal: e.target.value }))}
+                            className="ps-10 border-secondary/20 focus:border-secondary focus:ring-secondary/20 rounded-xl"
+                            placeholder="example@gmail.com"
+                          />
+                        </div>
                       ) : (
-                        <p className="font-medium">{profile?.emailPersonal}</p>
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-secondary/5 group-hover:border-secondary/20 transition-all shadow-sm">
+                          <Mail className="h-4 w-4 text-secondary/60" />
+                          <p className="font-medium text-foreground">{profile?.emailPersonal}</p>
+                        </div>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-sm text-muted-foreground">{t('رقم الهاتف', 'Phone Number')}</Label>
+
+                    <div className="space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('رقم الهاتف', 'Phone Number')}
+                      </Label>
                       {isEditingProfile ? (
-                        <Input
-                          value={editedProfile.phone || ''}
-                          onChange={(e) => setEditedProfile(prev => ({ ...prev, phone: e.target.value }))}
-                          dir="ltr"
-                        />
+                        <div className="relative group/input">
+                          <Phone className="absolute start-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/input:text-secondary transition-colors" />
+                          <Input
+                            value={editedProfile.phone || ''}
+                            onChange={(e) => setEditedProfile(prev => ({ ...prev, phone: e.target.value }))}
+                            className="ps-10 border-secondary/20 focus:border-secondary focus:ring-secondary/20 rounded-xl"
+                            dir="ltr"
+                            placeholder="+967 ..."
+                          />
+                        </div>
                       ) : (
-                        <p className="font-medium" dir="ltr">{profile?.phone}</p>
+                        <div className="flex items-center gap-3 p-3 rounded-xl bg-background border border-secondary/5 group-hover:border-secondary/20 transition-all shadow-sm">
+                          <Phone className="h-4 w-4 text-secondary/60" />
+                          <p className="font-medium text-foreground" dir="ltr">{profile?.phone}</p>
+                        </div>
                       )}
                     </div>
-                    <div>
-                      <Label className="text-sm text-muted-foreground">{t('تاريخ الالتحاق', 'Admission Date')}</Label>
-                      <p className="font-medium">{new Date(profile?.admissionDate || '').toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US')}</p>
+
+                    <div className="space-y-2 group">
+                      <Label className="text-xs font-bold uppercase tracking-wider text-muted-foreground group-hover:text-secondary transition-colors">
+                        {t('تاريخ الالتحاق', 'Admission Date')}
+                      </Label>
+                      <div className="flex items-center gap-3 p-3 rounded-xl bg-muted/40 border border-transparent group-hover:border-secondary/10 transition-all">
+                        <Calendar className="h-4 w-4 text-secondary/60" />
+                        <p className="font-medium text-foreground">
+                          {new Date(profile?.admissionDate || '').toLocaleDateString(language === 'ar' ? 'ar-SA' : 'en-US', {
+                            year: 'numeric',
+                            month: 'long',
+                            day: 'numeric'
+                          })}
+                        </p>
+                      </div>
                     </div>
                   </CardContent>
                 </Card>
