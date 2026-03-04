@@ -47,16 +47,7 @@ export default function CampusLifeDetailsContent({ item, relatedItems }: CampusL
                         ]}
                     />
 
-                    {/* Back Button */}
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => router.push('/campus-life')}
-                        className="mt-4 bg-white dark:bg-white text-black hover:bg-[#F4E4B0] dark:hover:bg-[#F4E4B0] border-2 border-border gap-2 rounded-lg font-medium transition-colors"
-                    >
-                        <BackArrow className="w-4 h-4" />
-                        {t('العودة إلى الحياة الجامعية', 'Back to Campus Life')}
-                    </Button>
+
 
                     {/* Title */}
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mt-4 mb-3">
@@ -157,30 +148,43 @@ export default function CampusLifeDetailsContent({ item, relatedItems }: CampusL
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="lg:col-span-9 order-1 lg:order-2"
                     >
-                        {/* Featured Image Placeholder */}
-                        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] bg-gradient-to-br from-muted/50 to-muted rounded-2xl mb-8 flex items-center justify-center overflow-hidden">
-                            {/* Decorative circles */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="relative">
-                                    {/* Outer circle */}
-                                    <div className="w-48 h-48 rounded-full border-2 border-muted-foreground/20"></div>
-                                    {/* Lines radiating from center */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-0"></div>
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-45"></div>
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-90"></div>
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-[135deg]"></div>
-                                    </div>
-                                    {/* Inner circle with icon */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
-                                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                                            <svg className="w-8 h-8 text-muted-foreground/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
+                        {/* Featured Image */}
+                        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] bg-gradient-to-br from-muted/50 to-muted rounded-2xl mb-8 flex items-center justify-center overflow-hidden shadow-elegant border border-border/50">
+                            {item.image ? (
+                                <Image
+                                    src={item.image}
+                                    alt={t(item.titleAr, item.titleEn)}
+                                    fill
+                                    priority
+                                    className="object-cover"
+                                    sizes="(max-width: 1024px) 100vw, 75vw"
+                                />
+                            ) : (
+                                <>
+                                    {/* Decorative circles - shown if no image exists */}
+                                    <div className="absolute inset-0 flex items-center justify-center">
+                                        <div className="relative">
+                                            {/* Outer circle */}
+                                            <div className="w-48 h-48 rounded-full border-2 border-muted-foreground/20"></div>
+                                            {/* Lines radiating from center */}
+                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+                                                <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-0"></div>
+                                                <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-45"></div>
+                                                <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-90"></div>
+                                                <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-[135deg]"></div>
+                                            </div>
+                                            {/* Inner circle with icon */}
+                                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
+                                                <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
+                                                    <svg className="w-8 h-8 text-muted-foreground/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                                    </svg>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
+                                </>
+                            )}
                         </div>
 
                         {/* About Section */}

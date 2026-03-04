@@ -87,14 +87,7 @@ export default function ArticlesClient() {
                 <div className="container mx-auto px-4">
                     <Breadcrumb items={breadcrumbItems} />
 
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                    >
-                        <ArrowIcon className="w-4 h-4 mx-2" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <div className="text-center mt-8">
                         <div className="flex items-center justify-center gap-3 mb-4">

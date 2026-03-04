@@ -118,14 +118,7 @@ export default function FacultyMemberDetailsContent({ member }: FacultyMemberDet
                 <div className="container mx-auto px-4">
                     <Breadcrumb items={breadcrumbItems} />
 
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mt-6 mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10 flex items-center gap-2"
-                    >
-                        {isRtl ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-                        <span>{t('رجوع', 'Back')}</span>
-                    </Button>
+
 
                     <div className="flex flex-col lg:flex-row gap-8 items-start">
                         {/* Profile Card */}

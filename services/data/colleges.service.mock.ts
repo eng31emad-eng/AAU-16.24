@@ -1,9 +1,10 @@
 import { AcademicProgram, College, FacultyMember, ProgramFacultyMember } from '@/types';
 import { facultyService } from '@/services/data/faculty.service.mock';
-import medicineImage from '@/assets/human-medicine.jpg';
-import healthSciencesImage from '@/assets/college-health-sciences.jpg';
-import engineeringImage from '@/assets/college-engineering.jpg';
-import businessImage from '@/assets/college-business.jpg';
+const medicineImage = '/assets/human-medicine.jpg';
+// Fallback paths for images that will be uploaded later
+const healthSciencesImage = '/assets/college-health-sciences.jpg';
+const engineeringImage = '/assets/college-engineering.jpg';
+const businessImage = '/assets/college-business.jpg';
 
 const hashString = (value: string) => {
   let hash = 0;

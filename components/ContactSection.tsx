@@ -27,6 +27,7 @@ export const ContactSection = () => {
 
   const form = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
+    mode: 'onChange',
     defaultValues: {
       name: '',
       email: '',
@@ -352,7 +353,7 @@ export const ContactSection = () => {
                         type="submit"
                         className="w-full group"
                         size="lg"
-                        disabled={!form.formState.isValid || form.formState.isSubmitting}
+                        disabled={form.formState.isSubmitting}
                       >
                         <Send className="w-4 h-4 mr-2 transition-transform group-hover:translate-x-1" />
                         {t('إرسال الرسالة', 'Send Message')}

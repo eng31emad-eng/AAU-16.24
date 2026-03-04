@@ -60,14 +60,7 @@ export default function ProjectDetailsContent({ project, relatedProjects }: Proj
                         ]}
                     />
 
-                    {/* Back Button */}
-                    <Button
-                        onClick={() => router.push('/projects-studio')}
-                        className="mt-4 bg-[#D4AF37] hover:bg-[#C9A961] text-white gap-2 rounded-lg font-medium transition-colors px-4 py-2 text-sm"
-                    >
-                        <BackArrow className="w-4 h-4" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
 
 

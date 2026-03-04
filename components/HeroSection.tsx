@@ -6,7 +6,7 @@ import { ChevronDown, GraduationCap, Users, Award, BookOpen, ArrowLeft, ArrowRig
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useRouter } from 'next/navigation';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import heroCampus from '@/assets/ngu-building.jpg';
+const heroCampus = '/assets/ngu-building.jpg';
 import {
   Dialog,
   DialogContent,
@@ -162,7 +162,7 @@ export const HeroSection = () => {
               <Button
                 size="lg"
                 onClick={() => router.push('/admission')}
-                className="bg-secondary text-primary hover:bg-secondary/90 text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 shadow-xl shadow-secondary/30 group w-full sm:w-auto"
+                className="bg-secondary text-primary hover:bg-secondary/90 text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-6 shadow-xl shadow-secondary/30 group w-full sm:w-auto"
               >
                 {t('التقديم الآن', 'Apply Now')}
                 {language === 'ar' ? (
@@ -180,7 +180,7 @@ export const HeroSection = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => router.push('/colleges')}
-                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto"
+                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-6 w-full sm:w-auto"
               >
                 {t('استكشف الكليات', 'Explore Colleges')}
               </Button>
@@ -193,7 +193,7 @@ export const HeroSection = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => window.open('https://result.yemenexam.com/', '_blank', 'noopener,noreferrer')}
-                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-base sm:text-lg px-6 sm:px-8 py-5 sm:py-6 w-full sm:w-auto flex items-center gap-2"
+                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white hover:bg-white/20 text-sm sm:text-lg px-4 sm:px-8 py-4 sm:py-6 w-full sm:w-auto flex items-center gap-2"
               >
                 <FileText className="w-5 h-5" />
                 {t('نتائج الطلاب', 'Student Results')}

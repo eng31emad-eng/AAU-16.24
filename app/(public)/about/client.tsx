@@ -5,8 +5,8 @@ import { Button } from '@/components/ui/button';
 import { ArrowLeft, ArrowRight, Target, Eye, Heart, Flag, Quote, Sparkles } from 'lucide-react';
 ;
 import { Card, CardContent } from '@/components/ui/card';
-import aboutImage from '@/assets/about-university.jpg';
-import studentsStudying from '@/assets/students-studying.jpg';
+const aboutImage = '/assets/about-university.jpg';
+const studentsStudying = '/assets/students-studying.jpg';
 import { useRouter } from 'next/navigation'
 
 const About = () => {
@@ -60,14 +60,7 @@ const About = () => {
           <Breadcrumb items={[{ label: { ar: 'عن الجامعة', en: 'About' } }]} />
         </div>
 
-        <Button
-          variant="ghost"
-          onClick={() => router.back()}
-          className="mb-6"
-        >
-          <BackArrow className="w-4 h-4 mx-2" />
-          {t('رجوع', 'Back')}
-        </Button>
+
 
         <div className="mb-16 text-center animate-fade-in-up">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">
@@ -242,26 +235,24 @@ const About = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 md:gap-12 justify-center pt-8">
                 {[
                   {
-                    name: { ar: 'أ.د. محمد العلفي', en: 'Dr. Mohamed Al-Alfi' },
-                    role: { ar: 'نائب رئيس الجامعة للشؤون الأكاديمية', en: 'Vice President for Academic Affairs' },
-                    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=200&q=80'
-                  },
-                  {
-                    name: { ar: 'د. خالد سيف', en: 'Dr. Khaled Saif' },
+                    name: { ar: 'أ. بشير الانسي', en: 'Mr. Basheer Al-Ansi' },
                     role: { ar: 'الأمين العام للجامعة', en: 'Secretary General' },
                     image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80'
                   },
                   {
-                    name: { ar: 'د. سارة المنصور', en: 'Dr. Sarah Al-Mansouri' },
-                    role: { ar: 'نائب رئيس الجامعة للدراسات العليا', en: 'Vice President for Graduate Studies' },
+                    name: { ar: 'أ. محمد عبدالرحمن الانسي', en: 'Mr. Mohammed Al-Ansi' },
+                    role: { ar: 'الأمين العام المساعد للشؤون الإدارية', en: 'Asst. Secretary General for Admin Affairs' },
+                    image: 'https://images.unsplash.com/photo-1537368910025-700350fe46c7?w=200&q=80'
+                  },
+                  {
+                    name: { ar: 'أ. ياسمين العريقي', en: 'Ms. Yasmin Al-Ariqi' },
+                    role: { ar: 'الأمين العام المساعد للشؤون المالية', en: 'Asst. Secretary General for Financial Affairs' },
                     image: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=200&q=80'
                   }
                 ].map((member, index) => (
                   <div key={index} className="flex flex-col items-center group relative">
-                    {/* Vertical line to horizontal (Desktop only) */}
                     <div className="absolute -top-8 w-0.5 h-8 bg-primary/20 hidden md:block"></div>
-
-                    <div className="w-24 h-24 md:w-28 md:h-28 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-secondary transition-all duration-300 shadow-lg mb-4 bg-background">
+                    <div className="w-40 h-40 md:w-56 md:h-56 rounded-full overflow-hidden border-2 border-primary/20 group-hover:border-secondary transition-all duration-300 shadow-lg mb-4 bg-background">
                       <img
                         src={member.image}
                         alt={t(member.name.ar, member.name.en)}
@@ -283,58 +274,53 @@ const About = () => {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 md:gap-8">
                 {[
                   {
-                    name: { ar: 'م. ياسر القاضي', en: 'Eng. Yasser Al-Qadi' },
+                    name: { ar: '-', en: '-' },
                     role: { ar: 'مدير الشؤون المالية', en: 'Director of Finance' },
                     image: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=200&q=80'
                   },
                   {
-                    name: { ar: 'د. علي عبده', en: 'Dr. Ali Abdu' },
-                    role: { ar: 'مسجل عام الجامعة', en: 'University Registrar' },
+                    name: { ar: 'أ. فايز الخولاني', en: 'Mr. Fayez Al-Kholani' },
+                    role: { ar: 'المسجل العام', en: 'General Registrar' },
                     image: 'https://images.unsplash.com/photo-1542909168-82c3e7fdca5c?w=200&q=80'
                   },
                   {
-                    name: { ar: 'أ. منى الراعي', en: 'Ms. Mona Al-Raee' },
+                    name: { ar: '-', en: '-' },
                     role: { ar: 'مدير شؤون الموظفين', en: 'HR Director' },
                     image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=200&q=80'
                   },
                   {
-                    name: { ar: 'أ. سامي محمد', en: 'Mr. Sami Mohamed' },
+                    name: { ar: 'د. مهيب', en: 'Dr. Moheeb' },
                     role: { ar: 'مدير النظم والمعلومات', en: 'IT Director' },
                     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80'
                   },
                   {
-                    name: { ar: 'د. ليلى أحمد', en: 'Dr. Layla Ahmed' },
-                    role: { ar: 'مدير ضمان الجودة والاعتماد', en: 'Quality Assurance Director' },
+                    name: { ar: 'د. منصر الصباري', en: 'Dr. Monser Al-Sabari' },
+                    role: { ar: 'عميد الجودة والاعتماد الأكاديمي', en: 'Dean of Quality & Accreditation' },
                     image: 'https://images.unsplash.com/photo-1594744803329-a584af1cae24?w=200&q=80'
                   },
                   {
-                    name: { ar: 'أ. حسن العزاني', en: 'Mr. Hassan Al-Azani' },
-                    role: { ar: 'مدير العلاقات العامة والإعلام', en: 'Public Relations Director' },
-                    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=200&q=80'
-                  },
-                  {
-                    name: { ar: 'أ. فؤاد الصبري', en: 'Mr. Fouad Al-Sabri' },
-                    role: { ar: 'مدير الشؤون القانونية', en: 'Legal Affairs Director' },
+                    name: { ar: 'د. فؤاد العديني', en: 'Dr. Fouad Al-Odaini' },
+                    role: { ar: 'مستشار الرئيس للشؤون القانونية', en: 'Presidents Legal Advisor' },
                     image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80'
                   },
                   {
-                    name: { ar: 'د. أروى صالح', en: 'Dr. Arwa Saleh' },
+                    name: { ar: '-', en: '-' },
                     role: { ar: 'أمين مكتبة الجامعة', en: 'University Librarian' },
                     image: 'https://images.unsplash.com/photo-1567532939604-b6b5b0ad2f01?w=200&q=80'
                   },
                   {
-                    name: { ar: 'م. عمار الحبيشي', en: 'Eng. Ammar Al-Hubaishi' },
+                    name: { ar: '-', en: '-' },
                     role: { ar: 'مدير التخطيط والمشاريع', en: 'Planning & Projects Director' },
                     image: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=200&q=80'
                   },
                   {
-                    name: { ar: 'أ. جيهان محمد', en: 'Ms. Jihan Mohamed' },
+                    name: { ar: '-', en: '-' },
                     role: { ar: 'منسق شؤون الخريجين', en: 'Alumni Coordinator' },
                     image: 'https://images.unsplash.com/photo-1554151228-14d9def656e4?w=200&q=80'
                   }
                 ].map((member, index) => (
                   <div key={index} className="flex flex-col items-center group">
-                    <div className="w-20 h-20 rounded-full overflow-hidden border border-primary/10 group-hover:border-secondary/50 transition-all duration-300 mb-3 bg-muted/20">
+                    <div className="w-28 h-28 md:w-32 md:h-32 rounded-full overflow-hidden border border-primary/10 group-hover:border-secondary/50 transition-all duration-300 mb-3 bg-muted/20">
                       <img
                         src={member.image}
                         alt={t(member.name.ar, member.name.en)}

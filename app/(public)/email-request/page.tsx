@@ -157,7 +157,7 @@ export default function EmailRequestPage() {
                         </div>
 
                         <div className="space-y-4">
-                            <h2 className="text-3xl font-display font-black text-gray-900 tracking-tight uppercase">
+                            <h2 className="text-3xl font-bold text-gray-900 tracking-tight uppercase">
                                 {t('تم الإرسال بنجاح!', 'SUBMITTED SUCCESSFULLY!')}
                             </h2>
                             <p className="text-gray-500 max-w-sm mx-auto font-medium">
@@ -183,7 +183,7 @@ export default function EmailRequestPage() {
                                 <div className="flex justify-between items-start relative z-10">
                                     <div className="space-y-1">
                                         <div className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-black">Digital University ID</div>
-                                        <div className="text-xl font-display font-black text-primary italic">AL-JEEL <span className="text-secondary-dark">ALJADEED</span></div>
+                                        <div className="text-xl font-bold text-primary">AL-JEEL <span className="text-secondary-dark font-black">ALJADEED</span></div>
                                     </div>
                                     <div className="bg-gray-50 p-2 rounded-2xl border border-gray-100 group-hover:bg-secondary/10 transition-colors">
                                         <QrCode className="w-8 h-8 text-primary/40 group-hover:text-primary transition-colors" />
@@ -252,7 +252,7 @@ export default function EmailRequestPage() {
                             animate={{ opacity: 1, x: 0 }}
                             className="space-y-8"
                         >
-                            <h1 className="text-5xl xl:text-7xl font-display font-black leading-[1.1] text-gray-900 italic uppercase">
+                            <h1 className="text-5xl xl:text-7xl font-bold leading-[1.1] text-gray-900 uppercase">
                                 {t('هويتك الرقمية تبدأ من هنا', 'YOUR DIGITAL IDENTITY STARTS HERE')}
                             </h1>
                             <p className="text-gray-500 text-lg max-w-xl leading-relaxed">

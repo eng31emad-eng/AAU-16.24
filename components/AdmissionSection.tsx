@@ -10,7 +10,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog';
 
 export const AdmissionSection = () => {
   const { t, language } = useLanguage();
@@ -155,7 +155,7 @@ export const AdmissionSection = () => {
       return;
     }
 
-    if (hasFiles || !isGraduate) {
+    if (hasFiles) {
       // In a real system, we wouldn't generate this until admin approval.
       // For the mock, we'll store it but show a "Pending Review" status.
       const sNum = generateSerialNumber();
@@ -666,7 +666,7 @@ export const AdmissionSection = () => {
 
         {/* Success Dialog */}
         <Dialog open={showSuccess} onOpenChange={setShowSuccess}>
-          <DialogContent className="max-w-md bg-white p-0 overflow-hidden border-none rounded-2xl shadow-2xl">
+          <DialogContent className="max-w-md bg-white p-0 overflow-hidden border-none rounded-2xl shadow-2xl print-content">
             <div className="p-8 text-center space-y-6">
               <motion.div
                 initial={{ scale: 0 }}
@@ -678,14 +678,14 @@ export const AdmissionSection = () => {
               </motion.div>
 
               <div className="space-y-2">
-                <h2 className="text-2xl font-display font-bold text-gray-900">
+                <DialogTitle className="text-2xl font-display font-bold text-gray-900">
                   {t('تم استلام طلبك بنجاح!', 'Application Received!')}
-                </h2>
-                <p className="text-gray-600">
+                </DialogTitle>
+                <DialogDescription className="text-gray-600">
                   {formData.educationStatus === 'graduate'
-                    ? t('شكراً لك على التقديم عبر موقعنا. لقد حصلت على خصم 3% للطلاب المجددين!', 'Thank you for applying through our website. You received a 3% discount for new students!')
+                    ? t('شكراً لك على التقديم عبر موقعنا. لقد حصلت على خصم 3% للطلاب المستجدين!', 'Thank you for applying through our website. You received a 3% discount for new students!')
                     : t('تم حفظ بيانات حجز المقعد بنجاح. سنقوم بمراجعة طلبك والتواصل معك.', 'Seat reservation data saved successfully. We will review and contact you.')}
-                </p>
+                </DialogDescription>
               </div>
 
               {serialNumber && formData.educationStatus === 'graduate' && (
@@ -739,7 +739,7 @@ export const AdmissionSection = () => {
                 </div>
               )}
 
-              <div className="flex flex-col gap-3 pt-4">
+              <div className="flex flex-col gap-3 pt-4 no-print">
                 {serialNumber && (
                   <Button
                     onClick={() => window.print()}

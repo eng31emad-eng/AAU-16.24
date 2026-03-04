@@ -65,14 +65,7 @@ export default function OffersPageContent({ initialOffers }: OffersPageContentPr
             <div className="container mx-auto px-4">
                 <Breadcrumb items={[{ label: { ar: 'عروض الجامعة', en: 'University Offers' } }]} />
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
+
 
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold mb-4">

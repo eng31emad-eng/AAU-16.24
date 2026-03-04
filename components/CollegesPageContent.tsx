@@ -37,14 +37,7 @@ export default function CollegesPageContent({ initialColleges }: CollegesPageCon
                         <Breadcrumb items={[{ label: { ar: 'كلياتنا', en: 'Our Colleges' } }]} />
                     </div>
 
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mb-8 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                    >
-                        <BackArrow className="w-4 h-4 mx-2" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <div className="text-center max-w-4xl mx-auto animate-fade-in">
                         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">

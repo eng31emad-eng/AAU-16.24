@@ -23,14 +23,7 @@ export default function CampusLifePageContent({ initialItems }: CampusLifePageCo
             <div className="container mx-auto px-4">
                 <Breadcrumb items={[{ label: { ar: 'الحياة الجامعية', en: 'Campus Life' } }]} />
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
+
 
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold mb-4">
@@ -59,9 +52,9 @@ export default function CampusLifePageContent({ initialItems }: CampusLifePageCo
                                         <img
                                             src={item.image}
                                             alt={t(item.titleAr, item.titleEn)}
-                                            className="absolute inset-0 w-full h-full object-cover"
+                                            className="absolute inset-0 w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                                         />
-                                        <div className="absolute inset-0 bg-primary/50"></div>
+                                        <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300"></div>
                                     </>
                                 ) : (
                                     <div className="absolute inset-0 flex items-center justify-center">

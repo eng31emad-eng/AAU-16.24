@@ -1,8 +1,8 @@
 import { NewsItem } from '@/types';
-import newsBuilding from '@/assets/news-building.jpg';
-import newsResearch from '@/assets/news-research.jpg';
-import newsPartnership from '@/assets/news-partnership.jpg';
-import newsLibrary from '@/assets/news-library.jpg';
+const newsBuilding = '/assets/news-building.jpg';
+const newsResearch = '/assets/news-research.jpg';
+const newsPartnership = '/assets/news-partnership.jpg';
+const newsLibrary = '/assets/news-library.jpg';
 
 const mockNews: NewsItem[] = [
   {

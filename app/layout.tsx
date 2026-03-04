@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { Metadata } from 'next'
-import { Tajawal, Inter, Playfair_Display } from 'next/font/google'
+import { Tajawal, Inter } from 'next/font/google'
 import { Providers } from './providers'
 import './globals.css'
 
@@ -17,11 +17,6 @@ const tajawal = Tajawal({
     display: 'swap',
 })
 
-const playfair = Playfair_Display({
-    subsets: ['latin'],
-    variable: '--font-playfair',
-    display: 'swap',
-})
 
 export async function generateMetadata({ params }): Promise<Metadata> {
     return {
@@ -89,7 +84,7 @@ export default function RootLayout({
     children: React.ReactNode
 }>) {
     return (
-        <html lang="ar" dir="rtl" className={`${inter.variable} ${tajawal.variable} ${playfair.variable}`} suppressHydrationWarning>
+        <html lang="ar" dir="rtl" className={`${inter.variable} ${tajawal.variable}`} suppressHydrationWarning>
             <head>
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />

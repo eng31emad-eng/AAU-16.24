@@ -5,7 +5,7 @@ import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import Image from 'next/image';
-import studentsStudying from '@/assets/students-studying.jpg';
+const studentsStudying = '/assets/students-studying.jpg';
 
 export const AboutSection = () => {
   const { t } = useLanguage();

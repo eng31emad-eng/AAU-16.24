@@ -59,14 +59,7 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
             <div className="container mx-auto px-4">
                 <Breadcrumb items={[{ label: { ar: 'مشاريع التخرج', en: 'Graduation Projects' } }]} />
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
+
 
                 <div className="text-center mb-12">
                     <h1 className="text-4xl font-bold mb-4">
@@ -220,67 +213,47 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="group relative h-[400px] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-white/10"
+                                    className="group bg-card rounded-2xl overflow-hidden cursor-pointer shadow-lg border border-border/50 flex flex-col"
                                     onClick={() => router.push(`/projects-studio/${project.slug}`)}
                                 >
                                     {/* Project Image */}
-                                    <div className="absolute inset-0">
+                                    <div className="relative h-60 overflow-hidden">
                                         <img
                                             src={project.images?.[0]}
                                             alt={t(project.titleAr, project.titleEn)}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
-                                    </div>
-
-                                    {/* Glassmorphism Info Overlay */}
-                                    <div className="absolute inset-x-4 bottom-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-2xl">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <Badge className="bg-secondary text-primary hover:bg-secondary font-bold text-[10px] px-2 py-0">
-                                                    {t(project.categoryAr || '', project.categoryEn || '')}
-                                                </Badge>
-                                            </div>
-                                            <h3 className="text-white font-bold text-lg mb-1 leading-tight">
-                                                {t(project.titleAr, project.titleEn)}
-                                            </h3>
-                                            <div className="flex items-center justify-between mt-4">
-                                                <div className="flex items-center gap-1.5 opacity-0">
-                                                    {/* Names removed as requested */}
-                                                </div>
-                                                <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <ArrowLeft className="w-4 h-4 rtl:block hidden" />
-                                                    <ArrowRight className="w-4 h-4 ltr:block hidden" />
-                                                </div>
-                                            </div>
+                                        <div className="absolute top-4 right-4">
+                                            <Badge className="bg-secondary text-primary hover:bg-secondary font-bold text-[10px] px-2 py-0.5">
+                                                {t(project.categoryAr || '', project.categoryEn || '')}
+                                            </Badge>
                                         </div>
                                     </div>
 
-                                    {/* Hover Highlight Border */}
-                                    <div className="absolute inset-0 border-2 border-secondary/0 group-hover:border-secondary/30 rounded-3xl transition-colors pointer-events-none" />
+                                    {/* Info Section - More compact to avoid white space */}
+                                    <div className="p-5 flex flex-col bg-card group-hover:bg-secondary/5 transition-colors duration-300">
+                                        <div className="flex items-center gap-2 mb-2">
+                                            <Badge variant="outline" className="text-[10px] border-secondary/30 text-secondary">
+                                                {project.year}
+                                            </Badge>
+                                        </div>
+                                        <h3 className="text-foreground font-bold text-lg mb-4 leading-tight group-hover:text-secondary transition-colors line-clamp-2">
+                                            {t(project.titleAr, project.titleEn)}
+                                        </h3>
+                                        <div className="flex items-center justify-between mt-2 pt-2 border-t border-border/50">
+                                            <span className="text-muted-foreground text-xs">
+                                                {t('تفاصيل المشروع', 'Project Details')}
+                                            </span>
+                                            <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-white transition-all duration-300">
+                                                <ArrowLeft className="w-4 h-4 rtl:block hidden" />
+                                                <ArrowRight className="w-4 h-4 ltr:block hidden" />
+                                            </div>
+                                        </div>
+                                    </div>
                                 </motion.div>
                             ))}
                         </div>
 
-                        {/* Creative Footer Note */}
-                        <div className="mt-20 text-center py-12 border-t border-border/50">
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                className="flex flex-col items-center gap-4"
-                            >
-                                <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center text-secondary mb-2">
-                                    <Award className="w-8 h-8" />
-                                </div>
-                                <h3 className="text-xl font-bold">{t('هل لديك مشروع إبداعي؟', 'Have a Creative Project?')}</h3>
-                                <p className="text-muted-foreground max-w-md mx-auto">
-                                    {t(
-                                        'نحن ندعم مواهب طلابنا ونوفر لهم المنصة المناسبة لعرض أعمالهم للعالم. تواصل مع الكلية لإضافة عملك هنا.',
-                                        'We support our students\' talents and provide them with the right platform to showcase their work to the world.'
-                                    )}
-                                </p>
-                            </motion.div>
-                        </div>
                     </div>
                 )}
             </div>

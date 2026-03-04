@@ -31,14 +31,7 @@ export default function OfferDetailsContent({ offer }: OfferDetailsContentProps)
                         ]}
                     />
 
-                    {/* Back Button - EVEN SMALLER SIZE */}
-                    <Button
-                        onClick={() => router.push('/offers')}
-                        className="mt-3 bg-[#D4AF37] hover:bg-[#C9A961] text-white gap-1.5 rounded-lg font-medium transition-colors px-4 py-1.5 text-xs"
-                    >
-                        {t('رجوع', 'Back')}
-                        <ArrowRight className="w-3 h-3" />
-                    </Button>
+
 
                     {/* Title and Info Row */}
                     <div className="mt-6 flex flex-col md:flex-row md:items-start md:justify-between gap-4">

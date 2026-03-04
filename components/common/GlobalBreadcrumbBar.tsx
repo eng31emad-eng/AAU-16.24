@@ -103,14 +103,7 @@ export const GlobalBreadcrumbBar = () => {
     <div data-breadcrumb="global" className="border-b border-border bg-background/95">
       <div className="container mx-auto px-4 py-3">
         <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-foreground/80 transition-colors"
-          >
-            <ChevronIcon className="h-4 w-4" />
-            {t('رجوع', 'Back')}
-          </button>
+
 
           <nav
             aria-label={t('فتات الخبز', 'Breadcrumb')}

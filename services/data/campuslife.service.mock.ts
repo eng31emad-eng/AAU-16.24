@@ -11,6 +11,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مكتبة حديثة مجهزة بأحدث الكتب والمراجع العلمية وقاعات الدراسة الهادئة',
     contentEn: 'Modern library equipped with the latest books, scientific references, and quiet study spaces',
     category: 'facilities',
+    image: '/images/campus/central-library.jpg'
   },
   {
     id: '2',
@@ -22,6 +23,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مختبرات متقدمة مجهزة بأحدث التقنيات للتجارب العملية والبحث العلمي',
     contentEn: 'Advanced laboratories equipped with the latest technologies for practical experiments and research',
     category: 'facilities',
+    image: '/images/campus/scientific-laboratories.jpg'
   },
   {
     id: '3',
@@ -33,6 +35,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'ملاعب مجهزة لمختلف الرياضات: كرة القدم، كرة السلة، الكرة الطائرة، والتنس',
     contentEn: 'Fields equipped for various sports: football, basketball, volleyball, and tennis',
     category: 'facilities',
+    image: '/images/campus/sports-activities.jpg'
   },
   {
     id: '4',
@@ -55,6 +58,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مجموعة متنوعة من المطاعم والكافتيريات التي تقدم وجبات صحية ولذيذة',
     contentEn: 'Various restaurants and cafeterias offering healthy and delicious meals',
     category: 'facilities',
+    image: '/images/campus/cafeteria.jpg'
   },
   {
     id: '6',
@@ -77,6 +81,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'دوريات وبطولات رياضية منتظمة في مختلف الألعاب',
     contentEn: 'Regular sports leagues and championships in various games',
     category: 'activities',
+    image: '/images/campus/sports-activities.jpg'
   },
   {
     id: '8',
