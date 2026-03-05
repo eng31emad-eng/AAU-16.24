@@ -49,14 +49,7 @@ export default function BlogDetailsContent({ post, relatedPosts }: BlogDetailsCo
                     <div className="bg-card rounded-lg shadow-lg p-8 max-w-4xl mx-auto">
                         <Breadcrumb items={breadcrumbItems} />
 
-                        <Button
-                            variant="ghost"
-                            onClick={() => router.back()}
-                            className="mt-4 mb-2 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                        >
-                            <ArrowIcon className="w-4 h-4 mx-2" />
-                            {t('رجوع', 'Back')}
-                        </Button>
+
 
                         <Badge className="mt-4 mb-3">{post.category[language]}</Badge>
 

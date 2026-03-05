@@ -60,7 +60,7 @@ export const UnderDevelopment = ({ titleAr, titleEn }: UnderDevelopmentProps) =>
                         </div>
 
                         <div className="space-y-4">
-                            <h1 className="text-4xl md:text-5xl font-display font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                            <h1 className="text-4xl md:text-5xl font-display font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent py-2 leading-relaxed">
                                 {t(titleAr, titleEn)}
                             </h1>
                             <div className="flex flex-col items-center gap-2">

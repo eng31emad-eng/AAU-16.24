@@ -37,7 +37,6 @@ export const ContactSection = () => {
 
   const onSubmit = (data: ContactFormValues) => {
     // Here you would typically send the data to your API
-    console.log(data);
 
     toast.success(
       t(
@@ -121,7 +120,7 @@ export const ContactSection = () => {
             <MessageCircle className="w-4 h-4" />
             {t('نحن هنا لمساعدتك', 'We are here to help')}
           </motion.div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('تواصل معنا', 'Contact Us')}
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -352,7 +351,7 @@ export const ContactSection = () => {
                         type="submit"
                         className="w-full group"
                         size="lg"
-                        disabled={!form.formState.isValid || form.formState.isSubmitting}
+                        disabled={form.formState.isSubmitting}
                       >
                         <Send className="w-4 h-4 mr-2 transition-transform group-hover:translate-x-1" />
                         {t('إرسال الرسالة', 'Send Message')}

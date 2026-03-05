@@ -71,15 +71,7 @@ export default function EventDetailsView({ event, relatedEvents }: EventDetailsV
                         ]}
                     />
 
-                    <Button
-                        variant="secondary"
-                        size="sm"
-                        onClick={() => router.push('/events')}
-                        className="mb-6 font-bold gap-2 hover:scale-105 transition-transform"
-                    >
-                        <BackArrow className="w-4 h-4" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

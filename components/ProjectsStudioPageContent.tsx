@@ -59,17 +59,10 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
             <div className="container mx-auto px-4">
                 <Breadcrumb items={[{ label: { ar: 'مشاريع التخرج', en: 'Graduation Projects' } }]} />
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
+
 
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">
+                    <h1 className="text-4xl font-bold mb-4 py-3 leading-relaxed">
                         {t('مشاريع التخرج', 'Graduation Projects')}
                     </h1>
                     <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
@@ -192,8 +185,8 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
 
                 {/* Studio Projects Gallery Section */}
                 {studioProjects.length > 0 && (
-                    <div className="mt-24">
-                        <div className="text-center mb-16">
+                    <div className="mt-24 pb-20">
+                        <div className="text-center mb-16 px-4">
                             <motion.div
                                 initial={{ opacity: 0, scale: 0.9 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
@@ -202,7 +195,7 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
                                 <Palette className="w-5 h-5" />
                                 {t('ستوديو الإبداع', 'Creativity Studio')}
                             </motion.div>
-                            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent">
+                            <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent py-2 leading-relaxed">
                                 {t('ستوديو المشاريع', 'Projects Studio')}
                             </h2>
                             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
@@ -220,38 +213,35 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
                                     initial={{ opacity: 0, y: 30 }}
                                     whileInView={{ opacity: 1, y: 0 }}
                                     transition={{ delay: index * 0.1 }}
-                                    className="group relative h-[400px] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-white/10"
+                                    className="group relative flex flex-col min-h-[450px] rounded-3xl overflow-hidden cursor-pointer shadow-xl border border-white/10 bg-card"
                                     onClick={() => router.push(`/projects-studio/${project.slug}`)}
                                 >
-                                    {/* Project Image */}
-                                    <div className="absolute inset-0">
+                                    {/* Project Image Container */}
+                                    <div className="h-[280px] overflow-hidden">
                                         <img
                                             src={project.images?.[0]}
                                             alt={t(project.titleAr, project.titleEn)}
                                             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                         />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent opacity-70 group-hover:opacity-90 transition-opacity" />
                                     </div>
 
-                                    {/* Glassmorphism Info Overlay */}
-                                    <div className="absolute inset-x-4 bottom-4 translate-y-2 group-hover:translate-y-0 transition-transform duration-500">
-                                        <div className="bg-white/10 backdrop-blur-md border border-white/20 p-5 rounded-2xl shadow-2xl">
-                                            <div className="flex items-center gap-2 mb-2">
-                                                <Badge className="bg-secondary text-primary hover:bg-secondary font-bold text-[10px] px-2 py-0">
-                                                    {t(project.categoryAr || '', project.categoryEn || '')}
-                                                </Badge>
+                                    {/* Project Info - Moved Below Image */}
+                                    <div className="p-6 bg-card flex-1 flex flex-col">
+                                        <div className="flex items-center gap-2 mb-3">
+                                            <Badge className="bg-secondary text-primary hover:bg-secondary font-bold text-[10px] px-2 py-0">
+                                                {t(project.categoryAr || '', project.categoryEn || '')}
+                                            </Badge>
+                                        </div>
+                                        <h3 className="text-foreground font-bold text-lg mb-2 leading-tight group-hover:text-secondary transition-colors">
+                                            {t(project.titleAr, project.titleEn)}
+                                        </h3>
+                                        <div className="mt-auto pt-4 flex items-center justify-between border-t border-border/50">
+                                            <div className="text-xs text-muted-foreground">
+                                                {/* Names removed as requested */}
                                             </div>
-                                            <h3 className="text-white font-bold text-lg mb-1 leading-tight">
-                                                {t(project.titleAr, project.titleEn)}
-                                            </h3>
-                                            <div className="flex items-center justify-between mt-4">
-                                                <div className="flex items-center gap-1.5 opacity-0">
-                                                    {/* Names removed as requested */}
-                                                </div>
-                                                <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary opacity-0 group-hover:opacity-100 transition-opacity">
-                                                    <ArrowLeft className="w-4 h-4 rtl:block hidden" />
-                                                    <ArrowRight className="w-4 h-4 ltr:block hidden" />
-                                                </div>
+                                            <div className="w-8 h-8 rounded-full bg-secondary/10 flex items-center justify-center text-secondary group-hover:bg-secondary group-hover:text-primary transition-all duration-300">
+                                                <ArrowLeft className="w-4 h-4 rtl:block hidden" />
+                                                <ArrowRight className="w-4 h-4 ltr:block hidden" />
                                             </div>
                                         </div>
                                     </div>
@@ -260,26 +250,6 @@ export default function ProjectsStudioPageContent({ initialCurrentProjects, init
                                     <div className="absolute inset-0 border-2 border-secondary/0 group-hover:border-secondary/30 rounded-3xl transition-colors pointer-events-none" />
                                 </motion.div>
                             ))}
-                        </div>
-
-                        {/* Creative Footer Note */}
-                        <div className="mt-20 text-center py-12 border-t border-border/50">
-                            <motion.div
-                                initial={{ opacity: 0 }}
-                                whileInView={{ opacity: 1 }}
-                                className="flex flex-col items-center gap-4"
-                            >
-                                <div className="w-16 h-16 rounded-2xl bg-primary/5 flex items-center justify-center text-secondary mb-2">
-                                    <Award className="w-8 h-8" />
-                                </div>
-                                <h3 className="text-xl font-bold">{t('هل لديك مشروع إبداعي؟', 'Have a Creative Project?')}</h3>
-                                <p className="text-muted-foreground max-w-md mx-auto">
-                                    {t(
-                                        'نحن ندعم مواهب طلابنا ونوفر لهم المنصة المناسبة لعرض أعمالهم للعالم. تواصل مع الكلية لإضافة عملك هنا.',
-                                        'We support our students\' talents and provide them with the right platform to showcase their work to the world.'
-                                    )}
-                                </p>
-                            </motion.div>
                         </div>
                     </div>
                 )}

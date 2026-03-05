@@ -48,13 +48,7 @@ export default function CenterDetailsContent({ center, relatedCenters }: CenterD
                         ]}
                     />
 
-                    <Button
-                        onClick={() => router.back()}
-                        className="mb-6 bg-[#D4AF37] hover:bg-[#C9A961] text-white gap-2 rounded-lg font-medium transition-colors px-4 py-2 text-sm"
-                    >
-                        <BackArrow className="w-4 h-4" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}
@@ -190,27 +184,7 @@ export default function CenterDetailsContent({ center, relatedCenters }: CenterD
                             </CardContent>
                         </Card>
 
-                        {/* Contact CTA */}
-                        <motion.div
-                            initial={{ opacity: 0, scale: 0.95 }}
-                            animate={{ opacity: 1, scale: 1 }}
-                            transition={{ duration: 0.3, delay: 0.4 }}
-                            className="bg-gradient-to-r from-primary/20 via-primary/10 to-secondary/20 p-8 rounded-2xl text-center"
-                        >
-                            <Clock className="w-12 h-12 text-primary mx-auto mb-4" />
-                            <h3 className="text-2xl font-bold mb-3">
-                                {t('تواصل معنا', 'Contact Us')}
-                            </h3>
-                            <p className="text-muted-foreground mb-6">
-                                {t('للاستفسار عن خدمات وبرامج المركز', 'For inquiries about center services and programs')}
-                            </p>
-                            <Button asChild size="lg" className="bg-primary hover:bg-primary/90">
-                                <Link href="/contact" className="gap-2">
-                                    {t('تواصل الآن', 'Contact Now')}
-                                    <Mail className="w-4 h-4" />
-                                </Link>
-                            </Button>
-                        </motion.div>
+
 
                         {/* Share Section */}
                         <div className="pt-8 border-t border-border">

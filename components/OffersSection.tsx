@@ -76,20 +76,20 @@ export const OffersSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 to-secondary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
             whileHover={{ scale: 1.05 }}
           >
             <Gift className="w-4 h-4" />
             {t('عروض حصرية', 'Exclusive Offers')}
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('العروض الخاصة', 'Special Offers')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -101,7 +101,7 @@ export const OffersSection = () => {
         </motion.div>
 
         {/* Offers Grid */}
-        <motion.div 
+        <motion.div
           className="grid md:grid-cols-2 gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -111,16 +111,16 @@ export const OffersSection = () => {
           {offers.map((offer, index) => {
             const config = categoryConfig[offer.category] || categoryConfig.other;
             const categoryLabel = getCategoryLabel(offer.category);
-            
+
             return (
               <motion.div
                 key={offer.id || index}
                 className="group relative"
                 variants={cardVariants}
               >
-                <motion.div 
+                <motion.div
                   className="relative bg-card rounded-2xl overflow-hidden shadow-lg border border-border/50 h-full"
-                  whileHover={{ 
+                  whileHover={{
                     y: -8,
                     boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)"
                   }}
@@ -131,15 +131,15 @@ export const OffersSection = () => {
                     <div className={`relative w-full md:w-1/3 h-32 md:h-auto bg-gradient-to-br ${config.color} flex items-center justify-center`}>
                       {offer.image ? (
                         <>
-                          <img 
-                            src={offer.image} 
+                          <img
+                            src={offer.image}
                             alt={language === 'ar' ? offer.titleAr : offer.titleEn}
                             className="absolute inset-0 w-full h-full object-cover"
                           />
                           <div className={`absolute inset-0 bg-gradient-to-br ${config.color} opacity-80`}></div>
                         </>
                       ) : null}
-                      <motion.div 
+                      <motion.div
                         className="relative z-10 w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center text-white"
                         whileHover={{ scale: 1.1, rotate: 10 }}
                       >
@@ -169,12 +169,12 @@ export const OffersSection = () => {
                       <p className="text-muted-foreground text-sm line-clamp-3 mb-4">
                         {language === 'ar' ? offer.descAr : offer.descEn}
                       </p>
-                      
+
                       <motion.div
                         whileHover={{ scale: 1.02 }}
                         whileTap={{ scale: 0.98 }}
                       >
-                        <Button 
+                        <Button
                           variant="outline"
                           size="sm"
                           onClick={() => router.push('/offers')}
@@ -197,7 +197,7 @@ export const OffersSection = () => {
         </motion.div>
 
         {/* View All Button */}
-        <motion.div 
+        <motion.div
           className="text-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -207,7 +207,7 @@ export const OffersSection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Button 
+            <Button
               size="lg"
               onClick={() => router.push('/offers')}
               className="group bg-gradient-to-r from-primary to-secondary hover:from-primary/90 hover:to-secondary/90"

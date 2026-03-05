@@ -127,14 +127,7 @@ export default function EventsPageContent({ initialEvents }: EventsPageContentPr
                         ]}
                     />
 
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mt-6 mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10 flex items-center gap-2"
-                    >
-                        {language === 'ar' ? <ArrowRight className="w-4 h-4" /> : <ArrowLeft className="w-4 h-4" />}
-                        <span>{t('رجوع', 'Back')}</span>
-                    </Button>
+
 
                     <motion.div
                         className="text-center py-12"
@@ -150,7 +143,7 @@ export default function EventsPageContent({ initialEvents }: EventsPageContentPr
                             {t('اكتشف الأنشطة', 'Discover Activities')}
                         </motion.div>
 
-                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent">
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent py-2 leading-relaxed">
                             {t('الفعاليات والأنشطة', 'Events & Activities')}
                         </h1>
                         <p className="text-lg text-muted-foreground max-w-2xl mx-auto">

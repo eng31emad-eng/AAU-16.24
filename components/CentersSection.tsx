@@ -54,20 +54,20 @@ export const CentersSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6"
             whileHover={{ scale: 1.05 }}
           >
             <Building2 className="w-4 h-4" />
             {t('خدمات متميزة', 'Outstanding Services')}
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('المراكز', 'Centers')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -79,7 +79,7 @@ export const CentersSection = () => {
         </motion.div>
 
         {/* Centers Grid */}
-        <motion.div 
+        <motion.div
           className="grid md:grid-cols-2 gap-8"
           variants={containerVariants}
           initial="hidden"
@@ -91,7 +91,7 @@ export const CentersSection = () => {
               key={center.id || index}
               className="group relative bg-card rounded-2xl overflow-hidden shadow-lg border border-border/50"
               variants={cardVariants}
-              whileHover={{ 
+              whileHover={{
                 y: -10,
                 boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)"
               }}
@@ -107,9 +107,9 @@ export const CentersSection = () => {
                   transition={{ duration: 0.6 }}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent"></div>
-                
+
                 {/* Icon Badge */}
-                <motion.div 
+                <motion.div
                   className="absolute top-4 left-4 w-12 h-12 rounded-full bg-primary/90 backdrop-blur-md flex items-center justify-center"
                   initial={{ opacity: 0, scale: 0 }}
                   animate={isInView ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
@@ -147,12 +147,12 @@ export const CentersSection = () => {
                     </div>
                   )}
                 </div>
-                
+
                 <motion.div
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  <Button 
+                  <Button
                     variant="outline"
                     size="sm"
                     onClick={() => router.push(`/centers/${center.id}`)}
@@ -172,7 +172,7 @@ export const CentersSection = () => {
         </motion.div>
 
         {/* View All Button */}
-        <motion.div 
+        <motion.div
           className="text-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -182,8 +182,8 @@ export const CentersSection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               onClick={() => router.push('/centers')}
               className="group"

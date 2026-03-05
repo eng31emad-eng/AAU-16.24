@@ -75,7 +75,7 @@ export const EventsSection = ({ initialEvents }: EventsSectionProps) => {
             <CalendarDays className="w-4 h-4" />
             {t('الأنشطة القادمة', 'Upcoming Activities')}
           </motion.div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('الفعاليات', 'Events')}
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">

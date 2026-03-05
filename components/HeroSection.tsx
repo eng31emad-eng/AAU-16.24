@@ -121,7 +121,7 @@ export const HeroSection = () => {
           </motion.div>
 
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-tight"
+            className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-display font-bold leading-relaxed py-4"
             variants={itemVariants}
           >
             <span className="bg-gradient-to-r from-white via-secondary to-white bg-clip-text text-transparent">

@@ -61,15 +61,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
 
                 <div className="container mx-auto px-4 h-full flex flex-col justify-end pb-12 relative z-10">
                     <div className="mb-6 space-y-4">
-                        <Button
-                            variant="secondary"
-                            size="sm"
-                            onClick={() => router.back()}
-                            className="font-bold gap-2 hover:scale-105 transition-transform"
-                        >
-                            <ArrowIcon className="w-4 h-4" />
-                            {t('رجوع', 'Back')}
-                        </Button>
+
                         <Breadcrumb
                             items={[
                                 { label: { ar: 'الكليات', en: 'Colleges' }, href: '/colleges' },
@@ -463,39 +455,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                     </Card>
                 )}
 
-                {/* Social Connect Section */}
-                <motion.div
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: 0.7 }}
-                    className="mt-8 text-center"
-                >
-                    <h3 className="text-xl font-bold mb-8 text-foreground relative inline-block">
-                        {t('تواصل مع الكلية', 'Connect with the College')}
-                        <span className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-secondary to-transparent rounded-full opacity-50"></span>
-                    </h3>
-                    <div className="flex justify-center gap-8">
-                        {[
-                            { icon: Facebook, label: 'Facebook', color: 'hover:bg-blue-600 hover:text-white', href: '#' },
-                            { icon: Instagram, label: 'Instagram', color: 'hover:bg-gradient-to-tr hover:from-yellow-400 hover:via-red-500 hover:to-purple-500 hover:text-white', href: '#' },
-                            { icon: MessageCircle, label: 'WhatsApp', color: 'hover:bg-green-600 hover:text-white', href: 'https://wa.me/967' },
-                        ].map((social, idx) => (
-                            <motion.a
-                                key={idx}
-                                href={social.href}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                whileHover={{ scale: 1.15, y: -8 }}
-                                whileTap={{ scale: 0.95 }}
-                                className={`w-14 h-14 rounded-2xl bg-card shadow-lg flex items-center justify-center transition-all duration-300 text-muted-foreground border border-border/40 ${social.color}`}
-                                title={social.label}
-                            >
-                                <social.icon className="w-7 h-7" />
-                            </motion.a>
-                        ))}
-                    </div>
-                </motion.div>
+
 
                 {/* CTA Section */}
                 <div className="bg-gradient-to-r from-primary to-secondary rounded-3xl p-8 md:p-12 text-center animate-fade-in-up mt-20" style={{ animationDelay: '0.6s' }}>
@@ -513,12 +473,6 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                             <Link href="/admission">
                                 {t('التقديم الآن', 'Apply Now')}
                                 <ArrowIcon className="w-5 h-5" />
-                            </Link>
-                        </Button>
-
-                        <Button asChild size="lg" variant="outline" className="text-lg px-8 bg-transparent border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-                            <Link href="/contact">
-                                {t('تواصل معنا', 'Contact Us')}
                             </Link>
                         </Button>
                     </div>

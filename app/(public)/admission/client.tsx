@@ -19,14 +19,6 @@ const Admission = () => {
                     <Breadcrumb items={[{ label: { ar: 'القبول والتسجيل', en: 'Admission' } }]} />
                 </div>
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
 
                 <AdmissionSection />
             </div>

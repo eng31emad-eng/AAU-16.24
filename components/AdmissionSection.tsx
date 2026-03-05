@@ -10,7 +10,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 
 export const AdmissionSection = () => {
   const { t, language } = useLanguage();
@@ -155,11 +155,11 @@ export const AdmissionSection = () => {
       return;
     }
 
-    if (hasFiles || !isGraduate) {
-      // In a real system, we wouldn't generate this until admin approval.
-      // For the mock, we'll store it but show a "Pending Review" status.
+    if (isGraduate && hasFiles) {
       const sNum = generateSerialNumber();
       setSerialNumber(sNum);
+    } else {
+      setSerialNumber(null);
     }
 
     setShowSuccess(true);
@@ -222,7 +222,7 @@ export const AdmissionSection = () => {
             <FileText className="w-4 h-4" />
             {t('ابدأ مستقبلك الآن', 'Start Your Future Now')}
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('القبول والتسجيل', 'Admission & Registration')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -678,9 +678,9 @@ export const AdmissionSection = () => {
               </motion.div>
 
               <div className="space-y-2">
-                <h2 className="text-2xl font-display font-bold text-gray-900">
+                <DialogTitle className="text-2xl font-display font-bold text-gray-900">
                   {t('تم استلام طلبك بنجاح!', 'Application Received!')}
-                </h2>
+                </DialogTitle>
                 <p className="text-gray-600">
                   {formData.educationStatus === 'graduate'
                     ? t('شكراً لك على التقديم عبر موقعنا. لقد حصلت على خصم 3% للطلاب المجددين!', 'Thank you for applying through our website. You received a 3% discount for new students!')

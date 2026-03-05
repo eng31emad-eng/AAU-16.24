@@ -55,20 +55,20 @@ export const PartnersSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Header */}
-        <motion.div 
+        <motion.div
           className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
-          <motion.div 
+          <motion.div
             className="inline-flex items-center gap-2 bg-secondary/10 text-secondary px-4 py-2 rounded-full text-sm font-medium mb-6"
             whileHover={{ scale: 1.05 }}
           >
             <Handshake className="w-4 h-4" />
             {t('شراكات استراتيجية', 'Strategic Partnerships')}
           </motion.div>
-          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent">
+          <h2 className="text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-secondary via-primary to-secondary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('شركاؤنا', 'Our Partners')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
@@ -80,7 +80,7 @@ export const PartnersSection = () => {
         </motion.div>
 
         {/* Partners Grid */}
-        <motion.div 
+        <motion.div
           className="grid grid-cols-2 md:grid-cols-4 gap-6"
           variants={containerVariants}
           initial="hidden"
@@ -92,24 +92,23 @@ export const PartnersSection = () => {
               className="group relative"
               variants={cardVariants}
             >
-              <motion.div 
+              <motion.div
                 className="relative bg-background rounded-2xl p-6 shadow-lg border border-border/50 h-full flex flex-col items-center justify-center text-center overflow-hidden"
-                whileHover={{ 
+                whileHover={{
                   y: -8,
                   boxShadow: "0 25px 50px -12px rgba(0,0,0,0.15)"
                 }}
                 transition={{ duration: 0.3 }}
               >
                 {/* Partner Type Badge */}
-                <Badge 
-                  className={`absolute top-3 right-3 text-xs ${
-                    partner.type === 'international' 
-                      ? 'bg-primary/10 text-primary' 
+                <Badge
+                  className={`absolute top-3 right-3 text-xs ${partner.type === 'international'
+                      ? 'bg-primary/10 text-primary'
                       : 'bg-secondary/10 text-secondary'
-                  }`}
+                    }`}
                 >
-                  {partner.type === 'international' 
-                    ? t('دولي', 'International') 
+                  {partner.type === 'international'
+                    ? t('دولي', 'International')
                     : t('محلي', 'Local')
                   }
                 </Badge>
@@ -117,8 +116,8 @@ export const PartnersSection = () => {
                 {/* Logo */}
                 <div className="w-24 h-24 rounded-full bg-gradient-to-br from-muted to-muted/50 flex items-center justify-center mb-4 overflow-hidden group-hover:scale-110 transition-transform duration-300">
                   {partner.logo ? (
-                    <img 
-                      src={partner.logo} 
+                    <img
+                      src={partner.logo}
                       alt={language === 'ar' ? partner.nameAr : partner.nameEn}
                       className="w-full h-full object-contain p-2"
                     />
@@ -155,7 +154,7 @@ export const PartnersSection = () => {
         </motion.div>
 
         {/* View All Button */}
-        <motion.div 
+        <motion.div
           className="text-center mt-12"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
@@ -165,8 +164,8 @@ export const PartnersSection = () => {
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="lg"
               onClick={() => router.push('/partners')}
               className="group border-secondary/50 hover:bg-secondary hover:text-secondary-foreground"

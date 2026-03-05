@@ -13,7 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { NotificationDropdown } from './NotificationDropdown';
+
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -143,18 +143,18 @@ export const Header = () => {
             >
               <img src={(nguLogo as any).src || nguLogo} alt={t('شعار NGU', 'NGU Logo')} className="w-full h-full object-cover" />
             </motion.div>
-            <div className={`transition-all duration-500 text-white text-shadow`}>
-              <h1 className="text-xl font-display font-bold leading-tight group-hover:text-secondary transition-colors">
+            <div className={`transition-all duration-500 text-white text-shadow flex flex-col justify-center`}>
+              <h1 className="text-[13px] xs:text-sm sm:text-lg md:text-xl font-display font-bold leading-tight group-hover:text-secondary transition-colors">
                 {t('جامعة الجيل الجديد', 'AJ JEEL ALJADEED UNIVERSITY')}
               </h1>
-              <p className="text-[9px] text-secondary/90 font-medium tracking-wider uppercase">
+              <p className="text-[7px] xs:text-[8px] sm:text-[9px] text-secondary/90 font-medium tracking-wider uppercase mt-0.5">
                 {t('لأجيال واعدة', 'FOR PROMISING GENERATIONS')}
               </p>
             </div>
           </motion.button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center xl:gap-6 lg:gap-3">
+          <nav className="hidden lg:flex items-center xl:gap-8 lg:gap-5">
             {mainNavRoutes.map((item, index) => {
               const isColleges = item.href === '/colleges';
               const isCenters = item.href === '/centers';
@@ -199,7 +199,7 @@ export const Header = () => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2 }}
-                          className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 ${menuWidth} bg-white/95 backdrop-blur-xl border border-secondary/20 rounded-2xl shadow-2xl overflow-hidden z-50 p-5`}
+                          className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 ${menuWidth} bg-background/95 backdrop-blur-xl border border-secondary/20 rounded-2xl shadow-2xl overflow-hidden z-50 p-5`}
                         >
                           <div className="grid grid-cols-2 gap-3">
                             {items.map((subItem) => (
@@ -213,7 +213,7 @@ export const Header = () => {
                                   <subItem.icon className="w-5 h-5" />
                                 </div>
                                 <div className="flex-1">
-                                  <h4 className="text-primary font-bold text-sm mb-0.5 group-hover/item:text-secondary-dark transition-colors">
+                                  <h4 className="text-foreground font-bold text-sm mb-0.5 group-hover/item:text-secondary transition-colors">
                                     {t(subItem.ar, subItem.en)}
                                   </h4>
                                   <p className="text-[10px] text-muted-foreground line-clamp-1">
@@ -285,14 +285,14 @@ export const Header = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[220px] bg-white/95 backdrop-blur-xl border border-secondary/20 rounded-xl shadow-2xl overflow-hidden z-50 p-2`}
+                      className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[220px] bg-background/95 backdrop-blur-xl border border-secondary/20 rounded-xl shadow-2xl overflow-hidden z-50 p-2`}
                     >
                       <div className="flex flex-col gap-1">
                         {additionalRoutes.map((item, index) => (
                           <motion.button
                             key={index}
                             onClick={() => handleNavigation(item.href, item.isRoute)}
-                            className={`flex items-center gap-3 w-full p-2.5 rounded-lg text-right transition-all duration-200 group/item ${isActiveRoute(item.href, item.isRoute) ? 'bg-secondary/20 text-secondary' : 'hover:bg-secondary/10 text-primary'}`}
+                            className={`flex items-center gap-3 w-full p-2.5 rounded-lg text-right transition-all duration-200 group/item ${isActiveRoute(item.href, item.isRoute) ? 'bg-secondary/20 text-secondary' : 'hover:bg-secondary/10 text-foreground'}`}
                             whileHover={{ x: language === 'ar' ? -5 : 5 }}
                           >
                             <span className="text-sm font-bold flex-1">
@@ -359,21 +359,7 @@ export const Header = () => {
               </Tooltip>
             </TooltipProvider>
 
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <NotificationDropdown />
-                  </motion.div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('الإشعارات', 'Notifications')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
+
 
             <TooltipProvider>
               <Tooltip>
@@ -425,8 +411,7 @@ export const Header = () => {
 
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden transition-all duration-300 text-white text-shadow-sm
-                }`}
+              className="lg:hidden transition-all duration-300 text-white text-shadow-sm z-[100] bg-white/10 p-2 rounded-xl hover:bg-white/20 border border-white/20 ml-1"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -439,7 +424,7 @@ export const Header = () => {
                     exit={{ rotate: 90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <X className="w-6 h-6" />
+                    <X className="w-5 h-5" />
                   </motion.div>
                 ) : (
                   <motion.div
@@ -449,7 +434,7 @@ export const Header = () => {
                     exit={{ rotate: -90, opacity: 0 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <Menu className="w-6 h-6" />
+                    <Menu className="w-5 h-5" />
                   </motion.div>
                 )}
               </AnimatePresence>

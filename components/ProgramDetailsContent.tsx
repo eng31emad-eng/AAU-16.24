@@ -83,14 +83,7 @@ export default function ProgramDetailsContent({
                 <div className="container mx-auto px-4 relative z-10 pt-8 pb-16">
                     <Breadcrumb items={breadcrumbItems} />
 
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mt-4 mb-2 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                    >
-                        <BackArrow className="w-4 h-4 mx-2" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <div className="mt-8 max-w-4xl">
                         <motion.div

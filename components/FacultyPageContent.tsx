@@ -103,14 +103,7 @@ export default function FacultyPageContent({ initialMembers }: FacultyPageConten
                         ]}
                     />
 
-                    <Button
-                        variant="ghost"
-                        onClick={() => router.back()}
-                        className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                    >
-                        <BackArrow className="w-4 h-4 mx-2" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <div className="text-center mt-8 mb-12">
                         <motion.div
@@ -121,7 +114,7 @@ export default function FacultyPageContent({ initialMembers }: FacultyPageConten
                             <div className="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center shadow-lg">
                                 <GraduationCap className="w-10 h-10 text-white" />
                             </div>
-                            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                            <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent py-2 leading-relaxed">
                                 {t('الكادر التعليمي', 'Faculty')}
                             </h1>
                             <p className="text-muted-foreground max-w-2xl mx-auto text-lg">

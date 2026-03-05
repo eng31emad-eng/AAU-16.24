@@ -65,18 +65,11 @@ export default function OffersPageContent({ initialOffers }: OffersPageContentPr
             <div className="container mx-auto px-4">
                 <Breadcrumb items={[{ label: { ar: 'عروض الجامعة', en: 'University Offers' } }]} />
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
+
 
                 <div className="text-center mb-12">
-                    <h1 className="text-4xl font-bold mb-4">
-                        {t('عروض الجامعة', 'University Offers')}
+                    <h1 className="text-4xl font-bold mb-4 py-3 leading-relaxed">
+                        {t('العروض الخاصة', 'Special Offers')}
                     </h1>
                     <div className="w-24 h-1 bg-secondary mx-auto mb-6"></div>
                     <p className="text-muted-foreground max-w-2xl mx-auto">

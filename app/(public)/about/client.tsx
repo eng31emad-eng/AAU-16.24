@@ -60,14 +60,6 @@ const About = () => {
           <Breadcrumb items={[{ label: { ar: 'عن الجامعة', en: 'About' } }]} />
         </div>
 
-        <Button
-          variant="ghost"
-          onClick={() => router.back()}
-          className="mb-6"
-        >
-          <BackArrow className="w-4 h-4 mx-2" />
-          {t('رجوع', 'Back')}
-        </Button>
 
         <div className="mb-16 text-center animate-fade-in-up">
           <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-medium mb-6">

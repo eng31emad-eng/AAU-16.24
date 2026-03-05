@@ -108,7 +108,7 @@ export const AboutSection = () => {
             <Sparkles className="w-4 h-4" />
             {t('تعرف علينا', 'About Us')}
           </motion.div>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-display font-bold mb-4 bg-gradient-to-r from-primary via-secondary to-primary bg-clip-text text-transparent py-2 leading-relaxed">
             {t('عن الجامعة', 'About the University')}
           </h2>
           <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto">

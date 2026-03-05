@@ -69,7 +69,7 @@ export const StudentSurvey = ({ onComplete, studentName }: StudentSurveyProps) =
                         <div className="w-16 h-16 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-primary/20">
                             <GraduationCap className="w-8 h-8 text-primary" />
                         </div>
-                        <CardTitle className="text-2xl font-display font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
+                        <CardTitle className="text-2xl font-display font-bold bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent py-1 leading-relaxed">
                             {t('استبيان تطوير الخدمات الجامعية', 'University Services Improvement Survey')}
                         </CardTitle>
                         <CardDescription className="text-base">

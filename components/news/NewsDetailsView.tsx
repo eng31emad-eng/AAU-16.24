@@ -51,13 +51,7 @@ export default function NewsDetailsView({ news, relatedNews }: NewsDetailsViewPr
                         ]}
                     />
 
-                    <Button
-                        onClick={() => router.push('/news')}
-                        className="mb-6 bg-[#D4AF37] hover:bg-[#C9A961] text-white gap-2 rounded-lg font-medium transition-colors px-4 py-2 text-sm"
-                    >
-                        <BackArrow className="w-4 h-4" />
-                        {t('رجوع', 'Back')}
-                    </Button>
+
 
                     <motion.div
                         initial={{ opacity: 0, y: 20 }}

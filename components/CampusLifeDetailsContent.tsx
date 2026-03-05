@@ -47,16 +47,7 @@ export default function CampusLifeDetailsContent({ item, relatedItems }: CampusL
                         ]}
                     />
 
-                    {/* Back Button */}
-                    <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => router.push('/campus-life')}
-                        className="mt-4 bg-white dark:bg-white text-black hover:bg-[#F4E4B0] dark:hover:bg-[#F4E4B0] border-2 border-border gap-2 rounded-lg font-medium transition-colors"
-                    >
-                        <BackArrow className="w-4 h-4" />
-                        {t('العودة إلى الحياة الجامعية', 'Back to Campus Life')}
-                    </Button>
+
 
                     {/* Title */}
                     <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mt-4 mb-3">

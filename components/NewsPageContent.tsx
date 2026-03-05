@@ -47,14 +47,7 @@ export default function NewsPageContent({ initialNews }: NewsPageContentProps) {
             <div className="container mx-auto px-4 py-8">
                 <Breadcrumb items={[{ label: { ar: 'الأخبار', en: 'News' } }]} />
 
-                <Button
-                    variant="ghost"
-                    onClick={() => router.back()}
-                    className="mb-6 text-secondary hover:text-secondary/80 hover:bg-secondary/10"
-                >
-                    <BackArrow className="w-4 h-4 mx-2" />
-                    {t('رجوع', 'Back')}
-                </Button>
+
 
                 <div className="mb-12 text-center animate-fade-in-up">
                     <h1 className="text-4xl md:text-5xl font-display font-bold mb-4">
