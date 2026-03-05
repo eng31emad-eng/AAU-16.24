@@ -398,19 +398,30 @@ export const Header = () => {
                       className="transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm"
                     >
                       <AnimatePresence mode="wait">
-                        <motion.div
-                          key={theme === 'dark' ? 'dark' : 'light'}
-                          initial={{ rotate: -90, opacity: 0 }}
-                          animate={{ rotate: 0, opacity: 1 }}
-                          exit={{ rotate: 90, opacity: 0 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          {theme === 'dark' ? (
-                            <Moon className="w-4 h-4" />
-                          ) : (
+                        {!mounted ? (
+                          <motion.div
+                            key="skeleton"
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ duration: 0.2 }}
+                          >
                             <Sun className="w-4 h-4" />
-                          )}
-                        </motion.div>
+                          </motion.div>
+                        ) : (
+                          <motion.div
+                            key={theme}
+                            initial={{ rotate: -90, opacity: 0 }}
+                            animate={{ rotate: 0, opacity: 1 }}
+                            exit={{ rotate: 90, opacity: 0 }}
+                            transition={{ duration: 0.2 }}
+                          >
+                            {theme === 'dark' ? (
+                              <Moon className="w-4 h-4" />
+                            ) : (
+                              <Sun className="w-4 h-4" />
+                            )}
+                          </motion.div>
+                        )}
                       </AnimatePresence>
                     </Button>
                   </motion.div>
