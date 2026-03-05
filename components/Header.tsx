@@ -5,7 +5,7 @@ import { ChevronLeft, ChevronRight, Menu, X, LogIn, ChevronDown, Globe, Stethosc
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useTheme } from 'next-themes';
 import { usePathname, useRouter } from 'next/navigation';
-const nguLogo = '/assets/ngu-building.jpg';
+import nguLogo from '@/assets/ngu-building.jpg';
 import { mainNavRoutes, additionalRoutes } from '@/config/routes';
 import {
   DropdownMenu,
@@ -13,6 +13,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { NotificationDropdown } from './NotificationDropdown';
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { Separator } from '@/components/ui/separator';
 import {
@@ -124,7 +125,7 @@ export const Header = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-20">
           {/* Logo */}
           <motion.button
             onClick={() => router.push('/')}
@@ -136,24 +137,24 @@ export const Header = () => {
             whileTap={{ scale: 0.98 }}
           >
             <motion.div
-              className="w-10 h-10 md:w-12 md:h-12 rounded-full overflow-hidden border-2 border-secondary"
+              className="w-12 h-12 rounded-full overflow-hidden border-2 border-secondary"
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ duration: 0.3 }}
             >
               <img src={(nguLogo as any).src || nguLogo} alt={t('شعار NGU', 'NGU Logo')} className="w-full h-full object-cover" />
             </motion.div>
             <div className={`transition-all duration-500 text-white text-shadow`}>
-              <h1 className="text-sm md:text-xl font-display font-bold leading-tight group-hover:text-secondary transition-colors line-clamp-1 md:line-clamp-none">
+              <h1 className="text-xl font-display font-bold leading-tight group-hover:text-secondary transition-colors">
                 {t('جامعة الجيل الجديد', 'AJ JEEL ALJADEED UNIVERSITY')}
               </h1>
-              <p className="text-[7px] md:text-[9px] text-secondary/90 font-medium tracking-wider uppercase">
+              <p className="text-[9px] text-secondary/90 font-medium tracking-wider uppercase">
                 {t('لأجيال واعدة', 'FOR PROMISING GENERATIONS')}
               </p>
             </div>
           </motion.button>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center xl:gap-8 lg:gap-5">
+          <nav className="hidden lg:flex items-center xl:gap-6 lg:gap-3">
             {mainNavRoutes.map((item, index) => {
               const isColleges = item.href === '/colleges';
               const isCenters = item.href === '/centers';
@@ -198,7 +199,7 @@ export const Header = () => {
                           animate={{ opacity: 1, y: 0, scale: 1 }}
                           exit={{ opacity: 0, y: 10, scale: 0.95 }}
                           transition={{ duration: 0.2 }}
-                          className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 ${menuWidth} bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-secondary/20 dark:border-secondary/10 rounded-2xl shadow-2xl overflow-hidden z-50 p-5`}
+                          className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 ${menuWidth} bg-white/95 backdrop-blur-xl border border-secondary/20 rounded-2xl shadow-2xl overflow-hidden z-50 p-5`}
                         >
                           <div className="grid grid-cols-2 gap-3">
                             {items.map((subItem) => (
@@ -284,7 +285,7 @@ export const Header = () => {
                       animate={{ opacity: 1, y: 0, scale: 1 }}
                       exit={{ opacity: 0, y: 10, scale: 0.95 }}
                       transition={{ duration: 0.2 }}
-                      className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[220px] bg-white/95 dark:bg-slate-900/95 backdrop-blur-xl border border-secondary/20 dark:border-secondary/10 rounded-xl shadow-2xl overflow-hidden z-50 p-2`}
+                      className={`absolute top-full ${language === 'ar' ? 'right-0' : 'left-0'} mt-2 w-[220px] bg-white/95 backdrop-blur-xl border border-secondary/20 rounded-xl shadow-2xl overflow-hidden z-50 p-2`}
                     >
                       <div className="flex flex-col gap-1">
                         {additionalRoutes.map((item, index) => (
@@ -308,41 +309,16 @@ export const Header = () => {
             )}
           </nav>
 
-          {/* Login, Language Toggle, Search & Mobile Menu */}
+          {/* Login, Language Toggle & Mobile Menu */}
           <motion.div
-            className="flex items-center gap-2 md:gap-4"
+            className="flex items-center gap-3"
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
           >
-            {/* Search Button */}
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <motion.div
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                  >
-                    <Button
-                      variant="outline"
-                      size="sm"
-                      onClick={() => router.push('/search')}
-                      className="transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm px-2 md:px-3"
-                    >
-                      <Search className="w-4 h-4" />
-                    </Button>
-                  </motion.div>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>{t('بحث', 'Search')}</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
-
             <motion.div
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="hidden xs:block"
             >
               <Button
                 size="sm"
@@ -383,6 +359,21 @@ export const Header = () => {
               </Tooltip>
             </TooltipProvider>
 
+            <TooltipProvider>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <motion.div
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <NotificationDropdown />
+                  </motion.div>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>{t('الإشعارات', 'Notifications')}</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
 
             <TooltipProvider>
               <Tooltip>
