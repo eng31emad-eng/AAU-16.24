@@ -156,7 +156,7 @@ export const SmartChat = () => {
 
   return (
     <>
-      <div className="fixed z-50 bottom-[calc(16px+env(safe-area-inset-bottom))] right-6">
+      <div className="fixed z-50 bottom-8 right-6 md:right-8">
         <motion.button
           whileTap={{ scale: 0.97 }}
           whileHover={{ y: -2 }}

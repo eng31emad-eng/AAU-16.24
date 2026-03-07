@@ -22,7 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion';
 
 export const Header = () => {
   const { language, toggleLanguage, t } = useLanguage();
@@ -38,6 +38,12 @@ export const Header = () => {
   const [isMoreHovered, setIsMoreHovered] = useState(false);
   const [openMobileSubMenu, setOpenMobileSubMenu] = useState<string | null>(null);
   const [mounted, setMounted] = useState(false);
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
+  });
 
   useEffect(() => {
     setMounted(true);
@@ -117,7 +123,7 @@ export const Header = () => {
   return (
     <motion.header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
-        ? 'bg-black/70 backdrop-blur-md border-b border-secondary/30 shadow-lg'
+        ? 'bg-black/40 backdrop-blur-xl saturate-[1.8] border-b border-white/5 shadow-2xl'
         : 'bg-black/60 backdrop-blur-sm border-b border-white/10'
         }`}
       initial={{ y: -100 }}
@@ -125,7 +131,7 @@ export const Header = () => {
       transition={{ duration: 0.5, ease: "easeOut" }}
     >
       <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between h-20">
+        <div className="flex items-center justify-between h-20 gap-x-4">
           {/* Logo */}
           <motion.button
             onClick={() => router.push('/')}
@@ -137,17 +143,17 @@ export const Header = () => {
             whileTap={{ scale: 0.98 }}
           >
             <motion.div
-              className="w-12 h-12 rounded-full overflow-hidden border-2 border-secondary"
+              className={`rounded-full overflow-hidden border-2 border-secondary transition-all duration-500 ${isScrolled ? 'w-10 h-10' : 'w-12 h-12'}`}
               whileHover={{ scale: 1.1, rotate: 5 }}
               transition={{ duration: 0.3 }}
             >
               <img src={(nguLogo as any).src || nguLogo} alt={t('شعار NGU', 'NGU Logo')} className="w-full h-full object-cover" />
             </motion.div>
             <div className={`transition-all duration-500 text-white text-shadow flex flex-col justify-center`}>
-              <h1 className="text-[13px] xs:text-sm sm:text-lg md:text-xl font-display font-bold leading-tight group-hover:text-secondary transition-colors">
+              <h1 className={`font-display font-bold leading-tight group-hover:text-secondary transition-all duration-500 ${isScrolled ? 'text-xs sm:text-base md:text-lg' : 'text-[13px] xs:text-sm sm:text-lg md:text-xl'}`}>
                 {t('جامعة الجيل الجديد', 'AJ JEEL ALJADEED UNIVERSITY')}
               </h1>
-              <p className="text-[7px] xs:text-[8px] sm:text-[9px] text-secondary/90 font-medium tracking-wider uppercase mt-0.5">
+              <p className={`text-secondary/90 font-medium tracking-wider uppercase transition-all duration-500 ${isScrolled ? 'text-[6px] sm:text-[8px]' : 'text-[7px] xs:text-[8px] sm:text-[9px]'} mt-0.5`}>
                 {t('لأجيال واعدة', 'FOR PROMISING GENERATIONS')}
               </p>
             </div>
@@ -186,7 +192,7 @@ export const Header = () => {
                       {t(item.ar, item.en)}
                       <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${hoveredState ? 'rotate-180' : ''}`} />
                       <motion.span
-                        className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
+                        className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_10px_rgba(245,200,60,0.8)] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
                           }`}
                         transition={{ duration: 0.3 }}
                       />
@@ -248,7 +254,7 @@ export const Header = () => {
                 >
                   {t(item.ar, item.en)}
                   <motion.span
-                    className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
+                    className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_10px_rgba(245,200,60,0.8)] ${isActiveRoute(item.href, item.isRoute) ? 'w-full' : 'w-0 group-hover:w-full'
                       }`}
                     transition={{ duration: 0.3 }}
                   />
@@ -273,7 +279,7 @@ export const Header = () => {
                   {t('المزيد', 'More')}
                   <ChevronDown className={`w-4 h-4 transition-transform duration-300 ${isMoreHovered ? 'rotate-180' : ''}`} />
                   <motion.span
-                    className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_8px_hsl(var(--secondary))] ${isMoreHovered ? 'w-full' : 'w-0 group-hover:w-full'}`}
+                    className={`absolute bottom-0 left-0 h-0.5 bg-secondary shadow-[0_0_10px_rgba(245,200,60,0.8)] ${isMoreHovered ? 'w-full' : 'w-0 group-hover:w-full'}`}
                     transition={{ duration: 0.3 }}
                   />
                 </motion.button>
@@ -323,9 +329,9 @@ export const Header = () => {
               <Button
                 size="sm"
                 onClick={() => router.push('/login')}
-                className="bg-secondary hover:bg-secondary/90 text-primary hover:text-primary font-semibold transition-all duration-300 glow-gold hidden sm:flex"
+                className="bg-secondary hover:bg-secondary/90 text-primary hover:text-primary font-bold transition-all duration-300 glow-gold hidden sm:flex gap-2 rounded-full px-5 py-5 border-2 border-secondary/20 h-9"
               >
-                <LogIn className="w-4 h-4 ml-2" />
+                <LogIn className="w-4 h-4" />
                 {t('تسجيل الدخول', 'Login')}
               </Button>
             </motion.div>
@@ -341,7 +347,7 @@ export const Header = () => {
                       variant="outline"
                       size="sm"
                       onClick={toggleLanguage}
-                      className="transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm"
+                      className="transition-all duration-300 group bg-white/5 text-white border-white/20 hover:bg-white hover:text-primary rounded-full px-4 h-9 backdrop-blur-sm"
                     >
                       <motion.div
                         animate={{ rotate: [0, 15, -15, 0] }}
@@ -372,7 +378,7 @@ export const Header = () => {
                       variant="outline"
                       size="sm"
                       onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
-                      className="transition-all duration-300 group bg-transparent text-white border-white/50 hover:bg-white hover:text-primary hover:border-white text-shadow-sm"
+                      className="transition-all duration-300 group bg-white/5 text-white border-white/20 hover:bg-white hover:text-primary rounded-full px-3 h-9 backdrop-blur-sm"
                     >
                       <AnimatePresence mode="wait">
                         {!mounted ? (
@@ -411,7 +417,7 @@ export const Header = () => {
 
             <motion.button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden transition-all duration-300 text-white text-shadow-sm z-[100] bg-white/10 p-2 rounded-xl hover:bg-white/20 border border-white/20 ml-1"
+              className="lg:hidden transition-all duration-300 text-white text-shadow-sm z-[100] bg-white/10 p-2 rounded-xl hover:bg-white/20 border border-white/20 ml-1 flex items-center justify-center"
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -611,6 +617,11 @@ export const Header = () => {
           </div>
         </SheetContent>
       </Sheet>
+      {/* Scroll Progress Bar */}
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-[2px] bg-gradient-to-r from-secondary via-primary to-secondary origin-left z-[60]"
+        style={{ scaleX }}
+      />
     </motion.header >
   );
 };

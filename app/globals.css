@@ -130,12 +130,12 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
     transition: direction 0.3s ease;
   }
 
   [dir="rtl"] body {
-    font-family: 'Tajawal', 'Noto Sans Arabic', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Tajawal', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 
   [dir="rtl"] h1,
@@ -143,19 +143,16 @@ All colors MUST be HSL.
   [dir="rtl"] h3,
   [dir="rtl"] h4,
   [dir="rtl"] h5,
-  [dir="rtl"] h6 {
-    font-family: 'Tajawal', 'Noto Sans Arabic', serif;
-    font-weight: 700;
-  }
-
+  [dir="rtl"] h6,
   [dir="ltr"] h1,
   [dir="ltr"] h2,
   [dir="ltr"] h3,
   [dir="ltr"] h4,
   [dir="ltr"] h5,
   [dir="ltr"] h6 {
-    font-family: 'Playfair Display', serif;
+    font-family: 'Tajawal', sans-serif;
     font-weight: 700;
+    font-style: normal;
   }
 }
 

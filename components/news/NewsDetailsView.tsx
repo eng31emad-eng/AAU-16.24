@@ -6,7 +6,7 @@ import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
-import { ArrowRight, ArrowLeft, Calendar, Eye, Share2, Clock, Users, Building2, Beaker } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Calendar, Eye, Clock, Users, Building2, Beaker } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { NewsItem } from '@/types';
 import Link from 'next/link';
@@ -126,26 +126,6 @@ export default function NewsDetailsView({ news, relatedNews }: NewsDetailsViewPr
                             </p>
                         </div>
 
-                        {/* Share Section */}
-                        <div className="mt-12 pt-8 border-t border-border">
-                            <div className="flex items-center justify-between flex-wrap gap-4">
-                                <div className="flex items-center gap-3">
-                                    <Share2 className="w-5 h-5 text-primary" />
-                                    <span className="font-medium">{t('مشاركة الخبر', 'Share this news')}</span>
-                                </div>
-                                <div className="flex gap-3">
-                                    <Button variant="outline" size="sm" className="rounded-full">
-                                        {t('فيسبوك', 'Facebook')}
-                                    </Button>
-                                    <Button variant="outline" size="sm" className="rounded-full">
-                                        {t('تويتر', 'Twitter')}
-                                    </Button>
-                                    <Button variant="outline" size="sm" className="rounded-full">
-                                        {t('لينكدإن', 'LinkedIn')}
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
                     </motion.article>
 
                     {/* Sidebar */}

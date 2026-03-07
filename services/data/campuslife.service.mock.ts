@@ -47,15 +47,16 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مركز طبي متكامل يقدم الخدمات الصحية للطلاب والموظفين',
     contentEn: 'Integrated medical center providing health services for students and staff',
     category: 'facilities',
+    image: 'https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?w=800&h=600&fit=crop'
   },
   {
     id: '5',
     slug: 'restaurants-cafeterias',
     titleAr: 'المطاعم والكافتيريات',
     titleEn: 'Restaurants and Cafeterias',
-    descriptionAr: 'مجموعة متنوعة من المطاعم والكافتيريات التي تقدم وجبات صحية ولذيذة',
+    descriptionAr: 'مجموعة متنوعة من المطاعم والكافتيريات التي تقدم وجبات صحية ولذيقة',
     descriptionEn: 'Various restaurants and cafeterias offering healthy and delicious meals',
-    contentAr: 'مجموعة متنوعة من المطاعم والكافتيريات التي تقدم وجبات صحية ولذيذة',
+    contentAr: 'مجموعة متنوعة من المطاعم والكافتيريات التي تقدم وجبات صحية ولذيقة',
     contentEn: 'Various restaurants and cafeterias offering healthy and delicious meals',
     category: 'facilities',
     image: '/images/campus/cafeteria.jpg'
@@ -70,6 +71,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مساحة ترفيهية للطلاب تشمل الألعاب والأنشطة المتنوعة',
     contentEn: 'Entertainment space for students including games and various activities',
     category: 'activities',
+    image: 'https://images.unsplash.com/photo-1523580494863-6f3031224c94?w=800&h=600&fit=crop'
   },
   {
     id: '7',
@@ -93,6 +95,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'ندوات ثقافية ومعارض فنية وأمسيات أدبية منتظمة',
     contentEn: 'Cultural seminars, art exhibitions, and regular literary evenings',
     category: 'activities',
+    image: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=800&h=600&fit=crop'
   },
   {
     id: '9',
@@ -104,6 +107,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'ورش علمية ومسابقات تقنية وجلسات برمجة',
     contentEn: 'Scientific workshops, technical competitions, and programming sessions',
     category: 'activities',
+    image: 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=800&h=600&fit=crop'
   },
   {
     id: '10',
@@ -115,6 +119,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'برامج تطوعية منتظمة لخدمة المجتمع المحلي',
     contentEn: 'Regular volunteer programs serving the local community',
     category: 'activities',
+    image: 'https://images.unsplash.com/photo-1559027615-cd26735559ad?w=800&h=600&fit=crop'
   },
   {
     id: '11',
@@ -126,6 +131,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'حرم جامعي واسع ومنظم يضم مساحات خضراء ومناطق للاستراحة',
     contentEn: 'Spacious and organized campus with green spaces and rest areas',
     category: 'campus',
+    image: 'https://images.unsplash.com/photo-1541339907198-e08756ebafe1?w=800&h=600&fit=crop'
   },
   {
     id: '12',
@@ -137,6 +143,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'خدمة حافلات منتظمة تربط الجامعة بمختلف مناطق المدينة',
     contentEn: 'Regular bus service connecting the university to various city areas',
     category: 'campus',
+    image: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&h=600&fit=crop'
   },
   {
     id: '13',
@@ -148,6 +155,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مواقف واسعة وآمنة للطلاب والموظفين',
     contentEn: 'Spacious and secure parking for students and staff',
     category: 'campus',
+    image: 'https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=800&h=600&fit=crop'
   },
   {
     id: '14',
@@ -159,6 +167,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'مركز مجهز بأحدث التقنيات وخدمات الإنترنت عالية السرعة',
     contentEn: 'Center equipped with the latest technologies and high-speed internet services',
     category: 'facilities',
+    image: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&h=600&fit=crop'
   },
   {
     id: '15',
@@ -170,6 +179,7 @@ const mockCampusLifeItems: CampusLifeItem[] = [
     contentAr: 'قاعات محاضرات مجهزة بأحدث أنظمة العرض والصوت',
     contentEn: 'Lecture halls equipped with the latest display and sound systems',
     category: 'facilities',
+    image: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800&h=600&fit=crop'
   },
 ];
 

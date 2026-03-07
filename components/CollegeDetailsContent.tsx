@@ -10,12 +10,15 @@ import {
     ArrowRight, ArrowLeft, Target, Eye, BookOpen, CheckCircle2,
     GraduationCap, Users, Award, Calendar, Flag, Newspaper,
     Library, CalendarDays, FileSpreadsheet,
-    Facebook, Instagram, MessageCircle
+    Facebook, Instagram, MessageCircle,
+    Construction, Rocket, Cog
 } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { DisplayName } from '@/lib/transliterateArabicName';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { useState } from 'react';
+import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import Link from 'next/link';
 
 const ENABLE_COLLEGE_ADMIN_CARD = true;
@@ -43,6 +46,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
     const { t, language } = useLanguage();
     const isRtl = language === 'ar';
     const ArrowIcon = isRtl ? ArrowLeft : ArrowRight;
+    const [showComingSoon, setShowComingSoon] = useState(false);
 
     return (
         <div className="min-h-screen bg-background" dir={isRtl ? 'rtl' : 'ltr'}>
@@ -377,7 +381,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                             variant="outline"
                             size="lg"
                             className="h-24 bg-card/50 backdrop-blur-md border border-primary/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/40 transition-all duration-300 text-lg font-bold gap-3 shadow-sm group rounded-2xl"
-                            onClick={() => window.open('https://library.university.edu', '_blank')}
+                            onClick={() => setShowComingSoon(true)}
                         >
                             <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10">
                                 <Library className="w-6 h-6 text-secondary" />
@@ -388,7 +392,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                             variant="outline"
                             size="lg"
                             className="h-24 bg-card/50 backdrop-blur-md border border-primary/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/40 transition-all duration-300 text-lg font-bold gap-3 shadow-sm group rounded-2xl"
-                            onClick={() => window.open('https://schedule.university.edu', '_blank')}
+                            onClick={() => setShowComingSoon(true)}
                         >
                             <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10">
                                 <CalendarDays className="w-6 h-6 text-secondary" />
@@ -399,7 +403,7 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                             variant="outline"
                             size="lg"
                             className="h-24 bg-card/50 backdrop-blur-md border border-primary/10 hover:bg-secondary/10 hover:text-secondary hover:border-secondary/40 transition-all duration-300 text-lg font-bold gap-3 shadow-sm group rounded-2xl"
-                            onClick={() => window.open('https://exams.university.edu', '_blank')}
+                            onClick={() => setShowComingSoon(true)}
                         >
                             <div className="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center group-hover:bg-primary/10">
                                 <FileSpreadsheet className="w-6 h-6 text-secondary" />
@@ -479,6 +483,79 @@ export default function CollegeDetailsContent({ college, facultyMembers }: Colle
                 </div>
 
             </div>
+            {/* Coming Soon Dialog */}
+            <Dialog open={showComingSoon} onOpenChange={setShowComingSoon}>
+                <DialogContent className="max-w-md bg-white p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
+                    <div className="p-8 text-center space-y-6">
+                        {/* Animated Icon */}
+                        <div className="relative inline-block">
+                            <motion.div
+                                animate={{ rotate: 360 }}
+                                transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                                className="absolute inset-0 border-2 border-dashed border-secondary/30 rounded-full scale-150"
+                            />
+                            <div className="w-20 h-20 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto border border-secondary/20 relative z-10 overflow-hidden shadow-xl">
+                                <motion.div
+                                    animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
+                                    transition={{ duration: 3, repeat: Infinity }}
+                                >
+                                    <Construction className="w-10 h-10 text-secondary" />
+                                </motion.div>
+                                <motion.div
+                                    animate={{ x: ['100%', '-100%'] }}
+                                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="space-y-2">
+                            <DialogTitle className="text-2xl font-display font-bold text-gray-900">
+                                {t('الخدمة قيد الإعداد', 'Service Being Prepared')}
+                            </DialogTitle>
+                            <div className="flex items-center justify-center gap-2 text-base font-medium text-foreground">
+                                <Rocket className="w-4 h-4 text-secondary animate-bounce" />
+                                <span>{t('سيتوفر الرابط قريباً', 'Link will be available soon')}</span>
+                            </div>
+                            <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+                                {t(
+                                    'نعمل على توفير هذه الخدمة وسيتم إطلاقها في أقرب وقت ممكن. شكراً لصبركم.',
+                                    'We are working to provide this service and it will be launched as soon as possible. Thank you for your patience.'
+                                )}
+                            </p>
+                        </div>
+
+                        {/* Progress Bar */}
+                        <div className="w-full max-w-xs mx-auto space-y-1">
+                            <div className="flex justify-between text-xs font-bold text-secondary uppercase tracking-wider">
+                                <span>{t('التقدم', 'Progress')}</span>
+                                <span>75%</span>
+                            </div>
+                            <div className="h-2 bg-muted rounded-full overflow-hidden">
+                                <motion.div
+                                    initial={{ width: 0 }}
+                                    animate={{ width: '75%' }}
+                                    transition={{ duration: 1.2, delay: 0.3 }}
+                                    className="h-full bg-gradient-to-r from-primary to-secondary"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="pt-2 flex items-center justify-center gap-4 opacity-20">
+                            <Cog className="w-6 h-6 animate-[spin_8s_linear_infinite]" />
+                            <Cog className="w-10 h-10 animate-[spin_12s_linear_infinite_reverse]" />
+                            <Cog className="w-5 h-5 animate-[spin_6s_linear_infinite]" />
+                        </div>
+
+                        <Button
+                            onClick={() => setShowComingSoon(false)}
+                            className="w-full rounded-xl h-12 font-bold"
+                        >
+                            {t('حسناً', 'Got it')}
+                        </Button>
+                    </div>
+                </DialogContent>
+            </Dialog>
         </div>
     );
 }

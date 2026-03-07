@@ -13,7 +13,6 @@ import {
     Phone,
     Mail,
     MapPin,
-    Share2,
     Briefcase,
     GraduationCap,
     Clock
@@ -183,29 +182,6 @@ export default function CenterDetailsContent({ center, relatedCenters }: CenterD
                                 </div>
                             </CardContent>
                         </Card>
-
-
-
-                        {/* Share Section */}
-                        <div className="pt-8 border-t border-border">
-                            <div className="flex items-center justify-between flex-wrap gap-4">
-                                <div className="flex items-center gap-3">
-                                    <Share2 className="w-5 h-5 text-primary" />
-                                    <span className="font-medium">{t('مشاركة المركز', 'Share this center')}</span>
-                                </div>
-                                <div className="flex gap-3">
-                                    <Button variant="outline" size="sm" className="rounded-full">
-                                        {t('فيسبوك', 'Facebook')}
-                                    </Button>
-                                    <Button variant="outline" size="sm" className="rounded-full">
-                                        {t('تويتر', 'Twitter')}
-                                    </Button>
-                                    <Button variant="outline" size="sm" className="rounded-full">
-                                        {t('لينكدإن', 'LinkedIn')}
-                                    </Button>
-                                </div>
-                            </div>
-                        </div>
                     </motion.div>
 
                     {/* Sidebar */}
@@ -215,52 +191,59 @@ export default function CenterDetailsContent({ center, relatedCenters }: CenterD
                         transition={{ duration: 0.5, delay: 0.3 }}
                         className="lg:col-span-1"
                     >
-                        {/* Related Centers */}
-                        <Card className="bg-card/50 backdrop-blur-sm border-border/50 sticky top-96">
-                            <CardContent className="p-6">
-                                <h3 className="text-xl font-bold mb-6 flex items-center gap-2">
-                                    <div className="w-1 h-6 bg-secondary rounded-full"></div>
+                        {/* Related Centers - Premium Card */}
+                        <div className="sticky top-24 border-[2px] border-[#C9A961]/30 rounded-[2rem] overflow-hidden shadow-xl bg-white/80 dark:bg-card/80 backdrop-blur-sm">
+                            {/* Card Header */}
+                            <div className="relative bg-gradient-to-br from-primary to-primary/80 p-6 text-center overflow-hidden">
+                                <div className="absolute top-0 right-0 w-24 h-24 bg-white/5 rounded-full -mr-10 -mt-10"></div>
+                                <Building2 className="w-8 h-8 text-white/80 mx-auto mb-2" />
+                                <h3 className="text-lg font-bold text-white">
                                     {t('مراكز أخرى', 'Other Centers')}
                                 </h3>
-                                <div className="space-y-4">
-                                    {relatedCenters.map((item, index) => (
-                                        <Link
-                                            key={item.id}
-                                            href={`/centers/${item.id}`}
-                                            className="group block"
-                                        >
-                                            <motion.div
-                                                initial={{ opacity: 0, y: 10 }}
-                                                animate={{ opacity: 1, y: 0 }}
-                                                transition={{ duration: 0.3, delay: index * 0.1 }}
-                                                className="flex gap-4 p-3 rounded-xl hover:bg-muted/50 transition-all duration-300"
-                                            >
-                                                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center flex-shrink-0">
-                                                    <Building2 className="w-6 h-6 text-primary" />
-                                                </div>
-                                                <div className="flex-1 min-w-0">
-                                                    <h4 className="font-medium text-sm line-clamp-2 group-hover:text-primary transition-colors">
-                                                        {t(item.titleAr, item.titleEn)}
-                                                    </h4>
-                                                    <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
-                                                        {t(item.descAr, item.descEn)}
-                                                    </p>
-                                                </div>
-                                            </motion.div>
-                                        </Link>
-                                    ))}
-                                </div>
+                                <div className="w-10 h-0.5 bg-[#C9A961] mx-auto mt-3 rounded-full"></div>
+                            </div>
 
-                                {/* View All Button */}
+                            {/* Centers List */}
+                            <div className="p-5 space-y-3 max-h-[500px] overflow-y-auto">
+                                {relatedCenters.map((item, index) => (
+                                    <Link
+                                        key={item.id}
+                                        href={`/centers/${item.id}`}
+                                        className="group block"
+                                    >
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ opacity: 1, y: 0 }}
+                                            transition={{ duration: 0.3, delay: index * 0.1 }}
+                                            className="flex gap-3 p-3 rounded-xl border border-transparent hover:border-[#C9A961]/20 hover:bg-[#C9A961]/5 transition-all duration-300"
+                                        >
+                                            <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-primary/15 to-secondary/15 flex items-center justify-center flex-shrink-0 group-hover:from-primary/25 group-hover:to-secondary/25 transition-colors">
+                                                <Building2 className="w-5 h-5 text-primary" />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <h4 className="font-semibold text-sm line-clamp-2 group-hover:text-primary transition-colors leading-snug">
+                                                    {t(item.titleAr, item.titleEn)}
+                                                </h4>
+                                                <p className="text-xs text-muted-foreground mt-1 line-clamp-1">
+                                                    {t(item.descAr, item.descEn)}
+                                                </p>
+                                            </div>
+                                        </motion.div>
+                                    </Link>
+                                ))}
+                            </div>
+
+                            {/* View All Button */}
+                            <div className="p-5 pt-0">
                                 <Button
                                     variant="outline"
-                                    className="w-full mt-6 rounded-full"
+                                    className="w-full rounded-full border-[#C9A961]/40 hover:border-[#C9A961] hover:bg-[#C9A961]/5 transition-all"
                                     onClick={() => router.push('/centers')}
                                 >
                                     {t('عرض جميع المراكز', 'View All Centers')}
                                 </Button>
-                            </CardContent>
-                        </Card>
+                            </div>
+                        </div>
                     </motion.aside>
                 </div>
             </div>

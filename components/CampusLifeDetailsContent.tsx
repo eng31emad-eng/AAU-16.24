@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { CampusLifeItem } from '@/types';
 import { Button } from '@/components/ui/button';
-import { ArrowRight, ArrowLeft, Home } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Home, Sparkles, Heart } from 'lucide-react';
 import { Breadcrumb } from '@/components/common/Breadcrumb';
 import { motion } from 'framer-motion';
 import Link from 'next/link';
@@ -64,80 +64,85 @@ export default function CampusLifeDetailsContent({ item, relatedItems }: CampusL
             {/* Main Content */}
             <div className="container mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-                    {/* Sidebar - معلومات الحياة الجامعية */}
+                    {/* Sidebar - معلومات جمالية - بدون روابط */}
                     <motion.aside
                         initial={{ opacity: 0, x: isRTL ? 20 : -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5 }}
                         className="lg:col-span-3 order-2 lg:order-1"
                     >
-                        {/* Card with Golden Border */}
-                        <div className="sticky top-24 border-[3px] border-[#C9A961] rounded-[2rem] overflow-hidden shadow-2xl bg-white dark:bg-card">
-                            {/* Header */}
-                            <div className="bg-white dark:bg-card p-6 text-center border-b border-border">
-                                <h3 className="text-xl font-bold">
-                                    {t('صور من الحياة الجامعية', 'Campus Life Photos')}
+                        {/* Card with Premium Golden Border and Glassmorphism feel */}
+                        <div className="sticky top-24 border-[2px] border-[#C9A961]/30 rounded-[2.5rem] overflow-hidden shadow-2xl bg-white/80 dark:bg-card/80 backdrop-blur-sm">
+                            {/* Premium Header */}
+                            <div className="relative bg-black p-8 text-center overflow-hidden">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#C9A961]/10 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+                                <div className="absolute bottom-0 left-0 w-24 h-24 bg-[#C9A961]/10 rounded-full -ml-12 -mb-12 blur-2xl"></div>
+                                <h3 className="text-xl font-display font-bold text-white relative z-10">
+                                    {t('تجربة جامعية فريدة', 'Unique Campus Experience')}
                                 </h3>
+                                <div className="w-12 h-1 bg-[#C9A961] mx-auto mt-4 rounded-full"></div>
                             </div>
 
                             {/* Content Area */}
-                            <div className="bg-white dark:bg-card p-6 space-y-6">
-                                {/* Stats Cards */}
-                                <div className="grid grid-cols-2 gap-4">
-                                    <div className="bg-muted/30 rounded-2xl p-6 text-center border border-border">
-                                        <div className="text-4xl font-bold mb-2">+15</div>
-                                        <div className="text-sm text-muted-foreground">
-                                            {t('مرافق', 'Facilities')}
-                                        </div>
-                                    </div>
-                                    <div className="bg-muted/30 rounded-2xl p-6 text-center border border-border">
-                                        <div className="text-4xl font-bold mb-2">+10</div>
-                                        <div className="text-sm text-muted-foreground">
-                                            {t('أنشطة', 'Activities')}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Quick Links */}
-                                <div className="space-y-3">
-                                    <h4 className="text-base font-bold mb-3">
-                                        {t('روابط سريعة', 'Quick Links')}
+                            <div className="p-8 space-y-10">
+                                {/* Values/Features List - Static Informative */}
+                                <div className="space-y-6">
+                                    <h4 className="text-sm font-bold text-muted-foreground uppercase tracking-wider mb-6">
+                                        {t('ما يميز هذا المرفق', 'Facility Highlights')}
                                     </h4>
-                                    <Link
-                                        href="/campus-life"
-                                        className="flex items-center gap-2 text-sm hover:text-primary transition-colors group"
-                                    >
-                                        <div className="w-1.5 h-1.5 rounded-full bg-foreground group-hover:bg-primary transition-colors"></div>
-                                        {t('جميع المرافق', 'All Facilities')}
-                                    </Link>
-                                    <Link
-                                        href="/campus-life"
-                                        className="flex items-center gap-2 text-sm hover:text-primary transition-colors group"
-                                    >
-                                        <div className="w-1.5 h-1.5 rounded-full bg-foreground group-hover:bg-primary transition-colors"></div>
-                                        {t('الأنشطة الطلابية', 'Student Activities')}
-                                    </Link>
-                                    <Link
-                                        href="/contact"
-                                        className="flex items-center gap-2 text-sm hover:text-primary transition-colors group"
-                                    >
-                                        <div className="w-1.5 h-1.5 rounded-full bg-foreground group-hover:bg-primary transition-colors"></div>
-                                        {t('تواصل معنا', 'Contact Us')}
-                                    </Link>
+
+                                    <div className="space-y-5">
+                                        {[
+                                            { ar: 'بيئة دراسية محفزة', en: 'Stimulating Study Environment', icon: <Sparkles className="w-5 h-5" /> },
+                                            { ar: 'أحدث التجهيزات التقنية', en: 'Modern Technical Equipment', icon: <Home className="w-5 h-5" /> }, // Refers to the Home icon used in detail view
+                                            { ar: 'دعم وخدمة مستمرة', en: 'Continuous Support & Service', icon: <Heart className="w-5 h-5" /> }
+                                        ].map((feat, idx) => (
+                                            <div key={idx} className="flex items-center gap-4 group">
+                                                <div className="w-10 h-10 rounded-xl bg-[#C9A961]/5 flex items-center justify-center text-[#C9A961] border border-[#C9A961]/20 group-hover:bg-[#C9A961]/10 transition-colors">
+                                                    {feat.icon}
+                                                </div>
+                                                <span className="text-sm font-medium leading-tight">
+                                                    {t(feat.ar, feat.en)}
+                                                </span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+
+                                {/* Divider */}
+                                <div className="h-px bg-gradient-to-r from-transparent via-border to-transparent"></div>
+
+                                {/* Stats Cards - Enhanced Aesthetics */}
+                                <div className="grid grid-cols-1 gap-4">
+                                    <div className="bg-gradient-to-br from-white to-gray-50/50 dark:from-muted/20 dark:to-muted/10 rounded-2xl p-6 text-center border border-[#C9A961]/10 relative group overflow-hidden">
+                                        <div className="absolute inset-0 bg-[#C9A961]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <div className="text-4xl font-display font-bold mb-1 text-primary">+15</div>
+                                        <div className="text-xs uppercase tracking-widest text-muted-foreground font-bold">
+                                            {t('مرفقاً حديثاً', 'Modern Facilities')}
+                                        </div>
+                                    </div>
+                                    <div className="bg-gradient-to-br from-white to-gray-50/50 dark:from-muted/20 dark:to-muted/10 rounded-2xl p-6 text-center border border-[#C9A961]/10 relative group overflow-hidden">
+                                        <div className="absolute inset-0 bg-[#C9A961]/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                                        <div className="text-4xl font-display font-bold mb-1 text-secondary">+10</div>
+                                        <div className="text-xs uppercase tracking-widest text-muted-foreground font-bold">
+                                            {t('أنشطة طلابية', 'Student Activities')}
+                                        </div>
+                                    </div>
+                                </div>
+
+                                {/* Quality Seal or Similar Static Note */}
+                                <div className="pt-4 text-center">
+                                    <p className="text-[10px] text-muted-foreground leading-relaxed">
+                                        {t(
+                                            'نلتزم بتقديم أفضل المعايير التعليمية والترفيهية لطلابنا في جميع مرافق الجامعة.',
+                                            'We are committed to providing the best educational and recreational standards for our students.'
+                                        )}
+                                    </p>
                                 </div>
                             </div>
 
-                            {/* Black Footer Button */}
-                            <div className="bg-black dark:bg-black p-6">
-                                <Button
-                                    className="w-full bg-transparent hover:bg-white/10 text-white border-0 rounded-2xl font-bold py-6 transition-all"
-                                    asChild
-                                >
-                                    <Link href="/campus-life">
-                                        {t('عش التجربة الجامعية المتكاملة', 'Live the Complete University Experience')}
-                                    </Link>
-                                </Button>
-                            </div>
+                            {/* Decorative Bottom Bar */}
+                            <div className="h-2 bg-[#C9A961]"></div>
                         </div>
                     </motion.aside>
 
@@ -148,30 +153,30 @@ export default function CampusLifeDetailsContent({ item, relatedItems }: CampusL
                         transition={{ duration: 0.5, delay: 0.2 }}
                         className="lg:col-span-9 order-1 lg:order-2"
                     >
-                        {/* Featured Image Placeholder */}
-                        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[500px] bg-gradient-to-br from-muted/50 to-muted rounded-2xl mb-8 flex items-center justify-center overflow-hidden">
-                            {/* Decorative circles */}
-                            <div className="absolute inset-0 flex items-center justify-center">
-                                <div className="relative">
-                                    {/* Outer circle */}
-                                    <div className="w-48 h-48 rounded-full border-2 border-muted-foreground/20"></div>
-                                    {/* Lines radiating from center */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-0"></div>
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-45"></div>
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-90"></div>
-                                        <div className="w-32 h-0.5 bg-muted-foreground/20 absolute top-0 left-1/2 -translate-x-1/2 rotate-[135deg]"></div>
-                                    </div>
-                                    {/* Inner circle with icon */}
-                                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
-                                        <div className="w-16 h-16 rounded-full bg-primary/20 flex items-center justify-center">
-                                            <svg className="w-8 h-8 text-muted-foreground/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                                            </svg>
+                        {/* Featured Image */}
+                        <div className="relative w-full h-[300px] md:h-[400px] lg:h-[550px] rounded-2xl mb-8 overflow-hidden shadow-xl border border-border/50 bg-muted">
+                            {item.image ? (
+                                <Image
+                                    src={item.image}
+                                    alt={t(item.titleAr, item.titleEn)}
+                                    fill
+                                    className="object-cover transition-transform duration-700 hover:scale-105"
+                                    priority
+                                />
+                            ) : (
+                                <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-primary/5 to-secondary/5">
+                                    <div className="text-center">
+                                        <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                                            <Home className="w-10 h-10 text-primary/40" />
                                         </div>
+                                        <p className="text-muted-foreground font-medium">
+                                            {t('لا توجد صورة متوفرة', 'No image available')}
+                                        </p>
                                     </div>
                                 </div>
-                            </div>
+                            )}
+                            {/* Gradient Overlay for better title contrast if needed later */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
                         </div>
 
                         {/* About Section */}

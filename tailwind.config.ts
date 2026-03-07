@@ -64,10 +64,10 @@ export default {
         sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        'display': ['var(--font-tajawal)', 'var(--font-inter)', 'sans-serif'],
-        'body': ['var(--font-inter)', 'sans-serif'],
+        'display': ['var(--font-tajawal)', 'sans-serif'],
+        'body': ['var(--font-tajawal)', 'sans-serif'],
         'arabic': ['var(--font-tajawal)', 'sans-serif'],
-        'sans': ['var(--font-tajawal)', 'var(--font-inter)', 'sans-serif'],
+        'sans': ['var(--font-tajawal)', 'sans-serif'],
       },
       keyframes: {
         "accordion-down": {

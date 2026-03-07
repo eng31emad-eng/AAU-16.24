@@ -5,7 +5,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { ChevronLeft, ChevronRight, CheckCircle, Upload, FileText, GraduationCap, User, FolderOpen } from 'lucide-react';
+import { ChevronLeft, ChevronRight, CheckCircle, Upload, FileText, GraduationCap, User, FolderOpen, Construction, Rocket, Cog } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { toast } from 'sonner';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
@@ -35,6 +35,7 @@ export const AdmissionSection = () => {
 
   const [serialNumber, setSerialNumber] = useState<string | null>(null);
   const [showSuccess, setShowSuccess] = useState(false);
+  const [showFileModal, setShowFileModal] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validateField = (name: string, value: string) => {
@@ -250,11 +251,12 @@ export const AdmissionSection = () => {
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[
-                { title: { ar: 'لائحة شؤون الطلاب', en: 'Student Affairs Regulations' }, icon: FileText, href: '/docs/regulations.pdf' },
-                { title: { ar: 'الدوري التكميلي', en: 'Supplementary Semester' }, icon: FileText, href: '/docs/supplementary.pdf' },
-                { title: { ar: 'استمارة تظلمات', en: 'Grievance Form' }, icon: FileText, href: '/docs/grievance.pdf' },
-                { title: { ar: 'ضوابط وسلوكيات عامة', en: 'General Behavior Controls' }, icon: FileText, href: '/docs/general_conduct.pdf' },
-                { title: { ar: 'ضوابط وسلوكيات الامتحانات', en: 'Exam Behavior Controls' }, icon: FileText, href: '/docs/exam_conduct.pdf' },
+                // ⚠️ لما ترفع الملف: غيّر fileComingSoon إلى false لهذا الملف بس
+                { title: { ar: 'لائحة شؤون الطلاب', en: 'Student Affairs Regulations' }, icon: FileText, href: '/docs/regulations.pdf', fileComingSoon: true },
+                { title: { ar: 'الدوري التكميلي', en: 'Supplementary Semester' }, icon: FileText, href: '/docs/supplementary.pdf', fileComingSoon: true },
+                { title: { ar: 'استمارة تظلمات', en: 'Grievance Form' }, icon: FileText, href: '/docs/grievance.pdf', fileComingSoon: true },
+                { title: { ar: 'ضوابط وسلوكيات عامة', en: 'General Behavior Controls' }, icon: FileText, href: '/docs/general_conduct.pdf', fileComingSoon: true },
+                { title: { ar: 'ضوابط وسلوكيات الامتحانات', en: 'Exam Behavior Controls' }, icon: FileText, href: '/docs/exam_conduct.pdf', fileComingSoon: true },
               ].map((doc, idx) => (
                 <motion.div
                   key={idx}
@@ -265,8 +267,12 @@ export const AdmissionSection = () => {
                     variant="outline"
                     className="w-full h-auto py-5 px-6 flex items-center justify-between text-right bg-white/5 hover:bg-white/10 border-border group transition-all duration-300 shadow-sm hover:shadow-md hover:border-secondary"
                     onClick={() => {
-                      window.open(doc.href, '_blank');
-                      toast.info(t('يتم الآن فتح الملف...', 'Opening file...'));
+                      if (doc.fileComingSoon) {
+                        setShowFileModal(true);
+                      } else {
+                        window.open(doc.href, '_blank');
+                        toast.info(t('يتم الآن فتح الملف...', 'Opening file...'));
+                      }
                     }}
                   >
                     <div className="flex items-center gap-3">
@@ -277,7 +283,13 @@ export const AdmissionSection = () => {
                         {t(doc.title.ar, doc.title.en)}
                       </span>
                     </div>
-                    <Upload className="w-5 h-5 text-muted-foreground group-hover:text-secondary opacity-50 group-hover:opacity-100 transition-all rotate-180" />
+                    {doc.fileComingSoon ? (
+                      <span className="text-[10px] font-bold text-secondary/60 bg-secondary/10 px-2 py-0.5 rounded-full whitespace-nowrap">
+                        {t('قريباً', 'Soon')}
+                      </span>
+                    ) : (
+                      <Upload className="w-5 h-5 text-muted-foreground group-hover:text-secondary opacity-50 group-hover:opacity-100 transition-all rotate-180" />
+                    )}
                   </Button>
                 </motion.div>
               ))}
@@ -663,6 +675,80 @@ export const AdmissionSection = () => {
             </CardContent>
           </Card>
         </motion.div>
+
+        {/* File Coming Soon Dialog */}
+        <Dialog open={showFileModal} onOpenChange={setShowFileModal}>
+          <DialogContent className="max-w-md bg-white p-0 overflow-hidden border-none rounded-3xl shadow-2xl">
+            <div className="p-8 text-center space-y-6">
+              {/* Animated Icon */}
+              <div className="relative inline-block">
+                <motion.div
+                  animate={{ rotate: 360 }}
+                  transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
+                  className="absolute inset-0 border-2 border-dashed border-secondary/30 rounded-full scale-150"
+                />
+                <div className="w-20 h-20 bg-secondary/10 rounded-2xl flex items-center justify-center mx-auto border border-secondary/20 relative z-10 overflow-hidden shadow-xl">
+                  <motion.div
+                    animate={{ y: [0, -8, 0], rotate: [0, 5, -5, 0] }}
+                    transition={{ duration: 3, repeat: Infinity }}
+                  >
+                    <Construction className="w-10 h-10 text-secondary" />
+                  </motion.div>
+                  <motion.div
+                    animate={{ x: ['100%', '-100%'] }}
+                    transition={{ duration: 2, repeat: Infinity, repeatDelay: 3 }}
+                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/30 to-transparent skew-x-12"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <DialogTitle className="text-2xl font-display font-bold text-gray-900">
+                  {t('الملف قيد الإعداد', 'File Being Prepared')}
+                </DialogTitle>
+                <div className="flex items-center justify-center gap-2 text-base font-medium text-foreground">
+                  <Rocket className="w-4 h-4 text-secondary animate-bounce" />
+                  <span>{t('سيتوفر الملف قريباً', 'File will be available soon')}</span>
+                </div>
+                <p className="text-muted-foreground text-sm max-w-xs mx-auto">
+                  {t(
+                    'نعمل على إعداد هذا الملف وسيتم رفعه قريباً. شكراً لصبركم.',
+                    'We are preparing this file and it will be uploaded soon. Thank you for your patience.'
+                  )}
+                </p>
+              </div>
+
+              {/* Progress Bar */}
+              <div className="w-full max-w-xs mx-auto space-y-1">
+                <div className="flex justify-between text-xs font-bold text-secondary uppercase tracking-wider">
+                  <span>{t('التقدم', 'Progress')}</span>
+                  <span>75%</span>
+                </div>
+                <div className="h-2 bg-muted rounded-full overflow-hidden">
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '75%' }}
+                    transition={{ duration: 1.2, delay: 0.3 }}
+                    className="h-full bg-gradient-to-r from-primary to-secondary"
+                  />
+                </div>
+              </div>
+
+              <div className="pt-2 flex items-center justify-center gap-4 opacity-20">
+                <Cog className="w-6 h-6 animate-[spin_8s_linear_infinite]" />
+                <Cog className="w-10 h-10 animate-[spin_12s_linear_infinite_reverse]" />
+                <Cog className="w-5 h-5 animate-[spin_6s_linear_infinite]" />
+              </div>
+
+              <Button
+                onClick={() => setShowFileModal(false)}
+                className="w-full rounded-xl h-12 font-bold"
+              >
+                {t('حسناً', 'Got it')}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
 
         {/* Success Dialog */}
         <Dialog open={showSuccess} onOpenChange={setShowSuccess}>

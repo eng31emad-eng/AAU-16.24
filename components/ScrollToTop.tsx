@@ -32,14 +32,15 @@ export const ScrollToTop = () => {
     <Button
       onClick={scrollToTop}
       className={`
-        fixed bottom-8 left-8 z-50 rounded-full w-12 h-12 p-0 
-        shadow-lg transition-all duration-300 
-        bg-secondary hover:bg-secondary/90 text-secondary-foreground
+        fixed bottom-24 md:bottom-32 right-8 md:right-10 z-40 rounded-full 
+        w-10 h-10 md:w-12 md:h-12 p-0 
+        shadow-xl transition-all duration-300 
+        bg-secondary hover:bg-secondary/90 text-secondary-foreground border-2 border-primary/20
         ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-16 pointer-events-none'}
       `}
       aria-label={t('العودة للأعلى', 'Scroll to top')}
     >
-      <ArrowUp className="w-5 h-5" />
+      <ArrowUp className="w-4 h-4 md:w-5 md:h-5" />
     </Button>
   );
 };
